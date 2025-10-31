@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638975059296192563
-    m_Hash: 1833868625
+      ticks: 638975082746785954
+    m_Hash: 3265070655
   m_LockFileStatus:
     m_FilePath: C:/Program Files/GitHub/Project-bambou/Project bambou/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638975059598752560
-    m_Hash: 3242075567
+      ticks: 638975082746851104
+    m_Hash: 1256170462
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
@@ -840,6 +840,719 @@ m_ResolvedPackages:
       scopePatternExpression: 
       message: 
       readMoreLink: 
+- packageId: com.unity.multiplayer.center.quickstart@1.0.1
+  testable: 0
+  isDirectDependency: 1
+  version: 1.0.1
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.multiplayer.center.quickstart@1fcc41c23ee5
+  assetPath: Packages/com.unity.multiplayer.center.quickstart
+  name: com.unity.multiplayer.center.quickstart
+  displayName: Multiplayer Center Quickstart Content
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: This package populates the Quickstart tab of the Multiplayer Center.
+  errors: []
+  versions:
+    all:
+    - 0.2.1
+    - 0.3.0
+    - 0.4.0
+    - 1.0.0-pre.1
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0
+    - 1.0.1
+    compatible:
+    - 0.2.1
+    - 0.3.0
+    - 0.4.0
+    - 1.0.0-pre.1
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0
+    - 1.0.1
+    recommended: 
+    deprecated: []
+  dependencies:
+  - name: com.unity.modules.uielements
+    version: 1.0.0
+  - name: com.unity.multiplayer.center
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.modules.uielements
+    version: 1.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.modules.hierarchycore
+    version: 1.0.0
+  - name: com.unity.modules.physics
+    version: 1.0.0
+  - name: com.unity.multiplayer.center
+    version: 1.0.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638700362515730000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.multiplayer.center.quickstart@1.0/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.multiplayer.center.git
+    revision: 23433a99efbf46511691df6fde1ab9ca4c8fbd4b
+    path: 
+  unityLifecycle:
+    version: 
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Changed\n- Migrated forum links in all Quickstart
+    sections\n- Improved Quickstart flow by opening MPPM with the sample scenes"}'
+  assetStore:
+    productId: 
+  fingerprint: 1fcc41c23ee54bd90f68bb85c9270ba3af0c22fb
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 0.2.1
+    minimumUnityVersion: 6000.0.19f1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.multiplayer.playmode@1.6.1
+  testable: 0
+  isDirectDependency: 1
+  version: 1.6.1
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.multiplayer.playmode@3acaa705f0f9
+  assetPath: Packages/com.unity.multiplayer.playmode
+  name: com.unity.multiplayer.playmode
+  displayName: Multiplayer Play Mode
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: Multiplayer Play Mode is a feature that enables multiple editor instances
+    to be opened simultaneously on the same development device.
+  errors: []
+  versions:
+    all:
+    - 0.1.0
+    - 0.1.1
+    - 0.2.0
+    - 0.3.0
+    - 0.4.0
+    - 0.5.0
+    - 0.6.0
+    - 1.0.0-pre.1
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0
+    - 1.1.0
+    - 1.2.0
+    - 1.2.1
+    - 1.2.2
+    - 1.3.0-exp.1
+    - 1.3.0-exp.2
+    - 1.3.0-exp.3
+    - 1.3.0-exp.4
+    - 1.3.0-pre.1
+    - 1.3.0-pre.2
+    - 1.3.0-pre.3
+    - 1.3.0
+    - 1.3.1
+    - 1.3.2
+    - 1.3.3
+    - 1.4.0-pre.1
+    - 1.4.0-pre.2
+    - 1.4.0-pre.3
+    - 1.4.0
+    - 1.4.1
+    - 1.4.2
+    - 1.4.3
+    - 1.5.0-exp.1
+    - 1.5.0-exp.2
+    - 1.5.0-exp.3
+    - 1.5.0-exp.4
+    - 1.5.0
+    - 1.6.0
+    - 1.6.1
+    - 2.0.0-pre.1
+    - 2.0.0
+    compatible:
+    - 1.6.1
+    recommended: 1.6.1
+    deprecated: []
+  dependencies:
+  - name: com.unity.nuget.newtonsoft-json
+    version: 2.0.2
+  resolvedDependencies:
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638926817254090000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.multiplayer.playmode@1.6/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/multiplayer-workflows.git
+    revision: d3d04631d26a390c05ab11bfbcbf4e2aae57fe84
+    path: 
+  unityLifecycle:
+    version: 1.6.1
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: "{\"changelog\":\"### Added\\n- Added a Profiler panel option within
+    Clone Editors that users can toggle on/off during Edit and Play mode.\\n- Added
+    validation checks for remote instances to ensure the cloud project ID, environment,
+    and Multiplay are all properly set up before running a scenario\\n\\n### Fixed\\n-
+    Fixed an issue where the clone editor\u2019s audio toggle would reset every time
+    scripts were reloaded\\n- Fixed an issue where the Main Editor's build profile
+    fails to restore when building local and remote instances.\\n- Fixed the play
+    button not updating when entering play mode using keyboard shortcuts\\n- Fixed
+    an issue where the Play Mode status popup window failed to update during loading\\n-
+    Fixed an issue where removing an active Scenario Configuration fails to close
+    running instances.\\n- Fixed an issue where removing an Instance configuration
+    from within the Configure Play Mode Scenarios window results in a null reference
+    error.\\n- Fixed an issue where the Mute Player At Launch toggle not working
+    properly\"}"
+  assetStore:
+    productId: 
+  fingerprint: 3acaa705f0f994547817cc7e4e98b83a8596a677
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.6.1
+    minimumUnityVersion: 6000.0.48f1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.multiplayer.tools@2.2.6
+  testable: 0
+  isDirectDependency: 1
+  version: 2.2.6
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.multiplayer.tools@8395f16a9a9a
+  assetPath: Packages/com.unity.multiplayer.tools
+  name: com.unity.multiplayer.tools
+  displayName: Multiplayer Tools
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: Adds a suite of tools that improve workflows for multiplayer development
+  errors: []
+  versions:
+    all:
+    - 1.0.0-pre.2
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0
+    - 1.1.0
+    - 1.1.1
+    - 2.0.0-pre.2
+    - 2.0.0-pre.3
+    - 2.0.0-pre.5
+    - 2.1.0
+    - 2.2.0
+    - 2.2.1
+    - 2.2.2
+    - 2.2.3
+    - 2.2.4
+    - 2.2.5
+    - 2.2.6
+    compatible:
+    - 2.2.6
+    recommended: 2.2.6
+    deprecated: []
+  dependencies:
+  - name: com.unity.burst
+    version: 1.8.18
+  - name: com.unity.collections
+    version: 2.5.1
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.profiling.core
+    version: 1.0.2
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.4
+  - name: com.unity.modules.uielements
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  resolvedDependencies:
+  - name: com.unity.burst
+    version: 1.8.25
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.test-framework
+    version: 1.6.0
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.2.0
+  - name: com.unity.profiling.core
+    version: 1.0.2
+  - name: com.unity.modules.uielements
+    version: 1.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.hierarchycore
+    version: 1.0.0
+  - name: com.unity.modules.physics
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  keywords:
+  - Multiplayer
+  - Netcode
+  - GameObjects
+  - Tools
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638895524257810000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.multiplayer.tools@2.2/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.com/Unity-Technologies/com.unity.multiplayer.tools.git
+    revision: ab36460379fa30068f17b98cbc4de4464874ac76
+    path: 
+  unityLifecycle:
+    version: 2.2.6
+    nextVersion: 
+    recommendedVersion: 2.2.0
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"#### *Network Scene Visualization*\n- Fixed settings
+    dropdown appearing at the wrong position in the scene view when close to an edge.\n-
+    Unified the settings overlay to only use foldout."}'
+  assetStore:
+    productId: 
+  fingerprint: 8395f16a9a9a77c66f48d3ef8dfd3a1bae8cfbf4
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 2.2.6
+    minimumUnityVersion: 6000.0.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.multiplayer.widgets@1.0.3
+  testable: 0
+  isDirectDependency: 1
+  version: 1.0.3
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.multiplayer.widgets@edba0410b7bd
+  assetPath: Packages/com.unity.multiplayer.widgets
+  name: com.unity.multiplayer.widgets
+  displayName: Multiplayer Widgets
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: The Multiplayer Widgets package provides a set of widgets that help
+    implementing Unity's multiplayer services in a rapid prototyping fashion.
+  errors: []
+  versions:
+    all:
+    - 0.1.1
+    - 0.2.0
+    - 0.3.0
+    - 0.4.0
+    - 0.5.0
+    - 1.0.0-pre.1
+    - 1.0.0-pre.2
+    - 1.0.0
+    - 1.0.1
+    - 1.0.2
+    - 1.0.3
+    - 1.1.0-exp.1
+    compatible:
+    - 1.0.0
+    - 1.0.1
+    - 1.0.2
+    - 1.0.3
+    - 1.1.0-exp.1
+    recommended: 1.0.3
+    deprecated: []
+  dependencies:
+  - name: com.unity.services.multiplayer
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.services.multiplayer
+    version: 1.2.0
+  - name: com.unity.transport
+    version: 2.6.0
+  - name: com.unity.burst
+    version: 1.8.25
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.test-framework
+    version: 1.6.0
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.2.0
+  - name: com.unity.services.qos
+    version: 1.3.0
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.services.authentication
+    version: 3.5.1
+  - name: com.unity.ugui
+    version: 2.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.services.wire
+    version: 1.4.0
+  - name: com.unity.services.deployment
+    version: 1.6.2
+  - name: com.unity.services.deployment.api
+    version: 1.1.2
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638966546972860000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.multiplayer.widgets@1.0/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.multiplayer.widgets.git
+    revision: a331484cf729a962be4bf17a2478870098296d6b
+    path: 
+  unityLifecycle:
+    version: 1.0.0
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### General\n- Updated deprecated event usages."}'
+  assetStore:
+    productId: 
+  fingerprint: edba0410b7bd31058b902b5254b3f34d36a9ba8a
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.0.0
+    minimumUnityVersion: 6000.0.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.netcode.gameobjects@2.6.0
+  testable: 0
+  isDirectDependency: 1
+  version: 2.6.0
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.netcode.gameobjects@7e60351bfc70
+  assetPath: Packages/com.unity.netcode.gameobjects
+  name: com.unity.netcode.gameobjects
+  displayName: Netcode for GameObjects
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: Netcode for GameObjects is a high-level netcode SDK that provides
+    networking capabilities to GameObject/MonoBehaviour workflows within Unity and
+    sits on top of underlying transport layer.
+  errors: []
+  versions:
+    all:
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0
+    - 1.0.1
+    - 1.0.2
+    - 1.1.0
+    - 1.2.0
+    - 1.3.1
+    - 1.4.0
+    - 1.5.1
+    - 1.5.2
+    - 1.6.0
+    - 1.7.0
+    - 1.7.1
+    - 1.8.0
+    - 1.8.1
+    - 1.9.1
+    - 1.10.0
+    - 1.11.0
+    - 1.12.0
+    - 1.12.1
+    - 1.12.2
+    - 1.13.0
+    - 1.13.1
+    - 1.14.0
+    - 1.14.1
+    - 2.0.0-exp.2
+    - 2.0.0-exp.4
+    - 2.0.0-exp.5
+    - 2.0.0-pre.1
+    - 2.0.0-pre.2
+    - 2.0.0-pre.3
+    - 2.0.0-pre.4
+    - 2.0.0
+    - 2.1.1
+    - 2.2.0
+    - 2.3.0
+    - 2.3.1
+    - 2.3.2
+    - 2.4.0
+    - 2.4.1
+    - 2.4.2
+    - 2.4.3
+    - 2.4.4
+    - 2.5.0
+    - 2.5.1
+    - 2.6.0
+    compatible:
+    - 1.14.1
+    - 2.0.0-exp.2
+    - 2.0.0-exp.4
+    - 2.0.0-exp.5
+    - 2.0.0-pre.1
+    - 2.0.0-pre.2
+    - 2.0.0-pre.3
+    - 2.0.0-pre.4
+    - 2.0.0
+    - 2.1.1
+    - 2.2.0
+    - 2.3.0
+    - 2.3.1
+    - 2.3.2
+    - 2.4.0
+    - 2.4.1
+    - 2.4.2
+    - 2.4.3
+    - 2.4.4
+    - 2.5.0
+    - 2.5.1
+    - 2.6.0
+    recommended: 2.6.0
+    deprecated: []
+  dependencies:
+  - name: com.unity.transport
+    version: 2.4.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.4
+  resolvedDependencies:
+  - name: com.unity.transport
+    version: 2.6.0
+  - name: com.unity.burst
+    version: 1.8.25
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.test-framework
+    version: 1.6.0
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.2.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638962271824990000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.netcode.gameobjects@2.6/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.com/Unity-Technologies/com.unity.netcode.gameobjects.git
+    revision: a0231c68aec9fed1e039a2091101acd7e6b94764
+    path: 
+  unityLifecycle:
+    version: 1.14.1
+    nextVersion: 
+    recommendedVersion: 2.6.0
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Added\n\n- `NetworkSceneManager` as an internal
+    wrapper for the `SceneManager.Scene.handle` and swapped all places that use an
+    `int` to represent a `Scene.handle` to instead use the `NetworkSceneManager`.
+    (#3647)\n- Clicking on the Help icon in the inspector will now redirect to the
+    relevant documentation. (#3663)\n- Added a `Set` function onto `NetworkList`
+    that takes an optional parameter that forces an update to be processed even if
+    the current value is equal to the previous value. (#3690)\n\n### Changed\n\n-
+    Improved performance of the NetworkVariable. (#3683)\n- Improved performance
+    around the NetworkBehaviour component. (#3687)\n\n### Fixed\n\n- Distributed
+    authority clients no longer send themselves in the `ClientIds` list when sending
+    a `ChangeOwnershipMessage`. (#3687)\n- Made a variety of small performance improvements.
+    (#3683)"}'
+  assetStore:
+    productId: 
+  fingerprint: 7e60351bfc704154de8b451abf43bdb8f72fd3a2
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.14.1
+    minimumUnityVersion: 6000.0.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
 - packageId: com.unity.render-pipelines.universal@17.2.0
   testable: 0
   isDirectDependency: 1
@@ -961,6 +1674,362 @@ m_ResolvedPackages:
     compatibilityLevel: 0
     minimumPackageVersion: 17.2.0
     minimumUnityVersion: 6000.2.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.services.multiplayer@1.2.0
+  testable: 0
+  isDirectDependency: 1
+  version: 1.2.0
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.services.multiplayer@b65d52ffeb93
+  assetPath: Packages/com.unity.services.multiplayer
+  name: com.unity.services.multiplayer
+  displayName: Multiplayer Services
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: The Multiplayer Services package is a one-stop solution for adding
+    multiplayer elements to a game developed in Unity. The Unity Gaming Services
+    (UGS) Multiplayer services powers these capabilities to define how groups of
+    players interact in your games.
+  errors: []
+  versions:
+    all:
+    - 0.0.5
+    - 0.0.6
+    - 0.0.7
+    - 0.2.0
+    - 0.3.0
+    - 0.4.0
+    - 0.4.2
+    - 0.5.0
+    - 0.5.1
+    - 0.6.0
+    - 1.0.0-pre.1
+    - 1.0.0
+    - 1.0.1
+    - 1.0.2
+    - 1.1.0
+    - 1.1.1
+    - 1.1.2
+    - 1.1.3
+    - 1.1.4
+    - 1.1.5
+    - 1.1.6
+    - 1.1.7
+    - 1.1.8
+    - 1.2.0-exp.1
+    - 1.2.0-exp.2
+    - 1.2.0-exp.3
+    - 1.2.0-exp.4
+    - 1.2.0-pre.1
+    - 1.2.0
+    compatible:
+    - 1.1.0
+    - 1.1.1
+    - 1.1.2
+    - 1.1.3
+    - 1.1.4
+    - 1.1.5
+    - 1.1.6
+    - 1.1.7
+    - 1.1.8
+    - 1.2.0-exp.1
+    - 1.2.0-exp.2
+    - 1.2.0-exp.3
+    - 1.2.0-exp.4
+    - 1.2.0-pre.1
+    - 1.2.0
+    recommended: 1.1.8
+    deprecated: []
+  dependencies:
+  - name: com.unity.transport
+    version: 2.5.0
+  - name: com.unity.collections
+    version: 2.2.1
+  - name: com.unity.services.qos
+    version: 1.3.0
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.services.wire
+    version: 1.4.0
+  - name: com.unity.services.deployment
+    version: 1.6.2
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.services.authentication
+    version: 3.5.1
+  resolvedDependencies:
+  - name: com.unity.transport
+    version: 2.6.0
+  - name: com.unity.burst
+    version: 1.8.25
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.test-framework
+    version: 1.6.0
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.2.0
+  - name: com.unity.services.qos
+    version: 1.3.0
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.services.authentication
+    version: 3.5.1
+  - name: com.unity.ugui
+    version: 2.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.services.wire
+    version: 1.4.0
+  - name: com.unity.services.deployment
+    version: 1.6.2
+  - name: com.unity.services.deployment.api
+    version: 1.1.2
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638961575818830000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.services.multiplayer@1.2/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
+    revision: 4a676718705e038adfdd2289e7e1d6449f390cba
+    path: 
+  unityLifecycle:
+    version: 1.1.0
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Added\n- Custom inspector for `.gsh` files.\n\n###
+    Changed\n- Removed error logging for unknown Lobby patch paths over Wire to support
+    future Distributed Authority state updates.\n\n### Fixed\n- Fixed assets being
+    loaded despite being of the incorrect type.\n- Fixed stale data used when deploying
+    `.gsh` files via the deployment window.\n- Resolved an issue where the `Task`
+    would resolve before the `NetworkManager` was fully connected and synchronized
+    when using Netcode for GameObjects.\n- Resolved an issue where the `Task` would
+    resolve before the `NetworkManager` had finished shutting down when using Netcode
+    for GameObjects.\n- Resolved an issue where some settings on the `NetworkManager`
+    would stay changed after leaving a Distributed Authority session.\n- Fixed an
+    issue where joining clients to a relay hosted game (either with Relay or Distributed
+    Authority) would no be able to connect because the relay protocol is invalid
+    for their platform. The RelayProtocol from the `_session_network` property is
+    now ignored by joining and reconnecting players. Players will always use the
+    `RelayProtocol.Default` value instead.","gameService":{}}'
+  assetStore:
+    productId: 
+  fingerprint: b65d52ffeb93ecdbb7ceb77a882f0f68d31836da
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.1.0
+    minimumUnityVersion: 2022.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.services.vivox@16.7.0
+  testable: 0
+  isDirectDependency: 1
+  version: 16.7.0
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.services.vivox@563fb2c43dc5
+  assetPath: Packages/com.unity.services.vivox
+  name: com.unity.services.vivox
+  displayName: Vivox
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: Unity's voice and text chat service for multiplayer communication
+    offers voice chat and direct message text service with a managed hosted solution.
+    Plug into your game and configure your project settings to add communications
+    to your project immediately. Connect an unlimited number of users in 2D and 3D
+    channels. Monitor concurrency on your dashboard. Add a custom UI to allow players
+    to control voice volume, mute, and add audio effects to voice channels and manage
+    them. Place users in team chat and allow them to participate in multiple channels.
+  errors: []
+  versions:
+    all:
+    - 15.1.150000-pre.6
+    - 15.1.150002-pre.1
+    - 15.1.150002-pre.2
+    - 15.1.160000-pre.1
+    - 15.1.170000-pre.1
+    - 15.1.180000-pre.1
+    - 15.1.180001-pre.1
+    - 15.1.180001-pre.2
+    - 15.1.180001-pre.3
+    - 15.1.180001-pre.4
+    - 15.1.180001-pre.5
+    - 15.1.190000-pre.1
+    - 15.1.190200-pre.1
+    - 15.1.190200-pre.2
+    - 15.1.190400-pre.1
+    - 15.1.200000-pre.1
+    - 15.1.210000-pre.1
+    - 15.1.210100-pre.1
+    - 15.1.230000-pre.1
+    - 15.1.230100-pre.1
+    - 15.1.240000-pre.1
+    - 15.1.250000-pre.1
+    - 15.1.260000-pre.1
+    - 16.0.0-pre.1
+    - 16.0.1
+    - 16.2.0
+    - 16.3.0
+    - 16.4.0
+    - 16.5.0
+    - 16.5.2
+    - 16.5.3
+    - 16.5.4
+    - 16.6.0
+    - 16.6.2
+    - 16.7.0
+    compatible:
+    - 16.7.0
+    recommended: 16.7.0
+    deprecated:
+    - 15.1.150000-pre.6
+    - 15.1.150002-pre.1
+    - 15.1.150002-pre.2
+    - 15.1.160000-pre.1
+    - 15.1.170000-pre.1
+    - 15.1.180000-pre.1
+    - 15.1.180001-pre.1
+    - 15.1.180001-pre.2
+    - 15.1.180001-pre.3
+    - 15.1.180001-pre.4
+    - 15.1.180001-pre.5
+    - 15.1.190000-pre.1
+    - 15.1.190200-pre.1
+    - 15.1.190200-pre.2
+    - 15.1.190400-pre.1
+    - 15.1.200000-pre.1
+  dependencies:
+  - name: com.unity.modules.audio
+    version: 1.0.0
+  - name: com.unity.services.core
+    version: 1.14.0
+  - name: com.unity.settings-manager
+    version: 1.0.3
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.0.2
+  resolvedDependencies:
+  - name: com.unity.modules.audio
+    version: 1.0.0
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.settings-manager
+    version: 2.1.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638926247563490000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.services.vivox@16.7/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/vivox-unity-sdk.git
+    revision: 68433ba647568d436e3c4cd89a1ee193dd8a71e2
+    path: 
+  unityLifecycle:
+    version: 16.7.0
+    nextVersion: 
+    recommendedVersion: 16.7.0
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Fixed\n- Fixed memory leak caused by unbound event
+    handlers preventing `VivoxParticipant` objects from being cleaned up when the
+    local user left channels with remaining participants.\n\n### Added\n- `VivoxMessage.Metadata`
+    property for accessing channel or directed message metadata.\n- `MessageOptions.Metadata`
+    property for attaching metadata to outgoing messages.\n- Added automatic SDK
+    initialization and user sign-in when SDK actions are attempted without prior
+    setup.\n- Added support for multiple concurrent Vivox SDK instances via `IUnityServices.GetVivoxService()`.\n\n###
+    Removed\n- Removed Mint service integration and deprecated related public APIs.\n\n###
+    Changed\n- Updated minimum supported Editor version to 2021.3.\n- Updated Services
+    Core SDK dependency version.","gameService":{"groupName":"Multiplayer","groupIndex":2,"configurePath":"Project/Services/Vivox","genericDashboardUrl":"https://dashboard.unity3d.com/vivox","projectDashboardUrl":"https://dashboard.unity3d.com/organizations/{0}/projects/{1}/vivox/credentials","projectDashboardUrlType":"OrganizationKeyAndProjectGuid"}}'
+  assetStore:
+    productId: 
+  fingerprint: 563fb2c43dc5ef3aba89b7f55c945a06a2c1ba10
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 16.7.0
+    minimumUnityVersion: 2021.3.0a1
   compliance:
     status: 0
     violation:
@@ -4331,6 +5400,1212 @@ m_ResolvedPackages:
       scopePatternExpression: 
       message: 
       readMoreLink: 
+- packageId: com.unity.settings-manager@2.1.0
+  testable: 0
+  isDirectDependency: 0
+  version: 2.1.0
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.settings-manager@41738c275190
+  assetPath: Packages/com.unity.settings-manager
+  name: com.unity.settings-manager
+  displayName: Settings Manager
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: A framework for making any serializable field a setting, complete
+    with a pre-built settings interface.
+  errors: []
+  versions:
+    all:
+    - 0.1.0-preview.4
+    - 0.1.0-preview.8
+    - 1.0.0
+    - 1.0.1
+    - 1.0.2
+    - 1.0.3
+    - 2.0.0
+    - 2.0.1
+    - 2.1.0
+    - 2.1.1
+    compatible:
+    - 2.1.0
+    - 2.1.1
+    recommended: 2.1.1
+    deprecated: []
+  dependencies: []
+  resolvedDependencies: []
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638792046006940000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.settings-manager@2.1/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.com/Unity-Technologies/com.unity.settings-manager.git
+    revision: 6eb5ed85eaf3276cc09f0cc4fc3311c72f0fc196
+    path: 
+  unityLifecycle:
+    version: 2.1.0
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Changes\n\n- Enable Auto Reference on main assembly.\n\n###
+    Bug Fixes\n\n- [case: PBLD-56] Added tooltip to \"Options\" gear icon to specify
+    that context menu items are relevant only to the selected category."}'
+  assetStore:
+    productId: 
+  fingerprint: 41738c27519039c335849eb78949382f4d7a3544
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 2.1.0
+    minimumUnityVersion: 2022.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.nuget.newtonsoft-json@3.2.1
+  testable: 0
+  isDirectDependency: 0
+  version: 3.2.1
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.nuget.newtonsoft-json@74deb55db2a0
+  assetPath: Packages/com.unity.nuget.newtonsoft-json
+  name: com.unity.nuget.newtonsoft-json
+  displayName: Newtonsoft Json
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: library
+  description: 'Newtonsoft Json for use in Unity projects and Unity packages. Currently
+    synced to version 13.0.2.
+
+
+    This package is used for advanced json serialization
+    and deserialization. Most Unity users will be better suited using the existing
+    json tools built into Unity.
+
+    To avoid assembly clashes, please use this
+    package if you intend to use Newtonsoft Json.'
+  errors: []
+  versions:
+    all:
+    - 1.0.0-preview.2
+    - 1.0.0-preview.3
+    - 1.0.0-preview.4
+    - 1.0.1-preview.1
+    - 1.1.2
+    - 2.0.0-preview
+    - 2.0.0-preview.1
+    - 2.0.0-preview.2
+    - 2.0.0
+    - 2.0.1-preview.1
+    - 2.0.2
+    - 3.0.1
+    - 3.0.2
+    - 3.1.0
+    - 3.2.0
+    - 3.2.1
+    - 3.2.2
+    compatible:
+    - 3.2.1
+    - 3.2.2
+    recommended: 3.2.2
+    deprecated: []
+  dependencies: []
+  resolvedDependencies: []
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638186318800000000
+  documentationUrl: 
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.newtonsoft-json.git
+    revision: d8e49aef8979bef617144382052ec2f479645eaf
+    path: 
+  unityLifecycle:
+    version: 3.2.1
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"* Fixed Newtonsoft DLL when compiling with netstandard
+    2.0."}'
+  assetStore:
+    productId: 
+  fingerprint: 74deb55db2a0c29ddfda576608bcb86abbd13ee6
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 3.2.1
+    minimumUnityVersion: 2018.4.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.transport@2.6.0
+  testable: 0
+  isDirectDependency: 0
+  version: 2.6.0
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.transport@6e74a0e6481d
+  assetPath: Packages/com.unity.transport
+  name: com.unity.transport
+  displayName: Unity Transport
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: Unity network transport layer - the low-level interface for connecting
+    and sending data through a network
+  errors: []
+  versions:
+    all:
+    - 0.2.0-preview.4
+    - 0.2.1-preview.1
+    - 0.2.2-preview.2
+    - 0.2.3-preview.0
+    - 0.2.4-preview.0
+    - 0.3.0-preview.6
+    - 0.3.1-preview.4
+    - 0.4.0-preview.3
+    - 0.4.1-preview.1
+    - 0.5.0-preview.5
+    - 0.6.0-preview.7
+    - 0.8.0-preview.8
+    - 1.0.0-pre.2
+    - 1.0.0-pre.3
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.0.0-pre.7
+    - 1.0.0-pre.8
+    - 1.0.0-pre.9
+    - 1.0.0-pre.10
+    - 1.0.0-pre.12
+    - 1.0.0-pre.13
+    - 1.0.0-pre.14
+    - 1.0.0-pre.15
+    - 1.0.0-pre.16
+    - 1.0.0
+    - 1.1.0
+    - 1.2.0
+    - 1.3.0
+    - 1.3.1
+    - 1.3.2
+    - 1.3.3
+    - 1.3.4
+    - 1.4.0
+    - 1.4.1
+    - 1.5.0
+    - 2.0.0-exp.6
+    - 2.0.0-exp.7
+    - 2.0.0-exp.8
+    - 2.0.0-pre.2
+    - 2.0.0-pre.3
+    - 2.0.0-pre.5
+    - 2.0.0-pre.6
+    - 2.0.0-pre.7
+    - 2.0.0-pre.8
+    - 2.0.1
+    - 2.0.2
+    - 2.1.0
+    - 2.2.1
+    - 2.3.0
+    - 2.4.0
+    - 2.5.0
+    - 2.5.1
+    - 2.5.2
+    - 2.5.3
+    - 2.6.0
+    compatible:
+    - 2.6.0
+    recommended: 2.6.0
+    deprecated: []
+  dependencies:
+  - name: com.unity.burst
+    version: 1.8.24
+  - name: com.unity.collections
+    version: 2.2.1
+  - name: com.unity.mathematics
+    version: 1.3.2
+  resolvedDependencies:
+  - name: com.unity.burst
+    version: 1.8.25
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.test-framework
+    version: 1.6.0
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.2.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638943428172140000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.transport@2.6/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.transport.git
+    revision: 0c352da68b43c68c8c316e998b3d62220e1a83ed
+    path: 
+  unityLifecycle:
+    version: 2.6.0
+    nextVersion: 
+    recommendedVersion: 2.6.0
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### New Features\n* It is now possible to increase
+    the reliable pipeline window size past 64. The maximum is technically 2040 but
+    it is *strongly* recommended to stick to 256 or below. The [documentation](../manual/pipelines-usage.html#the-reliable-pipeline-stage)
+    has more details on this change.\n* Added a new `NetworkDriver.GetMaxSupportedPayloadSize`
+    method that can be used to find out what the maximum payload size is on a given
+    connection/pipeline. It''s equivalent to fetching the `Capacity` property of
+    the `DataStreamWriter` returned by `BeginSend` on the same connection and pipeline,
+    but does not require acquiring a packet buffer like `BeginSend` does.\n\n###
+    Changes\n* Integration with the logging package (`com.unity.logging`) has been
+    removed. Logs are now only written to the default `Debug.Log` mechanism. This
+    should have no impact even to most users of the logging package, since its default
+    configuration forwards `Debug.Log` logs to the default logger.\n* When using
+    the reliable pipeline stage, the configured window size will now always be internally
+    rounded up to the next multiple of 8 (if not already one). This change should
+    be completely transparent to everyone, as the only impact is slightly improved
+    bandwidth if using an atypical window size.\n* `NetworkDriver.GetMaxSupportedMessageSize`
+    can now return different negative values to represent different errors. All values
+    map to the `Error.StatusCode` enum.\n* Updated the Burst package dependency to
+    version 1.8.24.\n* Updated the Mathematics package dependency to version 1.3.2.\n\n###
+    Fixes\n* Fixed an issue where the DF (don''t fragment) bit would be set even
+    when MTU discovery was disabled, which could cause problems in environments where
+    the MTU is more limited (like with some VPN providers).\n* Prevented an extraneous
+    error from being logged when a send would fail within a pipeline (which already
+    logs an error).\n* Fixed a bug where `NetworkDriver.CheckHostnameLookupStatus`
+    would throw an exception when checking the status of connections that either
+    did not use hostname lookup at all, or for which the hostname lookup had already
+    finished in a previous driver update.\n* Prevented an error from being shown
+    on Windows when a UDP socket bound to an IPv4 address received IPv6 packets (or
+    vice-versa). Such packets were always discarded anyway, but now they won''t generate
+    errors at least.\n* Fixed a bug in `NetworkDriver.MaxHeaderSize` where it would
+    return a size one byte larger than the actual maximum header size.\n* Fixed an
+    issue where TLS alert messages would lead to a decryption failure, leading to
+    an error being logged even in normal disconnection scenarios.\n* `NetworkDriver.Bound`
+    and `NetworkDriver.Listening` will now return false if accessed on a disposed
+    driver, instead of throwing a `NullReferenceException` (or causing an application
+    segfault if safety checks are disabled)."}'
+  assetStore:
+    productId: 
+  fingerprint: 6e74a0e6481d0f4d298b271a4172b7d880d164e1
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 2.6.0
+    minimumUnityVersion: 2022.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.collections@2.5.7
+  testable: 0
+  isDirectDependency: 0
+  version: 2.5.7
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.collections@d49facba0036
+  assetPath: Packages/com.unity.collections
+  name: com.unity.collections
+  displayName: Collections
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: A C# collections library providing data structures that can be used
+    in jobs, and optimized by Burst compiler.
+  errors: []
+  versions:
+    all:
+    - 0.0.9-preview.1
+    - 0.0.9-preview.2
+    - 0.0.9-preview.3
+    - 0.0.9-preview.4
+    - 0.0.9-preview.5
+    - 0.0.9-preview.6
+    - 0.0.9-preview.7
+    - 0.0.9-preview.8
+    - 0.0.9-preview.9
+    - 0.0.9-preview.10
+    - 0.0.9-preview.11
+    - 0.0.9-preview.12
+    - 0.0.9-preview.13
+    - 0.0.9-preview.14
+    - 0.0.9-preview.15
+    - 0.0.9-preview.16
+    - 0.0.9-preview.17
+    - 0.0.9-preview.18
+    - 0.0.9-preview.19
+    - 0.0.9-preview.20
+    - 0.1.0-preview
+    - 0.1.1-preview
+    - 0.2.0-preview.13
+    - 0.3.0-preview.0
+    - 0.4.0-preview.6
+    - 0.5.0-preview.9
+    - 0.5.1-preview.11
+    - 0.5.2-preview.8
+    - 0.6.0-preview.9
+    - 0.7.0-preview.2
+    - 0.7.1-preview.3
+    - 0.8.0-preview.5
+    - 0.9.0-preview.5
+    - 0.9.0-preview.6
+    - 0.11.0-preview.17
+    - 0.12.0-preview.13
+    - 0.14.0-preview.16
+    - 0.15.0-preview.21
+    - 0.17.0-preview.18
+    - 1.0.0-pre.3
+    - 1.0.0-pre.5
+    - 1.0.0-pre.6
+    - 1.1.0
+    - 1.2.3-pre.1
+    - 1.2.3
+    - 1.2.4
+    - 1.3.1
+    - 1.4.0
+    - 1.5.1
+    - 1.5.2
+    - 2.1.0-exp.4
+    - 2.1.0-pre.2
+    - 2.1.0-pre.6
+    - 2.1.0-pre.11
+    - 2.1.0-pre.18
+    - 2.1.1
+    - 2.1.4
+    - 2.2.0
+    - 2.2.1
+    - 2.3.0-exp.1
+    - 2.3.0-pre.3
+    - 2.4.0-exp.2
+    - 2.4.0-pre.2
+    - 2.4.0-pre.5
+    - 2.4.0
+    - 2.4.1
+    - 2.4.2
+    - 2.4.3
+    - 2.5.0-exp.1
+    - 2.5.0-pre.2
+    - 2.5.1
+    - 2.5.2
+    - 2.5.3
+    - 2.5.7
+    - 2.6.0-exp.2
+    - 2.6.0-pre.3
+    - 2.6.0-pre.4
+    - 2.6.2
+    - 2.6.3
+    compatible:
+    - 2.5.7
+    - 2.6.0-exp.2
+    - 2.6.0-pre.3
+    - 2.6.0-pre.4
+    - 2.6.2
+    - 2.6.3
+    recommended: 2.5.7
+    deprecated: []
+  dependencies:
+  - name: com.unity.burst
+    version: 1.8.19
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.test-framework
+    version: 1.4.6
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.0.3
+  resolvedDependencies:
+  - name: com.unity.burst
+    version: 1.8.25
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.test-framework
+    version: 1.6.0
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.2.0
+  keywords:
+  - dots
+  - collections
+  - unity
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638803020568560000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.collections@2.5/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/dots.git
+    revision: 2520fc806449bf4c278c9031eb21f0a6aeccda46
+    path: 
+  unityLifecycle:
+    version: 2.5.7
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Changed\n\n* Updated the `com.unity.entities` dependency
+    to version `1.3.14`\n* Updated the `com.unity.burst` dependency to version `1.8.19`\n*
+    Updated the `com.unity.nuget.mono-cecil` dependency to version `1.11.5`\n* Updated
+    the `com.unity.test-framework dependency` to version `1.4.6`\n* The minimum supported
+    editor version is now 2022.3.20f1\n\n### Fixed\n\n* UnsafeQueue memory leak due
+    to OnDomainUnload callback being discarded by Burst."}'
+  assetStore:
+    productId: 
+  fingerprint: d49facba0036aa0e1508296262f9d93b44d1ab3b
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 2.5.7
+    minimumUnityVersion: 2022.3.20f1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.services.qos@1.3.0
+  testable: 0
+  isDirectDependency: 0
+  version: 1.3.0
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.services.qos@f4a3648d24d3
+  assetPath: Packages/com.unity.services.qos
+  name: com.unity.services.qos
+  displayName: QoS
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: assets
+  description: Provides connectivity Quality of Service (QoS) measurements from Unity
+    game clients to different Unity game services running in various geographic regions.
+  errors: []
+  versions:
+    all:
+    - 1.0.0
+    - 1.0.1
+    - 1.0.2
+    - 1.1.0
+    - 1.2.0
+    - 1.2.1
+    - 1.3.0
+    - 1.3.2
+    - 1.4.1
+    compatible:
+    - 1.3.0
+    - 1.3.2
+    - 1.4.1
+    recommended: 1.3.2
+    deprecated: []
+  dependencies:
+  - name: com.unity.collections
+    version: 1.2.4
+  - name: com.unity.services.core
+    version: 1.12.4
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.0.2
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.services.authentication
+    version: 2.0.0
+  resolvedDependencies:
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.burst
+    version: 1.8.25
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.test-framework
+    version: 1.6.0
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.2.0
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.services.authentication
+    version: 3.5.1
+  - name: com.unity.ugui
+    version: 2.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638465522380000000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.services.qos@1.3/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
+    revision: c95a6f4077dc0f3c3083e32645ecbb0a92e7a135
+    path: 
+  unityLifecycle:
+    version: 1.3.0
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Changed\n- Added GetAllServersAsync.\n- Added GetQosResultsAsync.\n-
+    Register service to service registry\n- Updated unity core to 1.12.4"}'
+  assetStore:
+    productId: 
+  fingerprint: f4a3648d24d3f9ad047b1fae557532df86bb9d11
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.3.0
+    minimumUnityVersion: 2020.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.services.core@1.15.1
+  testable: 0
+  isDirectDependency: 0
+  version: 1.15.1
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.services.core@874e9d230d57
+  assetPath: Packages/com.unity.services.core
+  name: com.unity.services.core
+  displayName: Services Core
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: 'This package defines common components used by multiple Game Service
+    packages.
+
+    These are standardized and aim to unify the overall experience
+    of working with Game Services SDK.'
+  errors: []
+  versions:
+    all:
+    - 1.0.1
+    - 1.1.0-pre.7
+    - 1.1.0-pre.8
+    - 1.1.0-pre.9
+    - 1.1.0-pre.10
+    - 1.1.0-pre.11
+    - 1.1.0-pre.41
+    - 1.1.0-pre.69
+    - 1.2.0
+    - 1.3.1
+    - 1.3.2
+    - 1.4.0
+    - 1.4.1
+    - 1.4.2
+    - 1.4.3
+    - 1.5.2
+    - 1.6.0
+    - 1.7.0
+    - 1.7.1
+    - 1.8.1
+    - 1.8.2
+    - 1.9.0
+    - 1.10.1
+    - 1.11.0
+    - 1.12.0
+    - 1.12.1
+    - 1.12.2
+    - 1.12.4
+    - 1.12.5
+    - 1.13.0
+    - 1.14.0
+    - 1.15.1
+    - 1.15.2
+    compatible:
+    - 1.14.0
+    - 1.15.1
+    - 1.15.2
+    recommended: 1.15.2
+    deprecated: []
+  dependencies:
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638878409138160000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.services.core@1.15/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
+    revision: 09780e68ffae81ddcda923c77243b12f7814cf13
+    path: 
+  unityLifecycle:
+    version: 1.14.0
+    nextVersion: 
+    recommendedVersion: 1.15.1
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Added\n\n- Adding editor log when setting a custom
+    environment during services initialization.\n- Changing environment label in
+    environment settings.\n- Adding Unity Services Status Viewer accessible through
+    the `Services` > `Status` menu item."}'
+  assetStore:
+    productId: 
+  fingerprint: 874e9d230d570aadc14c743a9bbdbbfdd89037d3
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.14.0
+    minimumUnityVersion: 2021.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.services.wire@1.4.0
+  testable: 0
+  isDirectDependency: 0
+  version: 1.4.0
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.services.wire@2d36cce58c62
+  assetPath: Packages/com.unity.services.wire
+  name: com.unity.services.wire
+  displayName: Wire
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: Wire provides notifications in real-time for Unity Gaming Services
+    subscribing to a particular service and listening for messages from that subscription
+    through a websocket connection.
+  errors: []
+  versions:
+    all:
+    - 1.0.0-preview.20
+    - 1.0.0
+    - 1.1.0
+    - 1.1.1
+    - 1.1.4
+    - 1.1.5
+    - 1.1.6
+    - 1.1.8
+    - 1.2.0
+    - 1.2.2
+    - 1.2.3
+    - 1.2.5
+    - 1.2.6
+    - 1.2.7
+    - 1.2.8
+    - 1.3.0
+    - 1.4.0
+    - 1.4.1
+    compatible:
+    - 1.4.0
+    - 1.4.1
+    recommended: 1.4.1
+    deprecated: []
+  dependencies:
+  - name: com.unity.services.core
+    version: 1.12.5
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.services.authentication
+    version: 2.7.4
+  resolvedDependencies:
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.services.authentication
+    version: 3.5.1
+  - name: com.unity.ugui
+    version: 2.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638852460331360000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.services.wire@1.4/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
+    revision: b52cf66f16e79e8d96634389f2334b342668df40
+    path: 
+  unityLifecycle:
+    version: 1.4.0
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Fixed\n\n- Fixed WebSocketInvalidStateException
+    raised when disconnecting, closing an already opened socket\n- Fixed Wire occasionally
+    using attempting to parse addresses as IPV6 on latfomrsm that do not support
+    IPV6\n- Fixed error getting thrown when application returns from sleep due to
+    unhandled server ping request. (Not applicable to WebGL.)"}'
+  assetStore:
+    productId: 
+  fingerprint: 2d36cce58c62ac886c8bb03e9e262a35dcdc4752
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.4.0
+    minimumUnityVersion: 2021.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.services.deployment@1.6.2
+  testable: 0
+  isDirectDependency: 0
+  version: 1.6.2
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.services.deployment@3b0f19f59670
+  assetPath: Packages/com.unity.services.deployment
+  name: com.unity.services.deployment
+  displayName: Deployment
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: "The Deployment package allows for a cohesive interface for the deployment
+    of assets and configurations for UGS services.\n\nIt is not used on its own as
+    UGS services will integrate with it.\nIt provides the base tooling, such as the
+    Deployment Window, so that UGS services have shared functionality surrounding
+    the deployment of the service's configuration files.\nCurrently supports:\n-
+    Cloud Code\n- Economy\n- Leaderboards\n- Multiplayer Services\n\t- Server Hosting\n\t-
+    Matchmaker\n- Services tooling\n\t- Game Overrides\n\t- Access Control\n- Remote
+    Config"
+  errors: []
+  versions:
+    all:
+    - 1.0.0-pre.4
+    - 1.0.0-pre.5
+    - 1.0.0-pre.7
+    - 1.0.0
+    - 1.0.1
+    - 1.1.0
+    - 1.2.0
+    - 1.2.1
+    - 1.3.0
+    - 1.4.0
+    - 1.4.1
+    - 1.5.0
+    - 1.6.2
+    compatible:
+    - 1.4.1
+    - 1.5.0
+    - 1.6.2
+    recommended: 1.6.2
+    deprecated: []
+  dependencies:
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.services.deployment.api
+    version: 1.1.2
+  resolvedDependencies:
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  - name: com.unity.services.deployment.api
+    version: 1.1.2
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638936279029550000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.services.deployment@1.6/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
+    revision: 429db3a0d04c165a1d7e4bb35acf979e3ddf7467
+    path: 
+  unityLifecycle:
+    version: 1.4.1
+    nextVersion: 
+    recommendedVersion: 1.6.2
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Fixed\n- Fixed assets being loaded despite being
+    of the incorrect type","gameService":{"groupId":"devops"}}'
+  assetStore:
+    productId: 
+  fingerprint: 3b0f19f59670cca60eef09acaa44345d7f7208e0
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.4.1
+    minimumUnityVersion: 2021.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.services.authentication@3.5.1
+  testable: 0
+  isDirectDependency: 0
+  version: 3.5.1
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.services.authentication@c43f6f840fa0
+  assetPath: Packages/com.unity.services.authentication
+  name: com.unity.services.authentication
+  displayName: Authentication
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: 'Client SDK offering player identity management for Unity Gaming Services.
+
+
+    Identity
+    providers can be configured from the editor or the Unity Dashboard.
+
+
+    Player
+    management is available in the Unity Dashboard.'
+  errors: []
+  versions:
+    all:
+    - 1.0.0-pre.4
+    - 1.0.0-pre.6
+    - 1.0.0-pre.37
+    - 2.0.0
+    - 2.1.1
+    - 2.2.0
+    - 2.3.1
+    - 2.4.0
+    - 2.5.0-pre.3
+    - 2.5.0
+    - 2.6.1
+    - 2.7.1
+    - 2.7.2
+    - 2.7.4
+    - 3.0.0
+    - 3.1.0
+    - 3.2.0
+    - 3.3.0
+    - 3.3.1
+    - 3.3.3
+    - 3.4.0
+    - 3.4.1
+    - 3.5.1
+    - 3.5.2
+    compatible:
+    - 3.4.1
+    - 3.5.1
+    - 3.5.2
+    recommended: 3.5.2
+    deprecated: []
+  dependencies:
+  - name: com.unity.ugui
+    version: 1.0.0
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.ugui
+    version: 2.0.0
+  - name: com.unity.modules.ui
+    version: 1.0.0
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.services.core
+    version: 1.15.1
+  - name: com.unity.modules.androidjni
+    version: 1.0.0
+  - name: com.unity.nuget.newtonsoft-json
+    version: 3.2.1
+  - name: com.unity.modules.unitywebrequest
+    version: 1.0.0
+  keywords: []
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638878409148140000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.services.authentication@3.5/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
+    revision: 09780e68ffae81ddcda923c77243b12f7814cf13
+    path: 
+  unityLifecycle:
+    version: 3.4.1
+    nextVersion: 
+    recommendedVersion: 3.5.1
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 1
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"### Added\n- Added event `IAuthenticationService.PlayerInfoChanged`
+    for when the instance of `PlayerInfo` is set.\n- Added event `PlayerInfo.Changed`
+    for when the values within `PlayerInfo` are updated.\n- Added event `IAuthenticationService.PlayerNameChanged`
+    for when the player name changes.\n- Added event `IAuthenticationService.PlayerIdChanged`
+    for when the player id changes.\n- Added more details to server exception messages.","gameService":{"configurePath":"Project/Services/Authentication","genericDashboardUrl":"https://cloud.unity3d.com/player-authentication","projectDashboardUrl":"https://cloud.unity3d.com/organizations/{0}/projects/{1}/player-authentication/about","projectDashboardUrlType":"OrganizationKeyAndProjectGuid"}}'
+  assetStore:
+    productId: 
+  fingerprint: c43f6f840fa0990220e6d07c33724cef4df901a4
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 3.4.1
+    minimumUnityVersion: 2021.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
 - packageId: com.unity.render-pipelines.core@17.2.0
   testable: 0
   isDirectDependency: 0
@@ -4681,55 +6956,50 @@ m_ResolvedPackages:
       scopePatternExpression: 
       message: 
       readMoreLink: 
-- packageId: com.unity.searcher@4.9.3
+- packageId: com.unity.nuget.mono-cecil@1.11.5
   testable: 0
   isDirectDependency: 0
-  version: 4.9.3
+  version: 1.11.5
   source: 1
-  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.searcher@1e17ce91558d
-  assetPath: Packages/com.unity.searcher
-  name: com.unity.searcher
-  displayName: Searcher
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.nuget.mono-cecil@d78732e851eb
+  assetPath: Packages/com.unity.nuget.mono-cecil
+  name: com.unity.nuget.mono-cecil
+  displayName: Mono Cecil
   author:
     name: 
     email: 
     url: 
   category: 
   type: 
-  description: General search window for use in the Editor. First target use is for
-    GraphView node search.
+  description: 'The mono cecil library from https://www.nuget.org/packages/Mono.Cecil/
+
+
+    This
+    package is intended for internal Unity use only. Most Unity users will be better
+    suited using the existing community tooling.
+
+    To avoid assembly clashes,
+    please use this package if you intend to use Mono.Cecil.'
   errors: []
   versions:
     all:
-    - 4.0.0-preview
-    - 4.0.0
-    - 4.0.7-preview
-    - 4.0.7
-    - 4.0.8-preview
-    - 4.0.9
-    - 4.1.0-preview
-    - 4.1.0
-    - 4.2.0
-    - 4.3.0
-    - 4.3.1
-    - 4.3.2
-    - 4.6.0-preview
-    - 4.7.0-preview
-    - 4.9.1
-    - 4.9.2
-    - 4.9.3
-    - 4.9.4
+    - 0.1.6-preview.2
+    - 1.0.0-preview.1
+    - 1.10.0-preview.1
+    - 1.10.1-preview.1
+    - 1.10.1
+    - 1.10.2
+    - 1.11.4
+    - 1.11.5
+    - 1.11.6
     compatible:
-    - 4.9.2
-    - 4.9.3
-    - 4.9.4
-    recommended: 4.9.4
+    - 1.11.5
+    - 1.11.6
+    recommended: 1.11.6
     deprecated: []
   dependencies: []
   resolvedDependencies: []
-  keywords:
-  - search
-  - searcher
+  keywords: []
   registry:
     id: main
     name: 
@@ -4745,16 +7015,16 @@ m_ResolvedPackages:
   entitlements:
     licensingModel: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 638731478077990000
-  documentationUrl: https://docs.unity3d.com/Packages/com.unity.searcher@4.9/manual/index.html
+  datePublishedTicks: 638729992509040000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.nuget.mono-cecil@1.11/manual/index.html
   hasRepository: 1
   repository:
     type: git
-    url: https://github.cds.internal.unity3d.com/unity/com.unity.searcher.git
-    revision: 6fad693b6604ae7175b59ebb4990d9a0b6c1d012
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.mono-cecil.git
+    revision: ab40507b5d82f57a4f34b6d0eacca1d6b170341d
     path: 
   unityLifecycle:
-    version: 4.9.2
+    version: 1.11.5
     nextVersion: 
     recommendedVersion: 
     isDeprecated: 0
@@ -4765,15 +7035,16 @@ m_ResolvedPackages:
   git:
     hash: 
     revision: 
-  upmReserved: '{"changelog":"- Fixed a bug where spaces are removed when highlighted.\n-
-    Changed VisualSplitter to twoPaneSplitView and updated indentation"}'
+  upmReserved: '{"changelog":"* This is a verified release of the com.unity.nuget.mono-cecil
+    with embedded dlls of mono-cecil\n* Updated Cecil to 0.11.5 with a grafted patch
+    from this bug fix PR (https://github.com/jbevain/cecil/pull/914)"}'
   assetStore:
     productId: 
-  fingerprint: 1e17ce91558d1d9127554adc03d275f39a7466a2
+  fingerprint: d78732e851eb42273c8e4d97993d3a94b207e570
   editorCompatibility:
     compatibilityLevel: 0
-    minimumPackageVersion: 4.9.2
-    minimumUnityVersion: 2019.1.0a1
+    minimumPackageVersion: 1.11.5
+    minimumUnityVersion: 2019.4.0a1
   compliance:
     status: 0
     violation:
@@ -5115,146 +7386,44 @@ m_ResolvedPackages:
       scopePatternExpression: 
       message: 
       readMoreLink: 
-- packageId: com.unity.collections@2.5.7
+- packageId: com.unity.profiling.core@1.0.2
   testable: 0
   isDirectDependency: 0
-  version: 2.5.7
+  version: 1.0.2
   source: 1
-  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.collections@d49facba0036
-  assetPath: Packages/com.unity.collections
-  name: com.unity.collections
-  displayName: Collections
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.profiling.core@aac7b93912bc
+  assetPath: Packages/com.unity.profiling.core
+  name: com.unity.profiling.core
+  displayName: Unity Profiling Core API
   author:
     name: 
     email: 
     url: 
   category: 
-  type: 
-  description: A C# collections library providing data structures that can be used
-    in jobs, and optimized by Burst compiler.
+  type: asset
+  description: The Unity Profiling Core package provides an API for code instrumentation
+    markup, and for profiling statistic collection.
   errors: []
   versions:
     all:
-    - 0.0.9-preview.1
-    - 0.0.9-preview.2
-    - 0.0.9-preview.3
-    - 0.0.9-preview.4
-    - 0.0.9-preview.5
-    - 0.0.9-preview.6
-    - 0.0.9-preview.7
-    - 0.0.9-preview.8
-    - 0.0.9-preview.9
-    - 0.0.9-preview.10
-    - 0.0.9-preview.11
-    - 0.0.9-preview.12
-    - 0.0.9-preview.13
-    - 0.0.9-preview.14
-    - 0.0.9-preview.15
-    - 0.0.9-preview.16
-    - 0.0.9-preview.17
-    - 0.0.9-preview.18
-    - 0.0.9-preview.19
-    - 0.0.9-preview.20
-    - 0.1.0-preview
-    - 0.1.1-preview
-    - 0.2.0-preview.13
-    - 0.3.0-preview.0
-    - 0.4.0-preview.6
-    - 0.5.0-preview.9
-    - 0.5.1-preview.11
-    - 0.5.2-preview.8
-    - 0.6.0-preview.9
-    - 0.7.0-preview.2
-    - 0.7.1-preview.3
-    - 0.8.0-preview.5
-    - 0.9.0-preview.5
-    - 0.9.0-preview.6
-    - 0.11.0-preview.17
-    - 0.12.0-preview.13
-    - 0.14.0-preview.16
-    - 0.15.0-preview.21
-    - 0.17.0-preview.18
-    - 1.0.0-pre.3
-    - 1.0.0-pre.5
-    - 1.0.0-pre.6
-    - 1.1.0
-    - 1.2.3-pre.1
-    - 1.2.3
-    - 1.2.4
-    - 1.3.1
-    - 1.4.0
-    - 1.5.1
-    - 1.5.2
-    - 2.1.0-exp.4
-    - 2.1.0-pre.2
-    - 2.1.0-pre.6
-    - 2.1.0-pre.11
-    - 2.1.0-pre.18
-    - 2.1.1
-    - 2.1.4
-    - 2.2.0
-    - 2.2.1
-    - 2.3.0-exp.1
-    - 2.3.0-pre.3
-    - 2.4.0-exp.2
-    - 2.4.0-pre.2
-    - 2.4.0-pre.5
-    - 2.4.0
-    - 2.4.1
-    - 2.4.2
-    - 2.4.3
-    - 2.5.0-exp.1
-    - 2.5.0-pre.2
-    - 2.5.1
-    - 2.5.2
-    - 2.5.3
-    - 2.5.7
-    - 2.6.0-exp.2
-    - 2.6.0-pre.3
-    - 2.6.0-pre.4
-    - 2.6.2
-    - 2.6.3
+    - 0.1.0-preview.1
+    - 0.2.0-preview.1
+    - 0.2.1-preview.1
+    - 1.0.0-pre.1
+    - 1.0.0
+    - 1.0.2
+    - 1.0.3
     compatible:
-    - 2.5.7
-    - 2.6.0-exp.2
-    - 2.6.0-pre.3
-    - 2.6.0-pre.4
-    - 2.6.2
-    - 2.6.3
-    recommended: 2.5.7
+    - 1.0.2
+    - 1.0.3
+    recommended: 1.0.3
     deprecated: []
-  dependencies:
-  - name: com.unity.burst
-    version: 1.8.19
-  - name: com.unity.mathematics
-    version: 1.3.2
-  - name: com.unity.test-framework
-    version: 1.4.6
-  - name: com.unity.nuget.mono-cecil
-    version: 1.11.5
-  - name: com.unity.test-framework.performance
-    version: 3.0.3
-  resolvedDependencies:
-  - name: com.unity.burst
-    version: 1.8.25
-  - name: com.unity.mathematics
-    version: 1.3.2
-  - name: com.unity.modules.jsonserialize
-    version: 1.0.0
-  - name: com.unity.test-framework
-    version: 1.6.0
-  - name: com.unity.ext.nunit
-    version: 2.0.5
-  - name: com.unity.modules.imgui
-    version: 1.0.0
-  - name: com.unity.nuget.mono-cecil
-    version: 1.11.5
-  - name: com.unity.test-framework.performance
-    version: 3.2.0
+  dependencies: []
+  resolvedDependencies: []
   keywords:
-  - dots
-  - collections
-  - unity
+  - profiler
+  - profiling
+  - api
   registry:
     id: main
     name: 
@@ -5270,16 +7439,16 @@ m_ResolvedPackages:
   entitlements:
     licensingModel: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 638803020568560000
-  documentationUrl: https://docs.unity3d.com/Packages/com.unity.collections@2.5/manual/index.html
+  datePublishedTicks: 637828752310000000
+  documentationUrl: 
   hasRepository: 1
   repository:
     type: git
-    url: https://github.cds.internal.unity3d.com/unity/dots.git
-    revision: 2520fc806449bf4c278c9031eb21f0a6aeccda46
+    url: https://github.cds.internal.unity3d.com/unity/profiler.git
+    revision: 2189ba14439d76a4083f59fae87163b4bdfd49c2
     path: 
   unityLifecycle:
-    version: 2.5.7
+    version: 1.0.2
     nextVersion: 
     recommendedVersion: 
     isDeprecated: 0
@@ -5290,171 +7459,49 @@ m_ResolvedPackages:
   git:
     hash: 
     revision: 
-  upmReserved: '{"changelog":"### Changed\n\n* Updated the `com.unity.entities` dependency
-    to version `1.3.14`\n* Updated the `com.unity.burst` dependency to version `1.8.19`\n*
-    Updated the `com.unity.nuget.mono-cecil` dependency to version `1.11.5`\n* Updated
-    the `com.unity.test-framework dependency` to version `1.4.6`\n* The minimum supported
-    editor version is now 2022.3.20f1\n\n### Fixed\n\n* UnsafeQueue memory leak due
-    to OnDomainUnload callback being discarded by Burst."}'
-  assetStore:
-    productId: 
-  fingerprint: d49facba0036aa0e1508296262f9d93b44d1ab3b
-  editorCompatibility:
-    compatibilityLevel: 0
-    minimumPackageVersion: 2.5.7
-    minimumUnityVersion: 2022.3.20f1
-  compliance:
-    status: 0
-    violation:
-      scopePatternExpression: 
-      message: 
-      readMoreLink: 
-- packageId: com.unity.rendering.light-transport@1.0.1
-  testable: 0
-  isDirectDependency: 0
-  version: 1.0.1
-  source: 2
-  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.rendering.light-transport@2c9279f90d7c
-  assetPath: Packages/com.unity.rendering.light-transport
-  name: com.unity.rendering.light-transport
-  displayName: Unity Light Transport Library
-  author:
-    name: 
-    email: 
-    url: 
-  category: 
-  type: 
-  description: Unity Light Transport Library exposes reusable code for writing light
-    transport algorithms such as raytracing or pathtracing
-  errors: []
-  versions:
-    all:
-    - 1.0.1
-    compatible:
-    - 1.0.1
-    recommended: 1.0.1
-    deprecated: []
-  dependencies:
-  - name: com.unity.collections
-    version: 2.2.0
-  - name: com.unity.mathematics
-    version: 1.2.4
-  - name: com.unity.modules.terrain
-    version: 1.0.0
-  resolvedDependencies:
-  - name: com.unity.collections
-    version: 2.5.7
-  - name: com.unity.burst
-    version: 1.8.25
-  - name: com.unity.mathematics
-    version: 1.3.2
-  - name: com.unity.modules.jsonserialize
-    version: 1.0.0
-  - name: com.unity.test-framework
-    version: 1.6.0
-  - name: com.unity.ext.nunit
-    version: 2.0.5
-  - name: com.unity.modules.imgui
-    version: 1.0.0
-  - name: com.unity.nuget.mono-cecil
-    version: 1.11.5
-  - name: com.unity.test-framework.performance
-    version: 3.2.0
-  - name: com.unity.modules.terrain
-    version: 1.0.0
-  keywords:
-  - raytracing
-  - pathtracing
-  - monte-carlo
-  registry:
-    id: main
-    name: 
-    url: https://packages.unity.com
-    scopes: []
-    isDefault: 1
-    capabilities: 7
-    configSource: 0
-    compliance:
-      status: 0
-      violations: []
-  hideInEditor: 1
-  entitlements:
-    licensingModel: 0
-  isAssetStorePackage: 0
-  datePublishedTicks: 0
-  documentationUrl: 
-  hasRepository: 0
-  repository:
-    type: 
-    url: 
-    revision: 
-    path: 
-  unityLifecycle:
-    version: 1.0.1
-    nextVersion: 
-    recommendedVersion: 
-    isDeprecated: 0
-    deprecationMessage: 
-    isDiscoverable: 0
-  isDeprecated: 0
-  deprecationMessage: 
-  git:
-    hash: 
-    revision: 
   upmReserved: 
   assetStore:
     productId: 
-  fingerprint: 2c9279f90d7c8dfb6e76e3f90b6b3be1cafabfbc
+  fingerprint: aac7b93912bc5df5fe06b04ff1b758493cdc2346
   editorCompatibility:
     compatibilityLevel: 0
-    minimumPackageVersion: 1.0.1
-    minimumUnityVersion: 2023.3.0b1
+    minimumPackageVersion: 1.0.2
+    minimumUnityVersion: 2020.1.0a1
   compliance:
     status: 0
     violation:
       scopePatternExpression: 
       message: 
       readMoreLink: 
-- packageId: com.unity.nuget.mono-cecil@1.11.5
+- packageId: com.unity.services.deployment.api@1.1.2
   testable: 0
   isDirectDependency: 0
-  version: 1.11.5
+  version: 1.1.2
   source: 1
-  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.nuget.mono-cecil@d78732e851eb
-  assetPath: Packages/com.unity.nuget.mono-cecil
-  name: com.unity.nuget.mono-cecil
-  displayName: Mono Cecil
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.services.deployment.api@3c4a519a9319
+  assetPath: Packages/com.unity.services.deployment.api
+  name: com.unity.services.deployment.api
+  displayName: Deployment API
   author:
     name: 
     email: 
     url: 
   category: 
   type: 
-  description: 'The mono cecil library from https://www.nuget.org/packages/Mono.Cecil/
-
-
-    This
-    package is intended for internal Unity use only. Most Unity users will be better
-    suited using the existing community tooling.
-
-    To avoid assembly clashes,
-    please use this package if you intend to use Mono.Cecil.'
+  description: This package contains the API designed to allow for implementing Deployment
+    functionality.
   errors: []
   versions:
     all:
-    - 0.1.6-preview.2
-    - 1.0.0-preview.1
-    - 1.10.0-preview.1
-    - 1.10.1-preview.1
-    - 1.10.1
-    - 1.10.2
-    - 1.11.4
-    - 1.11.5
-    - 1.11.6
+    - 1.0.0-pre.3
+    - 1.0.0-pre.5
+    - 1.0.0
+    - 1.1.2
+    - 1.1.3
     compatible:
-    - 1.11.5
-    - 1.11.6
-    recommended: 1.11.6
+    - 1.1.2
+    - 1.1.3
+    recommended: 1.1.3
     deprecated: []
   dependencies: []
   resolvedDependencies: []
@@ -5474,18 +7521,18 @@ m_ResolvedPackages:
   entitlements:
     licensingModel: 1
   isAssetStorePackage: 0
-  datePublishedTicks: 638729992509040000
-  documentationUrl: https://docs.unity3d.com/Packages/com.unity.nuget.mono-cecil@1.11/manual/index.html
+  datePublishedTicks: 638652128849880000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.services.deployment.api@1.1/manual/index.html
   hasRepository: 1
   repository:
     type: git
-    url: https://github.cds.internal.unity3d.com/unity/com.unity.nuget.mono-cecil.git
-    revision: ab40507b5d82f57a4f34b6d0eacca1d6b170341d
+    url: https://github.cds.internal.unity3d.com/unity/operate-services-sdk.git
+    revision: ec472b6062ffe736672f0f296c68afa1f9fde23e
     path: 
   unityLifecycle:
-    version: 1.11.5
+    version: 1.1.2
     nextVersion: 
-    recommendedVersion: 
+    recommendedVersion: 1.1.2
     isDeprecated: 0
     deprecationMessage: 
     isDiscoverable: 0
@@ -5494,16 +7541,18 @@ m_ResolvedPackages:
   git:
     hash: 
     revision: 
-  upmReserved: '{"changelog":"* This is a verified release of the com.unity.nuget.mono-cecil
-    with embedded dlls of mono-cecil\n* Updated Cecil to 0.11.5 with a grafted patch
-    from this bug fix PR (https://github.com/jbevain/cecil/pull/914)"}'
+  upmReserved: '{"changelog":"### Added\n- Added a DeploymentWindow API allowing
+    easy interaction with the Deployment Window and its operations\n  - This API
+    is leveraged by new UIs in the supported packages\n\n### Fixed\n- `SetStatusSeverity`
+    was flipping message and detail. \n- Made main operations of Deployment Window
+    publicly available\n- Added auxiliary interfaces and classes for CLI interoperability"}'
   assetStore:
     productId: 
-  fingerprint: d78732e851eb42273c8e4d97993d3a94b207e570
+  fingerprint: 3c4a519a93193e78e83f6d2fb2dc3f92eb24be4e
   editorCompatibility:
     compatibilityLevel: 0
-    minimumPackageVersion: 1.11.5
-    minimumUnityVersion: 2019.4.0a1
+    minimumPackageVersion: 1.1.2
+    minimumUnityVersion: 2021.3.0a1
   compliance:
     status: 0
     violation:
@@ -5647,6 +7696,211 @@ m_ResolvedPackages:
     compatibilityLevel: 0
     minimumPackageVersion: 3.2.0
     minimumUnityVersion: 2020.3.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.searcher@4.9.3
+  testable: 0
+  isDirectDependency: 0
+  version: 4.9.3
+  source: 1
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.searcher@1e17ce91558d
+  assetPath: Packages/com.unity.searcher
+  name: com.unity.searcher
+  displayName: Searcher
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: General search window for use in the Editor. First target use is for
+    GraphView node search.
+  errors: []
+  versions:
+    all:
+    - 4.0.0-preview
+    - 4.0.0
+    - 4.0.7-preview
+    - 4.0.7
+    - 4.0.8-preview
+    - 4.0.9
+    - 4.1.0-preview
+    - 4.1.0
+    - 4.2.0
+    - 4.3.0
+    - 4.3.1
+    - 4.3.2
+    - 4.6.0-preview
+    - 4.7.0-preview
+    - 4.9.1
+    - 4.9.2
+    - 4.9.3
+    - 4.9.4
+    compatible:
+    - 4.9.2
+    - 4.9.3
+    - 4.9.4
+    recommended: 4.9.4
+    deprecated: []
+  dependencies: []
+  resolvedDependencies: []
+  keywords:
+  - search
+  - searcher
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 1
+  isAssetStorePackage: 0
+  datePublishedTicks: 638731478077990000
+  documentationUrl: https://docs.unity3d.com/Packages/com.unity.searcher@4.9/manual/index.html
+  hasRepository: 1
+  repository:
+    type: git
+    url: https://github.cds.internal.unity3d.com/unity/com.unity.searcher.git
+    revision: 6fad693b6604ae7175b59ebb4990d9a0b6c1d012
+    path: 
+  unityLifecycle:
+    version: 4.9.2
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: '{"changelog":"- Fixed a bug where spaces are removed when highlighted.\n-
+    Changed VisualSplitter to twoPaneSplitView and updated indentation"}'
+  assetStore:
+    productId: 
+  fingerprint: 1e17ce91558d1d9127554adc03d275f39a7466a2
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 4.9.2
+    minimumUnityVersion: 2019.1.0a1
+  compliance:
+    status: 0
+    violation:
+      scopePatternExpression: 
+      message: 
+      readMoreLink: 
+- packageId: com.unity.rendering.light-transport@1.0.1
+  testable: 0
+  isDirectDependency: 0
+  version: 1.0.1
+  source: 2
+  resolvedPath: C:\Program Files\GitHub\Project-bambou\Project bambou\Library\PackageCache\com.unity.rendering.light-transport@2c9279f90d7c
+  assetPath: Packages/com.unity.rendering.light-transport
+  name: com.unity.rendering.light-transport
+  displayName: Unity Light Transport Library
+  author:
+    name: 
+    email: 
+    url: 
+  category: 
+  type: 
+  description: Unity Light Transport Library exposes reusable code for writing light
+    transport algorithms such as raytracing or pathtracing
+  errors: []
+  versions:
+    all:
+    - 1.0.1
+    compatible:
+    - 1.0.1
+    recommended: 1.0.1
+    deprecated: []
+  dependencies:
+  - name: com.unity.collections
+    version: 2.2.0
+  - name: com.unity.mathematics
+    version: 1.2.4
+  - name: com.unity.modules.terrain
+    version: 1.0.0
+  resolvedDependencies:
+  - name: com.unity.collections
+    version: 2.5.7
+  - name: com.unity.burst
+    version: 1.8.25
+  - name: com.unity.mathematics
+    version: 1.3.2
+  - name: com.unity.modules.jsonserialize
+    version: 1.0.0
+  - name: com.unity.test-framework
+    version: 1.6.0
+  - name: com.unity.ext.nunit
+    version: 2.0.5
+  - name: com.unity.modules.imgui
+    version: 1.0.0
+  - name: com.unity.nuget.mono-cecil
+    version: 1.11.5
+  - name: com.unity.test-framework.performance
+    version: 3.2.0
+  - name: com.unity.modules.terrain
+    version: 1.0.0
+  keywords:
+  - raytracing
+  - pathtracing
+  - monte-carlo
+  registry:
+    id: main
+    name: 
+    url: https://packages.unity.com
+    scopes: []
+    isDefault: 1
+    capabilities: 7
+    configSource: 0
+    compliance:
+      status: 0
+      violations: []
+  hideInEditor: 1
+  entitlements:
+    licensingModel: 0
+  isAssetStorePackage: 0
+  datePublishedTicks: 0
+  documentationUrl: 
+  hasRepository: 0
+  repository:
+    type: 
+    url: 
+    revision: 
+    path: 
+  unityLifecycle:
+    version: 1.0.1
+    nextVersion: 
+    recommendedVersion: 
+    isDeprecated: 0
+    deprecationMessage: 
+    isDiscoverable: 0
+  isDeprecated: 0
+  deprecationMessage: 
+  git:
+    hash: 
+    revision: 
+  upmReserved: 
+  assetStore:
+    productId: 
+  fingerprint: 2c9279f90d7c8dfb6e76e3f90b6b3be1cafabfbc
+  editorCompatibility:
+    compatibilityLevel: 0
+    minimumPackageVersion: 1.0.1
+    minimumUnityVersion: 2023.3.0b1
   compliance:
     status: 0
     violation:
