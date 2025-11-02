@@ -12,17 +12,14 @@ GameObject:
   - component: {fileID: 1106458968051481601}
   - component: {fileID: 7034765546568992520}
   - component: {fileID: 8147164368027701252}
-  - component: {fileID: 2758479971294497709}
-  - component: {fileID: 5528898949465633582}
-  - component: {fileID: 9184037790195104086}
-  - component: {fileID: 1168456372966507850}
+  - component: {fileID: 8314851458677053459}
   m_Layer: 0
   m_Name: Enemy Test
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1173363112064771222
 Transform:
   m_ObjectHideFlags: 0
@@ -115,7 +112,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2758479971294497709
+--- !u!114 &8314851458677053459
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -124,46 +121,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 8461315490994381656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0714efee223302341a9bb111c94ce2fd, type: 3}
+  m_Script: {fileID: 11500000, guid: c1d68ef9f9d6ee242809d9abe6482151, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Enemy
-  baseStats:
-    maxHealth: 100
-    moveSpeed: 3
-    attackDamage: 1
---- !u!114 &5528898949465633582
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8461315490994381656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e0dae10c9838312499d34b23ab32a5cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyAI
---- !u!114 &9184037790195104086
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8461315490994381656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 196840037480b9b46956c73b57af2d24, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyHealth
---- !u!114 &1168456372966507850
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8461315490994381656}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0b9a49d41f374a41aa44652d3b5f245, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyMover
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyAuthoring
+  maxHealth: 100
+  moveSpeed: 1
+  attackDamage: 1

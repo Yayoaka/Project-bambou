@@ -12,7 +12,7 @@ namespace Player
 
         private void Init()
         {
-            Enemies.EnemiesManager.Instance.RegisterPlayer(this);
+            //Enemies.EnemiesManager.Instance.RegisterPlayer(this);
         }
     }
 }
