@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Enemies
@@ -6,6 +7,8 @@ namespace Enemies
     {
         private EnemyContext _ctx;
         private float _hp;
+        
+        public event Action<Enemy> OnDeath;
 
         public void Setup(EnemyContext ctx)
         {
@@ -18,17 +21,19 @@ namespace Enemies
             _hp = _ctx.Stats.maxHealth;
         }
 
-        public void OnDeactivated()
-        {
-            // No-op for now
-        }
+        public void OnDeactivated() { }
 
         public void Damage(float amount)
         {
-            // Minimal safe path
-            var newHp = _hp - amount;
-            _hp = newHp <= 0f ? 0f : newHp;
-            if (_hp <= 0f) gameObject.SetActive(false);
+            _hp -= amount;
+            if (_hp <= 0f)
+                Die();
+        }
+        
+        private void Die()
+        {
+            OnDeath?.Invoke(_ctx.Enemy);
+            EnemiesPool.Instance.Return(_ctx.Enemy);
         }
     }
 }

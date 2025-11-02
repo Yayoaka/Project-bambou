@@ -27,7 +27,6 @@ namespace Enemies
         public void Tick(float dt)
         {
             // Minimal placeholder: keep still
-            _mover.SetDirection(Vector3.zero);
         }
     }
 }

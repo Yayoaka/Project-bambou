@@ -9,10 +9,12 @@ namespace Enemies
         private EnemyContext _ctx;
         private IEnemyModule[] _modules;
         private IEnemyTick[] _tickables;
+        
+        public EnemyHealth Health { get; private set; }
 
         private void Awake()
         {
-            _ctx = new EnemyContext(transform, baseStats);
+            _ctx = new EnemyContext(transform, baseStats, this);
             _modules = GetComponents<IEnemyModule>();
             _tickables = GetComponents<IEnemyTick>();
             foreach (var m in _modules) m.Setup(_ctx);
@@ -20,16 +22,16 @@ namespace Enemies
 
         private void OnEnable()
         {
-            EnemyManager.Instance.Register(this);
+            EnemiesManager.Instance.Register(this);
             foreach (var m in _modules) m.OnActivated();
             // First classification on spawn/enable
-            EnemyManager.Instance.UpdateEnemyVisibility(this);
+            EnemiesManager.Instance.UpdateEnemyVisibility(this);
         }
 
         private void OnDisable()
         {
             foreach (var m in _modules) m.OnDeactivated();
-            EnemyManager.Instance.Unregister(this);
+            EnemiesManager.Instance.Unregister(this);
         }
 
         public void ApplyStats(EnemyStats stats) => _ctx.SetStats(stats);

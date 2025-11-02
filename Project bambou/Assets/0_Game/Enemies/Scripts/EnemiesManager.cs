@@ -1,10 +1,12 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Player;
 using UnityEngine;
 
 namespace Enemies
 {
-    public sealed class EnemyManager : MonoBehaviour
+    public sealed class EnemiesManager : MonoBehaviour
     {
         #region Global Variables
         
@@ -26,14 +28,26 @@ namespace Enemies
         private readonly List<Enemy> _closeEntities = new();
         private readonly List<Enemy> _farEntities = new();
 
-        private readonly List<Transform> _players = new();
+        private readonly List<PlayerEntity> _players = new();
         private int _frameIndex;
+
+        #endregion
+
+        #region Getters and Setters
+
+        public List<PlayerEntity> GetPlayers => _players;
+
+        #endregion
+
+        #region Events
+
+        public static event Action<PlayerEntity> OnPlayerSpawned;
 
         #endregion
 
         #region Singleton
 
-        public static EnemyManager Instance;
+        public static EnemiesManager Instance;
 
         private void Awake()
         {
@@ -59,9 +73,10 @@ namespace Enemies
             _farEntities.Remove(e);
         }
 
-        public void RegisterPlayer(Transform player)
+        public void RegisterPlayer(PlayerEntity player)
         {
             _players.Add(player);
+            OnPlayerSpawned?.Invoke(player);
         }
         
         #endregion
@@ -110,7 +125,7 @@ namespace Enemies
         
         private float GetClosestPlayerSqrDistance(Vector3 p)
         {
-            return _players.Select(t => (t.position - p)).Select(d => d.sqrMagnitude).Prepend(float.MaxValue).Min();
+            return _players.Select(t => (t.transform.position - p)).Select(d => d.sqrMagnitude).Prepend(float.MaxValue).Min();
         }
 
         private void MoveToList(Enemy e, List<Enemy> list)
@@ -120,5 +135,32 @@ namespace Enemies
             _farEntities.Remove(e);
             list.Add(e);
         }
+
+        #if UNITY_EDITOR
+        
+        private void OnDrawGizmos()
+        {
+            foreach (var player in _players)
+            {
+                DrawCircleGizmo(player.transform.position, visibleRange, color: Color.green);
+                DrawCircleGizmo(player.transform.position, closeRange, color: Color.red);
+            }
+        }
+        
+        private static void DrawCircleGizmo(Vector3 center, float radius, int segments = 32, Color color = default)
+        {
+            var step = Mathf.PI * 2f / segments;
+            Vector3 prevPoint = center + new Vector3(Mathf.Cos(0), 0f, Mathf.Sin(0)) * radius;
+            for (int i = 1; i <= segments; i++)
+            {
+                var angle = step * i;
+                var nextPoint = center + new Vector3(Mathf.Cos(angle), 0f, Mathf.Sin(angle)) * radius;
+                Gizmos.color = color;
+                Gizmos.DrawLine(prevPoint, nextPoint);
+                prevPoint = nextPoint;
+            }
+        }
+        
+        #endif
     }
 }
