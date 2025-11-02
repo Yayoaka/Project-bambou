@@ -105,3 +105,6 @@ InitTestScene*.unity*
 # Build / Obj
 [Bb]in/
 [Oo]bj/
+
+# Unity user-specific settings
+UserSettings/
