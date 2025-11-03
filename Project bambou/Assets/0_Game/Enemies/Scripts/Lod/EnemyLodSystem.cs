@@ -5,12 +5,12 @@ using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
 
-namespace Enemies.Distance
+namespace Enemies.Lod
 {
     [BurstCompile]
     [UpdateInGroup(typeof(SimulationSystemGroup))]
     [UpdateBefore(typeof(EnemySystem))]
-    public partial struct EnemyDistanceSystem : ISystem
+    public partial struct EnemyLodSystem : ISystem
     {
         private const float FarRange = 60f;
         private const float CloseRange = 30f;
@@ -20,24 +20,17 @@ namespace Enemies.Distance
             var ecb = new EntityCommandBuffer(Allocator.Temp);
             using var players = CollectPlayers(ref state);
 
-            foreach (var (transform, enemyEntity) in SystemAPI.Query<RefRO<LocalTransform>>().WithEntityAccess())
+            foreach (var (transform, lodData) in SystemAPI.Query<RefRO<LocalTransform>,RefRW<EnemyLodData>>())
             {
                 var distance = GetMinDistanceToPlayer(in players, transform.ValueRO.Position);
                 var dist = math.sqrt(distance);
 
-                if (SystemAPI.HasComponent<FarTag>(enemyEntity))
-                    ecb.RemoveComponent<FarTag>(enemyEntity);
-                if (SystemAPI.HasComponent<CloseTag>(enemyEntity))
-                    ecb.RemoveComponent<CloseTag>(enemyEntity);
-                if (SystemAPI.HasComponent<VisibleTag>(enemyEntity))
-                    ecb.RemoveComponent<VisibleTag>(enemyEntity);
-
                 if (dist > FarRange)
-                    ecb.AddComponent<FarTag>(enemyEntity);
+                    lodData.ValueRW.Interval = 50;
                 else if (dist > CloseRange)
-                    ecb.AddComponent<CloseTag>(enemyEntity);
+                    lodData.ValueRW.Interval = 10;
                 else
-                    ecb.AddComponent<VisibleTag>(enemyEntity);
+                    lodData.ValueRW.Interval = 1;
             }
 
             ecb.Playback(state.EntityManager);

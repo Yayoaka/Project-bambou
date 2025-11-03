@@ -108,3 +108,77 @@ InitTestScene*.unity*
 
 # Unity user-specific settings
 UserSettings/
+
+# --- Unity ECS / DOTS ---
+# Scene dependency caches (auto-generated during SubScene baking)
+Assets/SceneDependencyCache/
+Assets/**/SceneDependencyCache.meta
+
+# Entities baking cache (DOTS 1.0+)
+Assets/BakingCache/
+BakingCache/
+BakingCache.meta
+
+# DOTS live conversion cache (Editor)
+LiveLinkCache/
+LiveLinkBuilds/
+EntitiesCache/
+BuildCache/
+
+# --- Lighting / GI ---
+# Lightmaps, baked GI data, probes, and cache
+Assets/**/LightmapSnapshot.asset
+Assets/**/LightingData.asset
+Assets/**/ReflectionProbe-*.exr
+Assets/**/GICache/
+Assets/**/GI/
+Library/LightmapSnapshot*
+Library/GI/
+Library/ShaderCache/
+
+# --- Local project data ---
+# Temporary build artifacts
+Builds/
+Build/
+BuildCache/
+ExportedObj/
+*.apk
+*.aab
+*.app
+
+# --- Editor auto-generated stuff ---
+# Shader variant and analytics caches
+Library/ShaderCache/
+Library/PackageCache/
+Library/Artifacts/
+Library/PlayerDataCache/
+Library/StateCache/
+Library/PlaymodeViewState/
+Library/ScriptAssemblies/
+
+# --- Rider / VS / Editor logs ---
+*.DotSettings
+.idea/.idea/
+.vscode/*
+.vsconfig
+*.user
+*.userprefs
+
+# --- DOTS and Burst specific ---
+# Burst intermediate compilation
+Library/BurstCache/
+*.burst
+*.burst.meta
+BurstDebugInformation_DoNotShip/
+
+# Unity.Entities codegen temporary
+TempGenerated/
+TempCodeGen/
+Temp/BurstCache/
+
+# ---  Misc noise ---
+*.DS_Store
+Thumbs.db
+.DS_Store?
+ehthumbs.db
+desktop.ini

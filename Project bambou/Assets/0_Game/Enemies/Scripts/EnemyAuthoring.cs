@@ -1,27 +1,39 @@
+using Enemies.AI;
+using Enemies.Data;
+using Enemies.Lod;
 using Enemies.Spawner;
+using Unity.Collections;
 using Unity.Entities;
+using Unity.Mathematics;
 using UnityEngine;
 
 namespace Enemies
 {
     public class EnemyAuthoring : MonoBehaviour
     {
-        public int maxHealth = 100;
-        public float moveSpeed = 100;
-        public int attackDamage = 1;
+        public EnemyDataSO config;
 
-        public class Baker : Baker<EnemyAuthoring>
+        class Baker : Baker<EnemyAuthoring>
         {
-            public override void Bake(EnemyAuthoring a)
+            public override void Bake(EnemyAuthoring authoring)
             {
-                var enemyEntity = GetEntity(TransformUsageFlags.Dynamic);
+                var cfg = authoring.config;
 
-                AddComponent(enemyEntity, new EnemyData
-                {
-                    MaxHealth = a.maxHealth,
-                    MoveSpeed = a.moveSpeed,
-                    AttackDamage = a.attackDamage
-                });
+                var builder = new BlobBuilder(Allocator.Temp);
+                ref var root = ref builder.ConstructRoot<EnemyConfigBlob>();
+                root.MaxHealth = cfg.MaxHealth;
+                root.MoveSpeed = cfg.MoveSpeed;
+                root.AttackDamage = cfg.AttackDamage;
+                root.AttackRange = cfg.AttackRange;
+                var blobRef = builder.CreateBlobAssetReference<EnemyConfigBlob>(Allocator.Persistent);
+                builder.Dispose();
+
+                var entity = GetEntity(TransformUsageFlags.Dynamic);
+                
+                AddComponent(entity, new EnemyConfigData { Config = blobRef });
+                AddComponent(entity, new EnemyStateData { CurrentHealth = cfg.MaxHealth });
+                AddComponent(entity, new EnemyLodData { Interval = 1, Counter = 0 });
+                AddComponent(entity, new EnemyTargetData { TargetPosition = new float3() });
             }
         }
     }
