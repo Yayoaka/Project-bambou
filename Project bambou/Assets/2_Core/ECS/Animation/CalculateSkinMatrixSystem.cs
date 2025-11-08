@@ -1,51 +1,56 @@
+using _2_Core.ECS.Animation;
 using Enemies.Visual;
 using Unity.Burst;
-using Unity.Deformations;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using Unity.Deformations; // SkinMatrix
 
-namespace _2_Core.ECS.Animation
+namespace Tutorials.SimpleAnimation
 {
     [BurstCompile]
-    [UpdateInGroup(typeof(PresentationSystemGroup))]
+    [UpdateInGroup(typeof(SimulationSystemGroup))]
+    [UpdateAfter(typeof(TransformSystemGroup))] // important : après la maj des L2W
     public partial struct CalculateSkinMatrixSystem : ISystem
     {
         [BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
-            foreach (var (bones, bindPoses, root, localToWorld, entity)
+            foreach (var (boneEntities, bindPoses, rootEntity, localToWorld, entity)
                      in SystemAPI.Query<DynamicBuffer<BoneEntity>,
-                             DynamicBuffer<BindPose>,
-                             RefRO<RootEntity>,
-                             RefRO<LocalToWorld>>()
-                         .WithEntityAccess()
-                         .WithAll<CalculateSkinMatrixTag>())
+                                        DynamicBuffer<BindPose>,
+                                        RefRO<RootEntity>,
+                                        RefRO<LocalToWorld>>()
+                                  .WithAll<CalculateSkinMatrixTag>()
+                                  .WithEntityAccess())
             {
-                var skinMatrices = SystemAPI.GetBuffer<SkinMatrix>(entity); // ← accès RW autorisé
+                // buffer RW
+                var skinMatrices = SystemAPI.GetBuffer<SkinMatrix>(entity);
 
-                if (bones.Length != bindPoses.Length || bones.Length != skinMatrices.Length)
+                var bones        = boneEntities.Reinterpret<Entity>().AsNativeArray();
+                var bindPoseArr  = bindPoses   .Reinterpret<float4x4>().AsNativeArray();
+
+                if (bones.Length != bindPoseArr.Length || bones.Length != skinMatrices.Length)
                     continue;
 
-                var rootInverse = math.inverse(localToWorld.ValueRO.Value);
+                var rootL2W     = SystemAPI.GetComponentRO<LocalToWorld>(rootEntity.ValueRO.Value);
+                var rootInverse = math.inverse(rootL2W.ValueRO.Value);
 
                 for (int i = 0; i < bones.Length; i++)
                 {
-                    var boneEntity = bones[i].Value;
-                    if (!SystemAPI.Exists(boneEntity))
-                        continue;
+                    var boneL2W  = SystemAPI.GetComponentRO<LocalToWorld>(bones[i]);
+                    var bindPose = bindPoseArr[i];
 
-                    var boneL2W = SystemAPI.GetComponentRO<LocalToWorld>(boneEntity);
-                    var bindPose = bindPoses[i].Value;
+                    // root^-1 * bone * bindPose
+                    var m = math.mul(rootInverse, math.mul(boneL2W.ValueRO.Value, bindPose));
 
-                    var skinMatrix = math.mul(rootInverse, math.mul(boneL2W.ValueRO.Value, bindPose));
                     skinMatrices[i] = new SkinMatrix
                     {
                         Value = new float3x4(
-                            skinMatrix.c0.xyz,
-                            skinMatrix.c1.xyz,
-                            skinMatrix.c2.xyz,
-                            skinMatrix.c3.xyz)
+                            m.c0.xyz,
+                            m.c1.xyz,
+                            m.c2.xyz,
+                            m.c3.xyz)
                     };
                 }
             }
