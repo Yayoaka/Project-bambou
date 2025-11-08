@@ -17,7 +17,7 @@ namespace Enemies.Lod
 
         public void OnUpdate(ref SystemState state)
         {
-            var ecb = new EntityCommandBuffer(Allocator.Temp);
+            using var ecb = new EntityCommandBuffer(Allocator.Temp);
             using var players = CollectPlayers(ref state);
 
             foreach (var (transform, lodData) in SystemAPI.Query<RefRO<LocalTransform>,RefRW<EnemyLodData>>())

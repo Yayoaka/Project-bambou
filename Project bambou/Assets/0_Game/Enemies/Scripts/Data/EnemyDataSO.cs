@@ -7,13 +7,15 @@ namespace Enemies.Data
     {
         [Header("Identity")]
         public string Id;
-        public GameObject VisualPrefab;
 
         [Header("Stats")]
         public float MaxHealth;
         public float MoveSpeed;
         public float AttackDamage;
         public float AttackRange;
+        
+        [Header("Prefabs")]
+        public GameObject VisualPrefab;
 
         //Maybe later son
         /*[Header("Behavior")]

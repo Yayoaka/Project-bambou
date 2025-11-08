@@ -1,9 +1,12 @@
+using System;
 using Enemies.AI;
 using Enemies.Lod;
 using Unity.Burst;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
+using Math = Unity.Mathematics.Geometry.Math;
 
 namespace Enemies.Mover
 {
@@ -16,8 +19,6 @@ namespace Enemies.Mover
         public void OnUpdate(ref SystemState state)
         {
             _frameCounter++;
-
-            var dt = SystemAPI.Time.DeltaTime;
 
             foreach (var (transform, tick, target, config) in 
                      SystemAPI.Query<RefRW<LocalTransform>, RefRW<EnemyLodData>, RefRO<EnemyTargetData>, RefRO<EnemyConfigData>>())
@@ -37,6 +38,9 @@ namespace Enemies.Mover
         {
             ref var cfg = ref config.Config.Value;
             var dir = math.normalizesafe(target.TargetPosition - transform.Position);
+            dir.y = 0;
+            var rot = quaternion.LookRotationSafe(dir, math.up());
+            transform.Rotation = rot;
             transform.Position += dir * cfg.MoveSpeed * dt;
         }
     }

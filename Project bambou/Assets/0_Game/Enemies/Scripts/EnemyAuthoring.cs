@@ -25,10 +25,16 @@ namespace Enemies
                 root.MoveSpeed = cfg.MoveSpeed;
                 root.AttackDamage = cfg.AttackDamage;
                 root.AttackRange = cfg.AttackRange;
-                var blobRef = builder.CreateBlobAssetReference<EnemyConfigBlob>(Allocator.Persistent);
-                builder.Dispose();
 
                 var entity = GetEntity(TransformUsageFlags.Dynamic);
+
+                if (cfg.VisualPrefab != null)
+                {
+                    var prefab = GetEntity(cfg.VisualPrefab, TransformUsageFlags.Dynamic);
+                    AddComponent(entity, new EnemyPrefabData { Value = prefab });
+                }
+                
+                var blobRef = builder.CreateBlobAssetReference<EnemyConfigBlob>(Allocator.Persistent);
                 
                 AddComponent(entity, new EnemyConfigData { Config = blobRef });
                 AddComponent(entity, new EnemyStateData { CurrentHealth = cfg.MaxHealth });

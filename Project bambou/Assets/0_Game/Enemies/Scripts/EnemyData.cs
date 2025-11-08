@@ -1,4 +1,5 @@
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace Enemies
 {
@@ -18,5 +19,10 @@ namespace Enemies
         public float MoveSpeed;
         public float AttackDamage;
         public float AttackRange;
+    }
+    
+    public struct EnemyPrefabData : IComponentData
+    {
+        public Entity Value;
     }
 }
