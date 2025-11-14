@@ -1,3 +1,6 @@
+using GameState;
+using GameState.States;
+using SceneLoader;
 using TMPro;
 using Unity.Netcode;
 using Unity.Netcode.Transports.UTP;
@@ -80,6 +83,6 @@ public class MainMenuManager : MonoBehaviour
         if (!m_networkManager.IsServer)
             return;
 
-        m_networkManager.SceneManager.LoadScene("CharacterScene", LoadSceneMode.Single);
+        SceneLoaderManager.Instance.LoadSceneAsync(new LoadingContext(GameStateType.Lobby));
     }
 }
