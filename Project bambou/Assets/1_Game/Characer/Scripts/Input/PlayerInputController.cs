@@ -1,44 +1,94 @@
+using System;
 using UnityEngine;
+using Unity.Netcode;
 using UnityEngine.InputSystem;
 
 public class PlayerInputController : MonoBehaviour
 {
-    private Vector2 currentInput;
+    public static PlayerInputController Instance { get; private set; }
+    
+    private Vector2 moveInput;
     private Character character;
     
+    private PlayerControls controls;
+
     private void Awake()
     {
-        character = GetComponent<Character>();
+        if (Instance != null)
+        {
+            Destroy(gameObject); return;
+        }
+        Instance = this;
+        
+        controls = new PlayerControls();
     }
     
-    private void Update()
+    public void SetChampionCharacter(Character player)
     {
-        character.Move(currentInput);
+        character = player;
     }
 
-    private void OnMove(InputValue value)
+    private void Start()
     {
-        currentInput = value.Get<Vector2>();
-        //Debug.Log("OnMove: " + currentInput);
+        controls.Enable();
+        
+        controls.Player.Skill1.started += HandleSkill1Started;
+    }
+
+    private void HandleSkill1Started(InputAction.CallbackContext obj)
+    {
+        TriggerSkill(1);
+    }
+
+    private void OnDestroy()
+    {
+        controls.Dispose();
+    }
+
+    private void Update()
+    {
+        
+        if (!CanControl()) return;
+        moveInput = controls.Player.Move.ReadValue<Vector2>();
+        character.Move(moveInput);    
+    }
+
+    public void OnMove(InputValue value)
+    {
+        
+        if (!CanControl()) return;
+        moveInput = value.Get<Vector2>();
     }
 
     private void OnRoll()
     {
+        if (!CanControl()) return;
         character.StartRoll();
     }
 
     private void OnSkill1()
     {
-        character.UseSkill1();
+        TriggerSkill(1);
     }
 
     private void OnSkill2()
-    {
-        character.UseSkill2();
+    { 
+        TriggerSkill(2);
     }
 
     private void OnSkill3()
     {
-        character.UseSkill3();
+        TriggerSkill(3);
+    }
+
+    private void TriggerSkill(int index)
+    {
+        if (!CanControl()) return;
+        character.UseSkill(index);
+    }
+
+    private bool CanControl()
+    {
+        return character != null;
     }
 }

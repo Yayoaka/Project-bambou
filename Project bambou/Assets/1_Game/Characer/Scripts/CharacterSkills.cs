@@ -1,32 +1,33 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class CharacterSkills : MonoBehaviour
+public class CharacterSkills : NetworkBehaviour
 {
-    //private CharacterAnimationController anim;
-
-    private void Awake()
-    {
-        //anim = GetComponent<CharacterAnimationController>();
-    }
+    // [SerializeField] private CharacterAnimationController animationController;
 
     public void UseSkill(int index)
     {
+        if (!IsOwner) return;
+
         switch (index)
         {
-            case 1:
-                Debug.Log($"{name} used Skill 1");
-                break;
-            case 2:
-                Debug.Log($"{name} used Skill 2");
-                break;
-            case 3:
-                Debug.Log($"{name} used Skill 3");
-                break;
-            default:
-                Debug.Log($"{name} used Unknown skill {index}");
-                break;
+            case 1: Skill1(); break;
+            case 2: Skill2(); break;
+            case 3: Skill3(); break;
+            default: Debug.LogWarning($"Unknown Skill: {index}"); break;
         }
+    }
 
-        //anim?.TriggerSkill(index);
+    private void Skill1()
+    {
+        Debug.Log("Skill1 used");
+    }
+    private void Skill2()
+    {
+        Debug.Log("Skill2 used");
+    }
+    private void Skill3()
+    {
+        Debug.Log("Skill3 used");
     }
 }

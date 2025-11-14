@@ -1,75 +1,85 @@
+using Unity.Netcode;
 using UnityEngine;
 
-public class Character : MonoBehaviour
+public class Character : NetworkBehaviour
 {
     [Header("Modules")]
-    public CharacterMovementController movement;
-    public CharacterAnimationController animationController;
-    public CharacterSkills skills;
+    [SerializeField] private CharacterMovementController movement;
+    [SerializeField] private CharacterAnimationController animationController;
+    [SerializeField] private CharacterSkills skills;
+
     private Animator animator;
 
     [Header("Roll Settings")]
-    public float rollDuration = 0.5f;
-    public float rollSpeedMultiplier = 2f;
+    [SerializeField] private float rollDuration = 0.5f;
+    [SerializeField] private float rollSpeedMultiplier = 2f;
 
-    private bool isRolling = false;
-    private float rollTimer = 0f;
+    private bool isRolling;
+    private float rollTimer;
+    private float baseMoveSpeed;
+
+    public override void OnNetworkSpawn()
+    {
+        if (IsOwner && movement != null)
+        {
+            baseMoveSpeed = movement.MoveSpeed;
+        }
+    }
+
+    protected override void OnNetworkPostSpawn()
+    {
+        if (!IsOwner) return;
+        base.OnNetworkPostSpawn();
+        PlayerInputController.Instance.SetChampionCharacter(this);
+    }
 
     private void Awake()
     {
-        if(animator == null)
-        {
-            animator = GetComponentInChildren<Animator>();
-        }    
+        animator = GetComponentInChildren<Animator>();
+        if (movement != null && baseMoveSpeed == 0)
+            baseMoveSpeed = movement.MoveSpeed;
     }
-    
+
+    private void Update()
+    {
+        if (!IsOwner || !isRolling) return;
+
+        rollTimer -= Time.deltaTime;
+        if (rollTimer <= 0f) EndRoll();
+    }
+
     public void Move(Vector2 input)
     {
-        if (!isRolling && movement != null)
-        {
-            movement.Move(input);
-        }
+        if (!CanControl()) return;
+        Debug.Log("Character :" + input.ToString());
+        movement.Move(input);
     }
 
     public void StartRoll()
     {
-        if (isRolling) return; 
+        if (!CanControl()) return;
 
         isRolling = true;
         rollTimer = rollDuration;
 
         animator?.SetTrigger("roll");
-
-        if (movement != null)
-        {
-            movement.moveSpeed *= rollSpeedMultiplier;
-        }
-    }
-
-    private void Update()
-    {
-        if (isRolling)
-        {
-            rollTimer -= Time.deltaTime;
-
-            if (rollTimer <= 0f)
-            {
-                EndRoll();
-            }
-        }
+        movement.MoveSpeed = baseMoveSpeed * rollSpeedMultiplier;
     }
 
     private void EndRoll()
     {
         isRolling = false;
-
-        if (movement != null)
-        {
-            movement.moveSpeed /= rollSpeedMultiplier;
-        }
+        movement.MoveSpeed = baseMoveSpeed;
     }
 
-    public void UseSkill1() => skills?.UseSkill(1);
-    public void UseSkill2() => skills?.UseSkill(2);
-    public void UseSkill3() => skills?.UseSkill(3);
+    public void UseSkill(int skillIndex)
+    {
+        if (!IsOwner) return;
+        skills?.UseSkill(skillIndex);
+    }
+
+    private bool CanControl()
+    {
+        return IsOwner && !isRolling && movement != null;
+    }
 }

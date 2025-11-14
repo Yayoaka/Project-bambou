@@ -1,31 +1,43 @@
 using UnityEngine;
+using Unity.Netcode;
 
-public class CharacterMovementController : MonoBehaviour
+public class CharacterMovementController : NetworkBehaviour
 {
-    public float moveSpeed = 5f;
-    public Animator animator;
-    private Rigidbody rb;
-    private Vector3 moveDirection;
+    [SerializeField] private float moveSpeed = 5f;
+    public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
 
-    private void Awake()
-    {
-        rb = GetComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationZ;
-    }
+    [SerializeField] private Animator animator;
+    [SerializeField] private Rigidbody rb;
+    private Vector3 moveDirection;
 
     public void Move(Vector2 input)
     {
-        moveDirection = new Vector3(input.x, 0f, input.y);
-        animator.SetFloat("speed", moveDirection.magnitude);
-        //Debug.Log(moveDirection.magnitude);
+        if (!CanControl()) return;
+
+        moveDirection.Set(input.x, 0f, input.y);
+
+        Debug.unityLogger.Log("mouvement :" + moveDirection);
+        animator?.SetFloat("speed", input.magnitude);
     }
 
     private void FixedUpdate()
     {
-        if (moveDirection != Vector3.zero)
+        if (!CanControl()) return;
+
+        if (moveDirection.sqrMagnitude > 0.01f)
         {
-            rb.MovePosition(rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime);
-            transform.rotation = Quaternion.LookRotation(moveDirection);
+            Vector3 newPosition = rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
+            rb.MovePosition(newPosition);
+            rb.MoveRotation(Quaternion.LookRotation(moveDirection));
         }
+        else
+        {
+            animator?.SetFloat("speed", 0f);
+        }
+    }
+
+    private bool CanControl()
+    {
+        return IsOwner && rb != null;
     }
 }
