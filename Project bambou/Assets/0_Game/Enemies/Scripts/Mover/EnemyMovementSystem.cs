@@ -18,6 +18,7 @@ namespace Enemies.Mover
         
         public void OnUpdate(ref SystemState state)
         {
+            return;
             _frameCounter++;
 
             foreach (var (transform, tick, target, config) in 

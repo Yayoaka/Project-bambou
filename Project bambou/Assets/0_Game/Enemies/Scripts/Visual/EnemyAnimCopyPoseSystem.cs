@@ -1,51 +1,59 @@
+using System.Collections.Generic;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
+using UnityEngine;
+using Enemies.Visual;
+using _2_Core.ECS.Animation;
+using Unity.Burst;
 
 namespace Enemies.Visual
 {
-    [UpdateInGroup(typeof(SimulationSystemGroup))]
-    [WorldSystemFilter(WorldSystemFilterFlags.Default)]
+    // Tourne dans la présentation (main thread, accès GO)
+    [UpdateInGroup(typeof(PresentationSystemGroup))]
+    [BurstCompile]
     public partial class EnemyAnimCopyPoseSystem : SystemBase
     {
         protected override void OnUpdate()
         {
-            var dt = SystemAPI.Time.DeltaTime;
-            var entityManager = EntityManager;
+            var em = EntityManager;
 
-            foreach (var (animState, driverRef, boneEntities) in
-                     SystemAPI.Query<RefRW<EnemyAnimationState>, EnemyAnimDriverRef, DynamicBuffer<BoneEntity>>())
-            {
-                if (driverRef.Instance == null ||
-                    driverRef.Clip == null ||
-                    driverRef.DriverBones == null ||
-                    driverRef.DriverBones.Length == 0)
-                    continue;
-
-                animState.ValueRW.Time += dt * driverRef.Speed;
-
-                var clipLen = driverRef.Clip.length;
-                var t = clipLen > 0f ? animState.ValueRW.Time % clipLen : animState.ValueRW.Time;
-
-                driverRef.Clip.SampleAnimation(driverRef.Instance, t);
-
-                var driverBones = driverRef.DriverBones;
-                var count = math.min(boneEntities.Length, driverBones.Length);
-
-                for (int i = 0; i < count; i++)
+            // On reste côté main thread (GO) => WithoutBurst + Run implicite avec SystemBase
+            Entities
+                .ForEach((Entity e, in EnemyVisualLink link) =>
                 {
-                    var boneEntity = boneEntities[i].Value;
-                    var tr = driverBones[i];
-                    if (tr == null || !entityManager.HasComponent<LocalTransform>(boneEntity))
-                        continue;
+                    // 1) Récupère le rig Unity instancié pour CET ennemi
+                    if (!em.HasComponent<EnemyRigInstanceRef>(e)) return;
+                    var rigRef = em.GetComponentObject<EnemyRigInstanceRef>(e);
+                    if (rigRef == null || rigRef.Rig == null) return;
 
-                    var lt = entityManager.GetComponentData<LocalTransform>(boneEntity);
-                    lt.Position = tr.localPosition;
-                    lt.Rotation = tr.localRotation;
-                    lt.Scale = tr.localScale.x;
-                    entityManager.SetComponentData(boneEntity, lt);
-                }
-            }
+                    // 2) Construit une map nom->Transform du rig (simple et robuste; à optimiser plus tard si besoin)
+                    var map = new Dictionary<string, Transform>(128);
+                    var trs = rigRef.Rig.GetComponentsInChildren<Transform>(true);
+                    for (int i = 0; i < trs.Length; i++)
+                        map[trs[i].name] = trs[i];
+
+                    // 3) Récupère les buffers côté mesh ECS
+                    if (!em.HasBuffer<BoneEntity>(link.SkinEntity)) return;
+                    if (!em.HasBuffer<BoneName>(link.SkinEntity)) return;
+
+                    var boneEntities = em.GetBuffer<BoneEntity>(link.SkinEntity);
+                    var boneNames    = em.GetBuffer<BoneName>(link.SkinEntity);
+
+                    var count = math.min(boneEntities.Length, boneNames.Length);
+                    for (int i = 0; i < count; i++)
+                    {
+                        var name = boneNames[i].Value.ToString();
+                        if (!map.TryGetValue(name, out var tr)) continue;
+
+                        em.SetComponentData(boneEntities[i].Value, new LocalToWorld
+                        {
+                            Value = tr.localToWorldMatrix
+                        });
+                    }
+                })
+                .WithoutBurst()
+                .Run();
         }
     }
 }

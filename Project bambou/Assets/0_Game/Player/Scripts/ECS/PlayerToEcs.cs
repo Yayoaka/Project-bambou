@@ -21,6 +21,7 @@ namespace Player.ECS
 
         void Update()
         {
+            return;
             var pos = transform.position;
 
             _entityManager.SetComponentData(_playerEntity, new PlayerData

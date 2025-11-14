@@ -1,11 +1,15 @@
 using Unity.Entities;
+using Unity.Mathematics;
 
 namespace _2_Core.ECS.Animation
 {
-    /// <summary>
-    /// Tag utilisé pour marquer les entités dont les matrices de skin doivent être calculées.
-    /// </summary>
-    public struct CalculateSkinMatrixTag : IComponentData
-    {
-    }
+    public struct CalculateSkinMatrixTag : IComponentData {}   // tag
+
+    public struct BoneEntity : IBufferElementData { public Entity Value; }
+    public struct BindPose   : IBufferElementData { public float4x4 Value; }
+
+// Buffer consommé par Entities Graphics (ShaderGraph "Compute Deformation")
+    public struct SkinMatrix : IBufferElementData { public float3x4 Value; }
+
+    public struct RootEntity : IComponentData { public Entity Value; }
 }

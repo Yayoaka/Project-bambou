@@ -1,0 +1,70 @@
+#pragma kernel Skin
+
+Texture2D<float4> _AnimTex;
+
+StructuredBuffer<float3> _InPos;
+StructuredBuffer<float3> _InNrm;
+StructuredBuffer<float2> _UV;
+StructuredBuffer<float4> _InBoneWeights;
+StructuredBuffer<int4>   _InBoneIndices;
+
+RWStructuredBuffer<float3> _OutPos;
+RWStructuredBuffer<float3> _OutNrm;
+
+int _Count;
+int _FrameCount;
+int _BoneCount;
+float _AnimTime;
+
+float4x4 GetBoneMatrix(int boneIndex, int frame)
+{
+    int x = boneIndex * 4;
+    int y = frame;
+
+    float4 c0 = _AnimTex.Load(int3(x + 0, y, 0));
+    float4 c1 = _AnimTex.Load(int3(x + 1, y, 0));
+    float4 c2 = _AnimTex.Load(int3(x + 2, y, 0));
+    float4 c3 = _AnimTex.Load(int3(x + 3, y, 0));
+
+    return float4x4(c0, c1, c2, c3);
+}
+
+[numthreads(64,1,1)]
+void Skin(uint3 id : SV_DispatchThreadID)
+{
+    uint vid = id.x;
+    if (vid >= _Count) return;
+
+    float f = _AnimTime * (_FrameCount - 1);
+    int frame = (int)f;
+
+    float3 v = _InPos[vid];
+    float3 n = _InNrm[vid];
+
+    float4 w = _InBoneWeights[vid];
+    int4  bi = _InBoneIndices[vid];
+
+    float4 p  = float4(v,1);
+    float4 nn = float4(n,0);
+
+    float4 pOut = 0;
+    float4 nOut = 0;
+
+    float4x4 m0 = GetBoneMatrix(bi.x, frame);
+    float4x4 m1 = GetBoneMatrix(bi.y, frame);
+    float4x4 m2 = GetBoneMatrix(bi.z, frame);
+    float4x4 m3 = GetBoneMatrix(bi.w, frame);
+
+    pOut = mul(m0, p) * w.x
+         + mul(m1, p) * w.y
+         + mul(m2, p) * w.z
+         + mul(m3, p) * w.w;
+
+    nOut = mul(m0, nn) * w.x
+         + mul(m1, nn) * w.y
+         + mul(m2, nn) * w.z
+         + mul(m3, nn) * w.w;
+
+    _OutPos[vid] = float3(0,0,0);
+    _OutNrm[vid] = float3(0,1,0);
+}
