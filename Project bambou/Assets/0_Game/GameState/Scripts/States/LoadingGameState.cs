@@ -18,22 +18,26 @@ namespace GameState.States
         {
             _context = ctx;
             
+            //Use a loading screen manager to show it
+            
             SceneLoader.SceneLoaderManager.OnScenesLoaded += OnSceneLoaded;
         }
 
         void IGameState.Exit()
         {
+            //Use a loading screen manager to hide it
             
+            SceneLoader.SceneLoaderManager.OnScenesLoaded -= OnSceneLoaded;
         }
 
         void IGameState.Tick(float dt)
         {
-            
+            //Update loading percentage display
         }
 
         bool IGameState.CanPause()
         {
-            throw new System.NotImplementedException();
+            return false;
         }
 
         void IGameState.OnPause()
@@ -48,8 +52,6 @@ namespace GameState.States
 
         private void OnSceneLoaded()
         {
-            SceneLoader.SceneLoaderManager.OnScenesLoaded -= OnSceneLoaded;
-            
             if(_context is not LoadingContext loadingContext) return;
             
             GameStateManager.Instance.ChangeState(loadingContext.TargetGameState);

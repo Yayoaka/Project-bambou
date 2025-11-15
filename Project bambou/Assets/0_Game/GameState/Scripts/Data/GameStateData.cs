@@ -11,8 +11,10 @@ namespace GameState.Data
 
         [Header("Scenes to Load")]
         public List<SceneAsset> scenesToLoad;
+        public List<SceneAsset> netScenesToLoad;
 
         [Header("Scenes persistent")]
         public List<SceneAsset> scenesToKeep;
+        public List<SceneAsset> netScenesToKeep;
     }
 }
