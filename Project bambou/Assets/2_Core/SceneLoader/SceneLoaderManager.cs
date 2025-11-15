@@ -88,9 +88,12 @@ namespace SceneLoader
                 .Where(s => !desiredNet.Contains(s) && !scenesToKeepNet.Contains(s))
                 .ToList();
 
-            foreach (var scene in netToUnload)
+            if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
             {
-                yield return UnloadNetScene(scene);
+                foreach (var scene in netToUnload)
+                {
+                    yield return UnloadNetScene(scene);
+                }
             }
 
             foreach (var sceneAsset in state.scenesToLoad.Where(sceneAsset => !_currentLocalScenes.Contains(sceneAsset)))
@@ -145,6 +148,8 @@ namespace SceneLoader
         private IEnumerator LoadNetScene(SceneAsset scene)
         {
             var done = false;
+            
+            Debug.Log($"Loading scene {scene.name}");
 
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoaded;
 

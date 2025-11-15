@@ -46,12 +46,12 @@ public class MainMenuManager : MonoBehaviour
         m_hostButton.onClick.AddListener(HandleHostButtonClicked);
         m_clientButton.onClick.AddListener(HandleClientButtonClicked);
 
-        m_networkManager.OnServerStarted += HandleServerStarted;
+        m_networkManager.OnClientStarted += OnClientStarted;
     }
     
     private void OnDestroy()
     {
-        m_networkManager.OnServerStarted -= HandleServerStarted;
+        m_networkManager.OnClientStarted -= OnClientStarted;
         
         m_hostButton.onClick.RemoveListener(HandleHostButtonClicked);
         m_clientButton.onClick.RemoveListener(HandleClientButtonClicked);
@@ -78,11 +78,8 @@ public class MainMenuManager : MonoBehaviour
         m_networkManager.StartClient();
     }
     
-    private void HandleServerStarted()
+    private void OnClientStarted()
     {
-        if (!m_networkManager.IsServer)
-            return;
-
         SceneLoaderManager.Instance.LoadSceneAsync(new LoadingContext(GameStateType.Lobby));
     }
 }
