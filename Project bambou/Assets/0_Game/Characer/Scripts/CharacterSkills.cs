@@ -30,17 +30,18 @@ public class CharacterSkills : NetworkBehaviour
     {
         Debug.Log("Fireball Cast!");
 
-        SpawnFireballRpc(transform.position, transform.forward);
+        SpawnFireballRpc(transform.position, transform.forward, OwnerClientId);
     }
 
     [Rpc(SendTo.Server, RequireOwnership = false)]
-    private void SpawnFireballRpc(Vector3 spawnPos, Vector3 direction)
+    private void SpawnFireballRpc(Vector3 spawnPos, Vector3 direction, ulong clientId)
     {
         Debug.Log("Fireball Spawn!");
         GameObject obj = Instantiate(fireballPrefab, spawnPos, Quaternion.LookRotation(direction));
 
         NetworkObject netObj = obj.GetComponent<NetworkObject>();
-        netObj.Spawn();
+        
+        netObj.SpawnAsPlayerObject(clientId);
 
         obj.GetComponent<FireballProjectile>().Initialize(direction);
     }
