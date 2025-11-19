@@ -64,7 +64,6 @@ public class Character : NetworkBehaviour
     public void Move(Vector2 input)
     {
         if (!CanControl()) return;
-        Debug.Log("Character :" + input.ToString());
         movement.Move(input);
     }
 

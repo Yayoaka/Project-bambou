@@ -15,8 +15,6 @@ public class CharacterMovementController : NetworkBehaviour
         if (!CanControl()) return;
 
         moveDirection.Set(input.x, 0f, input.y);
-
-        Debug.unityLogger.Log("mouvement :" + moveDirection);
         animator?.SetFloat("speed", input.magnitude);
     }
 
