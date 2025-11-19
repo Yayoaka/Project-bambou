@@ -4,6 +4,14 @@ using Unity.Netcode;
 public class CharacterSkills : NetworkBehaviour
 {
     // [SerializeField] private CharacterAnimationController animationController;
+    [SerializeField] private GameObject fireballPrefab;
+    
+    private Character character;
+
+    private void Awake()
+    {
+        character = GetComponent<Character>();
+    }
 
     public void UseSkill(int index)
     {
@@ -11,17 +19,32 @@ public class CharacterSkills : NetworkBehaviour
 
         switch (index)
         {
-            case 1: Skill1(); break;
+            case 1: Skill1_Fireball(); break;
             case 2: Skill2(); break;
             case 3: Skill3(); break;
             default: Debug.LogWarning($"Unknown Skill: {index}"); break;
         }
     }
 
-    private void Skill1()
+    private void Skill1_Fireball()
     {
-        Debug.Log("Skill1 used");
+        Debug.Log("Fireball Cast!");
+
+        SpawnFireballRpc(transform.position, transform.forward);
     }
+
+    [Rpc(SendTo.Server, RequireOwnership = false)]
+    private void SpawnFireballRpc(Vector3 spawnPos, Vector3 direction)
+    {
+        Debug.Log("Fireball Spawn!");
+        GameObject obj = Instantiate(fireballPrefab, spawnPos, Quaternion.LookRotation(direction));
+
+        NetworkObject netObj = obj.GetComponent<NetworkObject>();
+        netObj.Spawn();
+
+        obj.GetComponent<FireballProjectile>().Initialize(direction);
+    }
+    
     private void Skill2()
     {
         Debug.Log("Skill2 used");

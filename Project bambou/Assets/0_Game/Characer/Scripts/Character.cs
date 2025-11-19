@@ -3,6 +3,15 @@ using UnityEngine;
 
 public class Character : NetworkBehaviour
 {
+    public enum CharacterState
+    {
+        Normal,
+        Rolling,
+        Casting
+    }
+    
+    public CharacterState State { get; private set; } = CharacterState.Normal;
+    
     [Header("Modules")]
     [SerializeField] private CharacterMovementController movement;
     [SerializeField] private CharacterAnimationController animationController;
@@ -44,8 +53,12 @@ public class Character : NetworkBehaviour
     {
         if (!IsOwner || !isRolling) return;
 
-        rollTimer -= Time.deltaTime;
-        if (rollTimer <= 0f) EndRoll();
+        if (State == CharacterState.Rolling)
+        {
+            rollTimer -= Time.deltaTime;
+            if (rollTimer <= 0f)
+                EndRoll();
+        }
     }
 
     public void Move(Vector2 input)
@@ -58,7 +71,8 @@ public class Character : NetworkBehaviour
     public void StartRoll()
     {
         if (!CanControl()) return;
-
+        
+        State = CharacterState.Rolling;
         isRolling = true;
         rollTimer = rollDuration;
 
@@ -70,16 +84,30 @@ public class Character : NetworkBehaviour
     {
         isRolling = false;
         movement.MoveSpeed = baseMoveSpeed;
+        
+        State = CharacterState.Normal;
     }
-
+    
+    public void StartCasting()
+    {
+        State = CharacterState.Casting;
+    }
+    
+    public void StopCasting()
+    {
+        State = CharacterState.Normal;
+    }
+    
     public void UseSkill(int skillIndex)
     {
         if (!IsOwner) return;
+        if (!CanControl()) return; 
+        
         skills?.UseSkill(skillIndex);
     }
 
     private bool CanControl()
     {
-        return IsOwner && !isRolling && movement != null;
+        return State == CharacterState.Normal;
     }
 }
