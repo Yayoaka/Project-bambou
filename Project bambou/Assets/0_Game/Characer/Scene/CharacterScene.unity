@@ -119,6 +119,107 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &1065976942
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 259.23676
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -29.492798
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1173363112064771222, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8461315490994381656, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      propertyPath: m_Name
+      value: Enemy Test
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8461315490994381656, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1065976944}
+    - targetCorrespondingSourceObject: {fileID: 8461315490994381656, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1065976945}
+  m_SourcePrefab: {fileID: 100100000, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+--- !u!1 &1065976943 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8461315490994381656, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+  m_PrefabInstance: {fileID: 1065976942}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &1065976944
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065976943}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.7706604, y: 2.4081655, z: 7.8257465}
+  m_Center: {x: -0.000015258789, y: 1.1454792, z: -0.8532171}
+--- !u!114 &1065976945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1065976943}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc150c3bf0363ff4eb8fabe6d110c350, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::IEnemy
 --- !u!1 &1196803321
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,3 +746,4 @@ SceneRoots:
   - {fileID: 2062387978}
   - {fileID: 1325739962}
   - {fileID: 1196803324}
+  - {fileID: 1065976942}
