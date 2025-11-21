@@ -103,6 +103,7 @@ public class Character : NetworkBehaviour
         if (!CanControl()) return; 
         
         skills?.UseSkill(skillIndex);
+        Debug.Log("UseSkill");
     }
 
     private bool CanControl()

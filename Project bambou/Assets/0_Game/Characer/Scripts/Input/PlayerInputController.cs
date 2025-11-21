@@ -31,13 +31,21 @@ public class PlayerInputController : MonoBehaviour
     private void Start()
     {
         controls.Enable();
-        
-        controls.Player.Skill1.started += HandleSkill1Started;
-    }
 
-    private void HandleSkill1Started(InputAction.CallbackContext obj)
-    {
-        TriggerSkill(1);
+        controls.Player.Skill1.started += (InputAction.CallbackContext ctx) =>
+        {
+            TriggerSkill(1);
+        };
+        
+        controls.Player.Skill2.started += (InputAction.CallbackContext ctx) =>
+        {
+            TriggerSkill(2);
+        };
+        
+        controls.Player.Skill3.started += (InputAction.CallbackContext ctx) =>
+        {
+            TriggerSkill(3);
+        };
     }
 
     private void OnDestroy()
@@ -51,34 +59,6 @@ public class PlayerInputController : MonoBehaviour
         if (!CanControl()) return;
         moveInput = controls.Player.Move.ReadValue<Vector2>();
         character.Move(moveInput);    
-    }
-
-    public void OnMove(InputValue value)
-    {
-        
-        if (!CanControl()) return;
-        moveInput = value.Get<Vector2>();
-    }
-
-    private void OnRoll()
-    {
-        if (!CanControl()) return;
-        character.StartRoll();
-    }
-
-    private void OnSkill1()
-    {
-        TriggerSkill(1);
-    }
-
-    private void OnSkill2()
-    { 
-        TriggerSkill(2);
-    }
-
-    private void OnSkill3()
-    {
-        TriggerSkill(3);
     }
 
     private void TriggerSkill(int index)

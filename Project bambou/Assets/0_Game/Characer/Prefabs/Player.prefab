@@ -97,6 +97,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterSkills
   ShowTopMostFoldoutHeaderGroup: 1
   fireballPrefab: {fileID: 4386560967392349379, guid: 981f3c795127a68429ff763980538f86, type: 3}
+  novaPrefab: {fileID: 301423627998132045, guid: 9f6f9f31eb33ffe46a1f366bec33a27f, type: 3}
 --- !u!54 &4064493778673570902
 Rigidbody:
   m_ObjectHideFlags: 0
