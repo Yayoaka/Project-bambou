@@ -1,0 +1,86 @@
+using Character.Data;
+using Character.Input;
+using Character.State;
+using Character.Visual;
+using Unity.Netcode;
+using UnityEngine;
+
+namespace Character
+{
+    public class CharacterController : NetworkBehaviour
+    {
+        [SerializeField] private CharacterData data;
+
+        [Header("Modules")]
+        public CharacterMovementController Movement { get; private set; }
+        public CharacterAnimationController AnimationController { get; private set; }
+        public CharacterSkills Skills { get; private set; }
+        public CharacterInputController InputController { get; private set; }
+        public CharacterState State { get; private set; }
+        public CharacterVisual Visual { get; private set; }
+
+        private void Awake()
+        {
+            Movement = GetComponent<CharacterMovementController>();
+            AnimationController = GetComponent<CharacterAnimationController>();
+            Skills = GetComponent<CharacterSkills>();
+            InputController = GetComponent<CharacterInputController>();
+            State = GetComponent<CharacterState>();
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            SpawnVisual();
+            SetData();
+            
+            if (!IsOwner)
+            {
+                if (InputController != null)
+                    InputController.enabled = false;
+                
+                return;
+            }
+            
+            InputController.SetCharacter(this);
+        }
+        
+        private void SpawnVisual()
+        {
+            if (Visual != null) return;
+
+            var prefab = data.CharacterVisualPrefab;
+            if (prefab == null)
+            {
+                Debug.LogError("CharacterVisualPrefab is missing in CharacterData!");
+                return;
+            }
+
+            Visual = Instantiate(prefab, transform);
+            AnimationController = Visual.GetComponent<CharacterAnimationController>();
+        }
+
+        private void SetData()
+        {
+            Skills.SetSpells(data.Spells);
+        }
+        
+        public void Move(Vector2 input)
+        {
+            if (!IsOwner) return;
+
+            if (State.IsStunned)
+                return;
+
+            Movement.Move(input);
+        }
+
+        public void TryUseSkill(int index, Vector3 direction)
+        {
+            if (!IsOwner) return;
+
+            if (State.IsStunned) return;
+
+            Skills.TryCast(index, direction);
+        }
+    }
+}

@@ -2,13 +2,14 @@ using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using CharacterController = Character.CharacterController;
 using Random = UnityEngine.Random;
 
 public class PlayerCharacterManager : NetworkBehaviour
 {
-    [SerializeField] private Character championPrefab;
+    [SerializeField] private CharacterController championPrefab;
 
-    private readonly Dictionary<ulong, Character> playerCharacters = new();
+    private readonly Dictionary<ulong, CharacterController> playerCharacters = new();
 
     private void OnDestroy()
     {

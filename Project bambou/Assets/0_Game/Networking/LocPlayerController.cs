@@ -1,10 +1,11 @@
+using Character.Input;
 using UnityEngine;
 
 public class LocPlayerController : MonoBehaviour
 {
     public static LocPlayerController Instance { get; private set; }
 
-    private PlayerInputController localPlayer;
+    private CharacterInputController _localCharacter;
 
     private void Awake()
     {
@@ -21,8 +22,8 @@ public class LocPlayerController : MonoBehaviour
             Instance = null;
     }
 
-    public void SetChampionCharacter(PlayerInputController player)
+    public void SetChampionCharacter(CharacterInputController character)
     {
-        localPlayer = player;
+        _localCharacter = character;
     }
 }

@@ -13,19 +13,25 @@ namespace Skills
     [Serializable]
     public struct EffectData
     {
-        public SpellType Type;
-        public float Duration;
-        public GameObject Effect;
-        public bool OnCursor;
+        public SpellType type;
+        public float duration;
+        public GameObject effectPrefab;
+        public bool onCursor;
     }
     
     [CreateAssetMenu(fileName = "SpellData", menuName = "Spells/SpellData", order = 0)]
     public class SpellData : ScriptableObject
     {
-        public string SpellName;
-        public string SpellDescription;
-        public Sprite SpellIcon;
-        public float Cooldown;
-        public EffectData[] Effects;
+        [SerializeField] private string spellName;
+        [SerializeField] private string spellDescription;
+        [SerializeField] private Sprite spellIcon;
+        [SerializeField] private float cooldown;
+        [SerializeField] private EffectData[] effects;
+
+        public string SpellName => spellName;
+        public string SpellDescription => spellDescription;
+        public Sprite SpellIcon => spellIcon;
+        public float Cooldown => cooldown;
+        public EffectData[] Effects => effects;
     }
 }

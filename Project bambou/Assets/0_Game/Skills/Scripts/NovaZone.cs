@@ -1,6 +1,7 @@
 using UnityEngine;
 using Unity.Netcode;
 using System.Collections;
+using CharacterController = Character.CharacterController;
 
 public class NovaZone : NetworkBehaviour
 {
@@ -28,7 +29,7 @@ public class NovaZone : NetworkBehaviour
     {
         if (!IsServer) return;
 
-        if (other.TryGetComponent<Character>(out var character))
+        if (other.TryGetComponent<CharacterController>(out var character))
         {
             if (character.NetworkObject.OwnerClientId == ownerId) return;
             
