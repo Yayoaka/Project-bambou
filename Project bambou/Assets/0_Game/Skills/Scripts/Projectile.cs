@@ -35,12 +35,6 @@ public class Projectile : NetworkBehaviour
         if (!IsServer) return;
 
         if(!other.CompareTag("Enemy")) return;
-        
-        if (other.TryGetComponent(out NetworkObject netObj))
-        {
-            if (netObj.OwnerClientId == OwnerClientId)
-                return;
-        }
 
         GetComponent<NetworkObject>().Despawn();
     }

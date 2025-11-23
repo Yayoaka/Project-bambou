@@ -10,7 +10,6 @@ public class CharacterAnimationController : MonoBehaviour
     void Awake()
     {
         _hashSpeed = Animator.StringToHash("Speed");
-        _hashSkillTrigger = Animator.StringToHash("Skill");
     }
 
     public void SetMoveInput(Vector2 move)
@@ -27,6 +26,6 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void TriggerSkill(int index)
     {
-        if (animator != null) animator.SetInteger(_hashSkillTrigger, index);
+        if (animator != null) animator.SetTrigger("Spell" + index);
     }
 }

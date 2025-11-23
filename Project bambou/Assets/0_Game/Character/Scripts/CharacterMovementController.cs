@@ -21,9 +21,22 @@ namespace Character
         {
             if (moveDirection.sqrMagnitude > 0.01f)
             {
-                Vector3 newPosition = rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
+                var newPosition = rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
                 rb.MovePosition(newPosition);
-                rb.MoveRotation(Quaternion.LookRotation(moveDirection));
+            }
+        }
+        
+        public void RotateToMouse(Vector3 worldMousePos)
+        {
+            if (!IsOwner) return;
+            
+            var direction = worldMousePos - rb.position;
+            direction.y = 0f;
+
+            if (direction.sqrMagnitude > 0.01f)
+            {
+                var rot = Quaternion.LookRotation(direction);
+                rb.MoveRotation(rot);
             }
         }
     }

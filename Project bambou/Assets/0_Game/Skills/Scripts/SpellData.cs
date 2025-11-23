@@ -17,6 +17,8 @@ namespace Skills
         public float duration;
         public GameObject effectPrefab;
         public bool onCursor;
+        public bool toCursor;
+        public bool followCaster;
     }
     
     [CreateAssetMenu(fileName = "SpellData", menuName = "Spells/SpellData", order = 0)]
@@ -27,11 +29,13 @@ namespace Skills
         [SerializeField] private Sprite spellIcon;
         [SerializeField] private float cooldown;
         [SerializeField] private EffectData[] effects;
+        [SerializeField] private bool animate;
 
         public string SpellName => spellName;
         public string SpellDescription => spellDescription;
         public Sprite SpellIcon => spellIcon;
         public float Cooldown => cooldown;
         public EffectData[] Effects => effects;
+        public bool Animate => animate;
     }
 }

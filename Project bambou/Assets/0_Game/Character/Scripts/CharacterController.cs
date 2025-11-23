@@ -1,3 +1,4 @@
+using Camera;
 using Character.Data;
 using Character.Input;
 using Character.State;
@@ -42,6 +43,7 @@ namespace Character
             }
             
             InputController.SetCharacter(this);
+            CameraManager.SetTarget(transform);
         }
         
         private void SpawnVisual()
@@ -62,6 +64,7 @@ namespace Character
         private void SetData()
         {
             Skills.SetSpells(data.Spells);
+            Skills.SetAnimationController(AnimationController);
         }
         
         public void Move(Vector2 input)
@@ -74,13 +77,23 @@ namespace Character
             Movement.Move(input);
         }
 
-        public void TryUseSkill(int index, Vector3 direction)
+        public void Rotate(Vector3 input)
+        {
+            if (!IsOwner) return;
+            
+            if (State.IsStunned)
+                return;
+            
+            Movement.RotateToMouse(input);
+        }
+
+        public void TryUseSkill(int index, Vector3 mousePosition, Vector3 direction)
         {
             if (!IsOwner) return;
 
             if (State.IsStunned) return;
 
-            Skills.TryCast(index, direction);
+            Skills.TryCast(index, mousePosition, direction);
         }
     }
 }
