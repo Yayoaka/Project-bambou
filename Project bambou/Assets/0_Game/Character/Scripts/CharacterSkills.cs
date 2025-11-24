@@ -93,9 +93,20 @@ namespace Character
             if (effect.followCaster)
             {
                 obj.transform.SetParent(transform);
+                
+                SetZoneParentClientRpc(netObj.NetworkObjectId, NetworkObjectId);
             }
 
             obj.GetComponent<Zone>().Init(effect);
+        }
+        
+        [Rpc(SendTo.NotServer, RequireOwnership = false)]
+        private void SetZoneParentClientRpc(ulong zoneId, ulong parentId)
+        {
+            var zoneObj = NetworkManager.Singleton.SpawnManager.SpawnedObjects[zoneId].transform;
+            var parentObj = NetworkManager.Singleton.SpawnManager.SpawnedObjects[parentId].transform;
+
+            zoneObj.SetParent(parentObj);
         }
 
         [Rpc(SendTo.ClientsAndHost, RequireOwnership = false)]
