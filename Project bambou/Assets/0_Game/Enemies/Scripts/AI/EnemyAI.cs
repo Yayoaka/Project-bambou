@@ -15,136 +15,109 @@ namespace Enemies.AI
         [Header("LOD")]
         public ILODComponent.LodLevel lodLevel = ILODComponent.LodLevel.High;
 
-        private Vector3 _lastTargetPos;
-        private int _frameCounter;
+        private int _frameCount;
         private int _randomOffset;
-
-        private const float RepathDistance = 0.5f; // Minimum movement before recalculating path
 
         void Awake()
         {
             nav.updateRotation = false;
             nav.updatePosition = false;
 
-            _randomOffset = Random.Range(0, 5);
+            _randomOffset = Random.Range(0, 8);
         }
 
         void Start()
         {
+            EnemyLODSystem.Instance.Register(this);
             EnemyTickSystem.Instance.Register(this);
 
             _movement = GetComponent<EnemyMovement>();
 
-            var obj = GameObject.FindWithTag("Player");
-            if (obj != null)
-                _target = obj.transform;
+            var pl = GameObject.FindGameObjectWithTag("Player");
+            if (pl != null)
+                _target = pl.transform;
 
             if (_target != null)
-                _lastTargetPos = Vector3.positiveInfinity;
+            {
+                nav.SetDestination(_target.position);
+            }
         }
 
         void OnDestroy()
         {
-            if (EnemyTickSystem.Instance != null)
-                EnemyTickSystem.Instance.Unregister(this);
+            if (EnemyLODSystem.Instance != null) EnemyLODSystem.Instance.Unregister(this);
+            if (EnemyTickSystem.Instance != null) EnemyTickSystem.Instance.Unregister(this);
         }
 
-        // ------------------------------------------------------------
+        // ----------------------------------------------------------
         // TICK
-        // ------------------------------------------------------------
-        public void Tick()
+        // ----------------------------------------------------------
+        public void Tick(float dt)
         {
-            //DEBUG
-            if(Vector3.Distance(_lastTargetPos, transform.position) < 2)
-                Destroy(this.gameObject);
-            
-            _frameCounter++;
+            _frameCount++;
 
-            if (!ShouldTick()) 
+            if (_target == null)
                 return;
 
-            if (_target == null) 
-                return;
+            ApplyMovement(dt);
 
-            TryRepath();
-            ApplyMovement();
+            if (ShouldRepath())
+                TryRepath();
         }
 
-        // ------------------------------------------------------------
+        // ----------------------------------------------------------
         // NAVIGATION
-        // ------------------------------------------------------------
+        // ----------------------------------------------------------
         void TryRepath()
         {
-            // Avoid too frequent SetDestination
-            var dist = (_target.position - _lastTargetPos).sqrMagnitude;
-            if (dist < RepathDistance * RepathDistance)
-                return;
-
-            // LOD throttling + random offset for desync
-            if (!LODAllowsRepath())
+            if (_target == null)
                 return;
 
             nav.SetDestination(_target.position);
-            _lastTargetPos = _target.position;
         }
 
-        bool LODAllowsRepath()
+        bool ShouldRepath()
         {
-            var mod = _randomOffset;
+            var fc = _frameCount + _randomOffset;
 
             switch (lodLevel)
             {
-                case ILODComponent.LodLevel.High:
+                case ILODComponent.LodLevel.High: 
                     return true;
 
                 case ILODComponent.LodLevel.Medium:
-                    return (_frameCounter + mod) % 10 == 0;
+                    return (fc % 10 == 0);
 
                 case ILODComponent.LodLevel.Low:
-                    return (_frameCounter + mod) % 50 == 0;
-
-                default:
-                    return true;
-            }
-        }
-
-        // ------------------------------------------------------------
-        // PHYSICS DRIVEN MOVEMENT
-        // ------------------------------------------------------------
-        void ApplyMovement()
-        {
-            var desired = nav.desiredVelocity;
-            _movement.Move(desired);
-
-            if (desired.sqrMagnitude > 0.01f)
-                _movement.Rotate(desired);
-            
-            nav.nextPosition = transform.position;
-        }
-
-        // ------------------------------------------------------------
-        // LOD
-        // ------------------------------------------------------------
-        public void SetLOD(ILODComponent.LodLevel level)
-        {
-            lodLevel = level;
-            _frameCounter = 0;
-        }
-
-        bool ShouldTick()
-        {
-            switch (lodLevel)
-            {
-                case ILODComponent.LodLevel.High:
-                    return true;
-
-                case ILODComponent.LodLevel.Medium:
-                    return (_frameCounter % 2 == 0);  // Half frequency
-                case ILODComponent.LodLevel.Low:
-                    return (_frameCounter % 5 == 0);  // Low frequency
+                    return (fc % 40 == 0);
             }
 
             return true;
         }
+
+        // ----------------------------------------------------------
+        // MOVEMENT
+        // ----------------------------------------------------------
+        void ApplyMovement(float dt)
+        {
+            var desired = nav.desiredVelocity;
+
+            _movement.Move(desired, dt);
+
+            if (desired.sqrMagnitude > 0.001f)
+                _movement.Rotate(desired, dt);
+
+            nav.nextPosition = transform.position;
+        }
+
+        // ----------------------------------------------------------
+        // LOD SYSTEM
+        // ----------------------------------------------------------
+        public void SetLOD(ILODComponent.LodLevel level)
+        {
+            lodLevel = level;
+        }
+
+        public Vector3 Position => transform.position;
     }
 }

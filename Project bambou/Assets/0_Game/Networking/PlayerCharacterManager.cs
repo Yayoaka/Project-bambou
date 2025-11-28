@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Unity.Netcode;
 using UnityEngine;
@@ -10,6 +11,8 @@ public class PlayerCharacterManager : NetworkBehaviour
     [SerializeField] private CharacterController championPrefab;
 
     private readonly Dictionary<ulong, CharacterController> playerCharacters = new();
+    
+    public static event Action<GameObject> OnPlayerSpawned;
 
     private void OnDestroy()
     {
@@ -53,6 +56,8 @@ public class PlayerCharacterManager : NetworkBehaviour
         playerCharacters.Add(clientId, character);
 
         character.NetworkObject.SpawnWithOwnership(clientId);
+        
+        OnPlayerSpawned?.Invoke(character.gameObject);
     }
 
 

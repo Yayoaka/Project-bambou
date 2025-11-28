@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Enemies.Lod
 {
     public interface ILODComponent
@@ -8,7 +10,8 @@ namespace Enemies.Lod
             Medium,
             Low
         }
-        
+
         void SetLOD(LodLevel level);
+        Vector3 Position { get; }
     }
 }

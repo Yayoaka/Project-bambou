@@ -2,6 +2,6 @@ namespace Enemies.Tick
 {
     public interface ITickable
     {
-        void Tick();
+        void Tick(float dt);
     }
 }

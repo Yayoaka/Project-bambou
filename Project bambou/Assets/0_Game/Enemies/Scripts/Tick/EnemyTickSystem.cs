@@ -11,32 +11,19 @@ namespace Enemies.Tick
 
         void Awake()
         {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
             Instance = this;
         }
 
         void Update()
         {
+            var dt = Time.deltaTime;
+
             var count = _tickables.Count;
             for (var i = 0; i < count; i++)
-            {
-                _tickables[i].Tick();
-            }
+                _tickables[i].Tick(dt);
         }
 
-        public void Register(ITickable tickable)
-        {
-            _tickables.Add(tickable);
-        }
-
-        public void Unregister(ITickable tickable)
-        {
-            _tickables.Remove(tickable);
-        }
+        public void Register(ITickable t) => _tickables.Add(t);
+        public void Unregister(ITickable t) => _tickables.Remove(t);
     }
 }

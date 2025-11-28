@@ -5,21 +5,27 @@ namespace Enemies.AI
     public class EnemyMovement : MonoBehaviour
     {
         [SerializeField] private Rigidbody rb;
-        [SerializeField] private float speed = 3f;
+        [SerializeField] private float moveLerp = 12f;
         [SerializeField] private float rotationSpeed = 10f;
 
-        public void Move(Vector3 desired)
+        public void Move(Vector3 desired, float dt)
         {
-            var current = rb.linearVelocity;
-            var newVel = new Vector3(desired.x, current.y, desired.z);
+            var vel = rb.linearVelocity;
+            var horizontal = new Vector3(desired.x, 0f, desired.z);
 
-            rb.linearVelocity = Vector3.Lerp(new Vector3(current.x, current.y, current.z), newVel, Time.deltaTime * 8f);
+            var newVel = Vector3.Lerp(
+                vel,
+                new Vector3(horizontal.x, vel.y, horizontal.z),
+                dt * moveLerp
+            );
+
+            rb.linearVelocity = newVel;
         }
 
-        public void Rotate(Vector3 dir)
+        public void Rotate(Vector3 dir, float dt)
         {
             var rot = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, Time.deltaTime * rotationSpeed);
+            transform.rotation = Quaternion.Slerp(transform.rotation, rot, dt * rotationSpeed);
         }
     }
 }
