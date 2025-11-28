@@ -9,6 +9,6 @@ namespace Enemies.Lod
             Low
         }
         
-        
+        void SetLOD(LodLevel level);
     }
 }
