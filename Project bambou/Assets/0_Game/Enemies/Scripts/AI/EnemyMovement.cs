@@ -24,8 +24,17 @@ namespace Enemies.AI
 
         public void Rotate(Vector3 dir, float dt)
         {
-            var rot = Quaternion.LookRotation(dir);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rot, dt * rotationSpeed);
+            if (dir.sqrMagnitude < 0.01f)
+                return;
+
+            // Force agent to always look exactly where it moves
+            var rot = Quaternion.LookRotation(dir.normalized, Vector3.up);
+
+            transform.rotation = Quaternion.Slerp(
+                transform.rotation,
+                rot,
+                dt * rotationSpeed
+            );
         }
     }
 }

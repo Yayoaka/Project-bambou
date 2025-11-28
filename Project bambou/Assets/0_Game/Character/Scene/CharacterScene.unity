@@ -510,6 +510,7 @@ GameObject:
   - component: {fileID: 929036776}
   - component: {fileID: 929036778}
   - component: {fileID: 929036779}
+  - component: {fileID: 929036780}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -557,7 +558,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Spawner.EnemySpawner
   prefab: {fileID: 8461315490994381656, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
-  count: 1000
+  count: 100
   radius: 100
 --- !u!114 &929036779
 MonoBehaviour:
@@ -572,6 +573,106 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Lod.EnemyLODSystem
   updatesPerFrame: 50
+--- !u!114 &929036780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929036775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 963d51a5d8e03544394c2ea02a41ee03, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.EnemyGhostRigSystem
+  ghostRigAnimators:
+  - {fileID: 2043405871}
+  - {fileID: 1307289745}
+  - {fileID: 1991256795}
+--- !u!1001 &1307289744
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1347928049}
+    m_Modifications:
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_Name
+      value: UndeadRat_Bl (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1307289747}
+  m_SourcePrefab: {fileID: 100100000, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+--- !u!4 &1307289745 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+  m_PrefabInstance: {fileID: 1307289744}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1307289746 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+  m_PrefabInstance: {fileID: 1307289744}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1307289747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1307289746}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f111c7844da56e14ab31ebb5613045e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.GhostRigAnimator
+  walkClip: {fileID: -3419257869308726280, guid: 4876f98ffea60c444a2b5c3c9be502dc, type: 3}
+  rigRoot: {fileID: 1307289746}
 --- !u!1 &1325739961
 GameObject:
   m_ObjectHideFlags: 0
@@ -644,6 +745,40 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacterManager
   ShowTopMostFoldoutHeaderGroup: 1
   championPrefab: {fileID: 6157826856464229571, guid: 3d7c666111baec24b87a12615095c291, type: 3}
+--- !u!1 &1347928048
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1347928049}
+  m_Layer: 0
+  m_Name: GhostRigs
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1347928049
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1347928048}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -38.61703, y: -3.34, z: 25.46284}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 2043405871}
+  - {fileID: 1307289745}
+  - {fileID: 1991256795}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1675391299
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,6 +906,174 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!1001 &1991256794
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1347928049}
+    m_Modifications:
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_Name
+      value: UndeadRat_Bl (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1991256797}
+  m_SourcePrefab: {fileID: 100100000, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+--- !u!4 &1991256795 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+  m_PrefabInstance: {fileID: 1991256794}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1991256796 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+  m_PrefabInstance: {fileID: 1991256794}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1991256797
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1991256796}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f111c7844da56e14ab31ebb5613045e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.GhostRigAnimator
+  walkClip: {fileID: -3419257869308726280, guid: 4876f98ffea60c444a2b5c3c9be502dc, type: 3}
+  rigRoot: {fileID: 1991256796}
+--- !u!1001 &2043405869
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1347928049}
+    m_Modifications:
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      propertyPath: m_Name
+      value: UndeadRat_Bl
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2043405872}
+  m_SourcePrefab: {fileID: 100100000, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+--- !u!1 &2043405870 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7904220611771072763, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+  m_PrefabInstance: {fileID: 2043405869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2043405871 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7420452690005580353, guid: 2f811dd6596dc8048ba8d72a448fda8f, type: 3}
+  m_PrefabInstance: {fileID: 2043405869}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2043405872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2043405870}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f111c7844da56e14ab31ebb5613045e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.GhostRigAnimator
+  walkClip: {fileID: -3419257869308726280, guid: 4876f98ffea60c444a2b5c3c9be502dc, type: 3}
+  rigRoot: {fileID: 2043405870}
 --- !u!1 &2062387975
 GameObject:
   m_ObjectHideFlags: 0
@@ -952,3 +1255,4 @@ SceneRoots:
   - {fileID: 67251081}
   - {fileID: 929036777}
   - {fileID: 699418276}
+  - {fileID: 1347928049}

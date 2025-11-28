@@ -1,3 +1,4 @@
+using Enemies.Visual;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -5,15 +6,14 @@ namespace Enemies.Lod
 {
     public class EnemyActivation : MonoBehaviour
     {
-        public Animator animator;
+        public EnemyPoseFollower PoseFollower;
         public NavMeshAgent nav;
         public Collider[] colliders;
 
         private void SetActiveState(bool visible)
         {
-            animator.cullingMode = visible 
-                ? AnimatorCullingMode.AlwaysAnimate 
-                : AnimatorCullingMode.CullCompletely;
+            PoseFollower.enabled = visible;
+            
             if (visible)
             {
                 if (nav) nav.enabled = true;

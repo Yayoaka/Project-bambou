@@ -10,7 +10,6 @@ namespace Enemies.AI
     {
         [Header("References")]
         [SerializeField] private NavMeshAgent nav;
-        [SerializeField] private EnemyAnimationDriver anim;
         private EnemyMovement _movement;
         private Transform _target;
 
@@ -26,6 +25,8 @@ namespace Enemies.AI
 
         void Awake()
         {
+            nav.avoidancePriority = 50;
+            nav.obstacleAvoidanceType = ObstacleAvoidanceType.HighQualityObstacleAvoidance;
             nav.updateRotation = false;
             nav.updatePosition = false;
 
@@ -65,7 +66,7 @@ namespace Enemies.AI
             if (_target == null)
                 return;
 
-            if (Vector2.Distance(_target.position, Position) < _attackRange)
+            if (Vector3.Distance(_target.position, Position) < _attackRange)
             {
                 //anim.SetAttack(_attackSpeed, dt);
                 return;
@@ -112,23 +113,14 @@ namespace Enemies.AI
         // ----------------------------------------------------------
         void ApplyMovement(float dt)
         {
+            nav.nextPosition = transform.position;
+            
             var desired = nav.desiredVelocity;
 
             _movement.Move(desired, dt);
 
             if (desired.sqrMagnitude > 0.001f)
                 _movement.Rotate(desired, dt);
-
-            nav.nextPosition = transform.position;
-
-            if (lodLevel != ILODComponent.LodLevel.High) return; //ignore renderer for far objects
-            // --- Animation ---
-            var speed = new Vector2(desired.x, desired.z).magnitude;
-
-            if (speed > 0.1f)
-                anim.PlayWalk(speed, dt);
-            else
-                anim.PlayWalk(0f, dt);
         }
 
         // ----------------------------------------------------------
