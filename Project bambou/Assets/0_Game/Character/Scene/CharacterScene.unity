@@ -557,8 +557,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Spawner.EnemySpawner
   prefab: {fileID: 8461315490994381656, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
-  count: 100
-  radius: 1000
+  count: 1000
+  radius: 100
 --- !u!114 &929036779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -571,6 +571,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3492349c91ace784d9d34938e25c30c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Lod.EnemyLODSystem
+  updatesPerFrame: 50
 --- !u!1 &1325739961
 GameObject:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Enemies.Tick;
 using Enemies.Lod;
+using Enemies.Visual;
 
 namespace Enemies.AI
 {
@@ -9,14 +10,19 @@ namespace Enemies.AI
     {
         [Header("References")]
         [SerializeField] private NavMeshAgent nav;
+        [SerializeField] private EnemyAnimationDriver anim;
         private EnemyMovement _movement;
         private Transform _target;
 
         [Header("LOD")]
         public ILODComponent.LodLevel lodLevel = ILODComponent.LodLevel.High;
 
+        private float _attackRange = 2.2f;
+        
         private int _frameCount;
         private int _randomOffset;
+
+        private float _attackSpeed = 3;
 
         void Awake()
         {
@@ -59,6 +65,12 @@ namespace Enemies.AI
             if (_target == null)
                 return;
 
+            if (Vector2.Distance(_target.position, Position) < _attackRange)
+            {
+                //anim.SetAttack(_attackSpeed, dt);
+                return;
+            }
+            
             ApplyMovement(dt);
 
             if (ShouldRepath())
@@ -108,6 +120,15 @@ namespace Enemies.AI
                 _movement.Rotate(desired, dt);
 
             nav.nextPosition = transform.position;
+
+            if (lodLevel != ILODComponent.LodLevel.High) return; //ignore renderer for far objects
+            // --- Animation ---
+            var speed = new Vector2(desired.x, desired.z).magnitude;
+
+            if (speed > 0.1f)
+                anim.PlayWalk(speed, dt);
+            else
+                anim.PlayWalk(0f, dt);
         }
 
         // ----------------------------------------------------------

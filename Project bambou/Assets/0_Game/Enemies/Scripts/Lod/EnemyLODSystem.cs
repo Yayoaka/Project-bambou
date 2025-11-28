@@ -8,7 +8,7 @@ namespace Enemies.Lod
         public static EnemyLODSystem Instance;
 
         private readonly List<ILODComponent> _lods = new();
-        private Transform[] _players;
+        private readonly List<Transform> _players = new();
 
         [SerializeField] private int updatesPerFrame = 50;
         private int _index;
@@ -16,18 +16,31 @@ namespace Enemies.Lod
         void Awake()
         {
             Instance = this;
-
-            var objs = GameObject.FindGameObjectsWithTag("Player");
-            _players = new Transform[objs.Length];
-
-            for (var i = 0; i < objs.Length; i++)
-                _players[i] = objs[i].transform;
         }
 
         void Update()
         {
             UpdateGroup();
         }
+
+        #region Events
+
+        private void OnEnable()
+        {
+            PlayerCharacterManager.OnPlayerSpawned += OnPlayerSpawned;
+        }
+
+        private void OnDisable()
+        {
+            PlayerCharacterManager.OnPlayerSpawned -= OnPlayerSpawned;
+        }
+
+        private void OnPlayerSpawned(GameObject player)
+        {
+            _players.Add(player.transform);
+        }
+
+        #endregion
 
         public void Register(ILODComponent c) => _lods.Add(c);
         public void Unregister(ILODComponent c) => _lods.Remove(c);
@@ -47,6 +60,7 @@ namespace Enemies.Lod
                 var e = _lods[_index];
                 var level = CalcLOD(e.Position);
                 e.SetLOD(level);
+                Debug.Log($"LOD {_index}: {level}");
 
                 _index++;
             }
@@ -56,7 +70,7 @@ namespace Enemies.Lod
         {
             var minDist = float.MaxValue;
 
-            for (var i = 0; i < _players.Length; i++)
+            for (var i = 0; i < _players.Count; i++)
             {
                 var d = (pos - _players[i].position).sqrMagnitude;
                 if (d < minDist)
