@@ -69,6 +69,7 @@ GameObject:
   - component: {fileID: 2986730952871065006}
   - component: {fileID: 961213145225754337}
   - component: {fileID: 8407760253474316313}
+  - component: {fileID: 8783507582712426449}
   m_Layer: 6
   m_Name: Enemy Test
   m_TagString: Untagged
@@ -183,6 +184,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &8783507582712426449
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461315490994381656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d00b4d3eac2d8c44aa52ea31021f27e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Health.HealthComponent
+  maxHealth: 100
 --- !u!1001 &2462969652738429882
 PrefabInstance:
   m_ObjectHideFlags: 0
