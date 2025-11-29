@@ -1,8 +1,9 @@
+using Interfaces;
 using UnityEngine;
 
 namespace Health
 {
-    public enum EventType
+    public enum HealthEventType
     {
         Physical,
         Magical,
@@ -13,8 +14,8 @@ namespace Health
     {
         public float Amount;
         public Vector3 HitPoint;
-        public GameObject Source;
-        public EventType Type;
+        public IAffectable Source;
+        public HealthEventType Type;
         public bool Critical;
     }
 }

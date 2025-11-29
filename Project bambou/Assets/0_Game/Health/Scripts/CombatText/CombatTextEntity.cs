@@ -29,10 +29,10 @@ namespace Health.CombatText
             healthEventText.text = data.Amount.ToString(CultureInfo.InvariantCulture);
             healthEventText.color = data.Type switch
             {
-                EventType.Physical => Color.brown,
-                EventType.Magical => Color.darkMagenta,
-                EventType.True => Color.azure,
-                EventType.Healing => Color.chartreuse,
+                HealthEventType.Physical => Color.brown,
+                HealthEventType.Magical => Color.darkMagenta,
+                HealthEventType.True => Color.azure,
+                HealthEventType.Healing => Color.chartreuse,
                 _ => Color.black
             };
             healthEventText.alpha = 0;

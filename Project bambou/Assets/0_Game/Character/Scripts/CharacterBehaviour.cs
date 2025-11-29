@@ -3,12 +3,14 @@ using Character.Data;
 using Character.Input;
 using Character.State;
 using Character.Visual;
+using Health;
+using Interfaces;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace Character
 {
-    public class CharacterController : NetworkBehaviour
+    public class CharacterBehaviour : NetworkBehaviour, IAffectable
     {
         [SerializeField] private CharacterData data;
 
@@ -19,14 +21,23 @@ namespace Character
         public CharacterInputController InputController { get; private set; }
         public CharacterState State { get; private set; }
         public CharacterVisual Visual { get; private set; }
+        public CharacterHealth Health { get; private set; }
+        public CharacterStats Stats { get; private set; }
 
         private void Awake()
         {
             Movement = GetComponent<CharacterMovementController>();
-            AnimationController = GetComponent<CharacterAnimationController>();
+            Movement.Init(this);
             Skills = GetComponent<CharacterSkills>();
+            Skills.Init(this);
             InputController = GetComponent<CharacterInputController>();
+            InputController.Init(this);
             State = GetComponent<CharacterState>();
+            State.Init(this);
+            Health = GetComponent<CharacterHealth>();
+            Health.Init(this);
+            Stats = GetComponent<CharacterStats>();
+            Stats.Init(this);
         }
 
         public override void OnNetworkSpawn()
@@ -59,6 +70,7 @@ namespace Character
 
             Visual = Instantiate(prefab, transform);
             AnimationController = Visual.GetComponent<CharacterAnimationController>();
+            AnimationController.Init(this);
         }
 
         private void SetData()
@@ -94,6 +106,11 @@ namespace Character
             if (State.IsStunned) return;
 
             Skills.TryCast(index, mousePosition, direction);
+        }
+
+        public void Damage(HealthEventData healthEventData)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

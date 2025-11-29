@@ -1,4 +1,5 @@
 using System;
+using Health;
 using UnityEngine;
 
 namespace Skills
@@ -15,10 +16,15 @@ namespace Skills
     {
         public SpellType type;
         public float duration;
+        public HealthEventType effectType;
+        public float baseValue;
+        public float bonusPercentage;
         public GameObject effectPrefab;
         public bool onCursor;
         public bool toCursor;
         public bool followCaster;
+        public bool loop;
+        public float tickDelay;
     }
     
     [CreateAssetMenu(fileName = "SpellData", menuName = "Spells/SpellData", order = 0)]

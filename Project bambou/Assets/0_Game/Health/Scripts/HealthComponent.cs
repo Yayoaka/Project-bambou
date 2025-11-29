@@ -26,9 +26,8 @@ namespace Health
             {
                 Amount = 12,
                 Critical = false,
-                Type = EventType.Physical,
-                HitPoint = transform.position,
-                Source = gameObject
+                Type = HealthEventType.Physical,
+                Source = null
             });
         }
 
@@ -39,6 +38,7 @@ namespace Health
             var finalDamage = data.Amount; // placeholder
             CurrentHealth -= finalDamage;
 
+            data.HitPoint = transform.position;
             CombatTextSystem.Instance.DoDamageText(data);
             
             OnHit?.Invoke(data);
