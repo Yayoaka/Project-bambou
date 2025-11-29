@@ -60,7 +60,6 @@ namespace Enemies.Lod
                 var e = _lods[_index];
                 var level = CalcLOD(e.Position);
                 e.SetLOD(level);
-                Debug.Log($"LOD {_index}: {level}");
 
                 _index++;
             }
