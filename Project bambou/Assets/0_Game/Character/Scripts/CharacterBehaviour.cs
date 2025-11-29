@@ -27,17 +27,19 @@ namespace Character
         private void Awake()
         {
             Movement = GetComponent<CharacterMovementController>();
-            Movement.Init(this);
             Skills = GetComponent<CharacterSkills>();
-            Skills.Init(this);
             InputController = GetComponent<CharacterInputController>();
-            InputController.Init(this);
             State = GetComponent<CharacterState>();
-            State.Init(this);
             Health = GetComponent<CharacterHealth>();
-            Health.Init(this);
             Stats = GetComponent<CharacterStats>();
+            
+            Movement.Init(this);
+            Skills.Init(this);
+            InputController.Init(this);
+            State.Init(this);
+            Health.Init(this);
             Stats.Init(this);
+            Stats.SetStats(data.Stats);
         }
 
         public override void OnNetworkSpawn()
@@ -110,7 +112,7 @@ namespace Character
 
         public void Damage(HealthEventData healthEventData)
         {
-            throw new System.NotImplementedException();
+            Health.ApplyDamage(healthEventData);
         }
     }
 }

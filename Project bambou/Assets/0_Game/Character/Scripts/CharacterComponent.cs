@@ -7,7 +7,7 @@ namespace Character
     {
         protected CharacterBehaviour CharacterBehaviour;
         
-        public void Init(CharacterBehaviour characterBehaviour)
+        public virtual void Init(CharacterBehaviour characterBehaviour)
         {
             CharacterBehaviour = characterBehaviour;
         }

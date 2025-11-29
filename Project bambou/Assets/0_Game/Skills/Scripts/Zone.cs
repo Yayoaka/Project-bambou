@@ -55,10 +55,12 @@ namespace Skills
                     _processingList.Clear();
                     _processingList.AddRange(_targetsInside);
 
+                    var isCrit = _sourceStats.ComputeCrit(_data.effectType);
+                    
                     var data = new HealthEventData()
                     {
-                        Amount = _sourceStats.ComputeStat(_data.baseValue, _data.bonusPercentage, _data.effectType),
-                        Critical = _sourceStats.ComputeCrit(_data.effectType),
+                        Amount = _sourceStats.ComputeStat(_data.HealthModification, isCrit),
+                        Critical = isCrit,
                         Source = _sourceEntity,
                         Type = _data.effectType
                     };
