@@ -48,7 +48,6 @@ namespace Skills
             {
                 yield return new WaitForSeconds(_data.tickDelay);
 
-                Debug.Log(_targetsInside.Count);
                 if (_targetsInside.Count > 0)
                 {
                     // Copy so iterator is safe
@@ -59,7 +58,7 @@ namespace Skills
                     
                     var data = new HealthEventData()
                     {
-                        Amount = _sourceStats.ComputeStat(_data.HealthModification, isCrit),
+                        Amount = _sourceStats.ComputeStat(_data.healthModification, isCrit),
                         Critical = isCrit,
                         Source = _sourceEntity,
                         Type = _data.effectType

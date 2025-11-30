@@ -17,7 +17,7 @@ namespace Skills
         public SpellType type;
         public float duration;
         public HealthEventType effectType;
-        public HealthModificationData HealthModification;
+        public HealthModificationData healthModification;
         public GameObject effectPrefab;
         public bool onCursor;
         public bool toCursor;
@@ -29,11 +29,10 @@ namespace Skills
     [Serializable]
     public struct HealthModificationData
     {
-        public float BaseAbilityDamage;
-        public float BaseAbilityPower;
-        public float BaseHeal;
-        public float BonusDamagePercentage;
-        public float BonusPowerPercentage;
+        public float baseAbilityDamage;
+        public float baseAbilityPower;
+        public float bonusDamagePercentage;
+        public float bonusPowerPercentage;
     }
     
     [CreateAssetMenu(fileName = "SpellData", menuName = "Spells/SpellData", order = 0)]

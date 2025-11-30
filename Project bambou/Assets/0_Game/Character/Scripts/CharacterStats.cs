@@ -16,11 +16,11 @@ namespace Character
         
         public float ComputeStat(HealthModificationData data, bool isCritical)
         {
-            var finalValue = data.BaseAbilityDamage + data.BaseAbilityPower;
+            var finalValue = data.baseAbilityDamage + data.baseAbilityPower;
 
-            finalValue += data.BonusDamagePercentage * _stats.abilityDamage;
+            finalValue += data.bonusDamagePercentage * _stats.abilityDamage;
 
-            finalValue += data.BonusPowerPercentage * _stats.abilityPower;
+            finalValue += data.bonusPowerPercentage * _stats.abilityPower;
 
             return isCritical ? finalValue * _stats.critMultiplier : finalValue;
         }

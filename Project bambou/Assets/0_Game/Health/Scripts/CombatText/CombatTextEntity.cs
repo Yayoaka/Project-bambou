@@ -2,23 +2,20 @@ using System;
 using System.Globalization;
 using DG.Tweening;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Health.CombatText
 {
     public class CombatTextEntity : MonoBehaviour
     {
+        [SerializeField] private CanvasGroup textCanvasGroup;
         [SerializeField] private TMPro.TMP_Text healthEventText;
-        [SerializeField] private Canvas healthEventCanvas;
+        [SerializeField] private GameObject critGameObject;
+        [SerializeField] private Image critImage;
         
         private Sequence _textSequence;
         
         public bool IsAvailable {get; private set;}
-
-        private void Awake()
-        {
-            healthEventCanvas.worldCamera = UnityEngine.Camera.main;
-            healthEventCanvas.overrideSorting = true;
-        }
         
         public void Init(HealthEventData data)
         {
@@ -26,16 +23,27 @@ namespace Health.CombatText
             
             transform.position = data.HitPoint + Vector3.up * 0.5f;
             
-            healthEventText.text = data.Amount.ToString(CultureInfo.InvariantCulture);
+            healthEventText.text = Mathf.Round(data.Amount).ToString(CultureInfo.InvariantCulture);
             healthEventText.color = data.Type switch
             {
-                HealthEventType.Physical => Color.brown,
-                HealthEventType.Magical => Color.darkMagenta,
+                HealthEventType.Physical => Color.darkOrange,
+                HealthEventType.Magical => Color.lightSlateBlue,
                 HealthEventType.True => Color.azure,
                 HealthEventType.Healing => Color.chartreuse,
                 _ => Color.black
             };
-            healthEventText.alpha = 0;
+
+            critGameObject.SetActive(data.Critical);
+            critImage.color = data.Type switch
+            {
+                HealthEventType.Physical => Color.darkOrange,
+                HealthEventType.Magical => Color.lightSlateBlue,
+                HealthEventType.True => Color.azure,
+                HealthEventType.Healing => Color.chartreuse,
+                _ => Color.black
+            };
+            
+            textCanvasGroup.alpha = 0;
             if (UnityEngine.Camera.main != null) transform.rotation = UnityEngine.Camera.main.transform.rotation;
 
             PlayTextAnimation();
@@ -49,13 +57,13 @@ namespace Health.CombatText
 
             _textSequence.AppendCallback(() => gameObject.SetActive(true));
             
-            _textSequence.Append(healthEventText.DOFade(1, 0.5f));
+            _textSequence.Append(textCanvasGroup.DOFade(1, 0.5f));
 
             _textSequence.AppendInterval(0.5f);
             
             _textSequence.Append(transform.DOMoveZ(transform.position.z + 5f, 0.5f));
 
-            _textSequence.Insert(1, healthEventText.DOFade(0, 0.5f));
+            _textSequence.Insert(1, textCanvasGroup.DOFade(0, 0.5f));
 
             _textSequence.onKill += ResetTextAnimation;
             
