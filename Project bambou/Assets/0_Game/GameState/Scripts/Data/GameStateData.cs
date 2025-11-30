@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using UnityEditor;
+using SceneLoader;
 using UnityEngine;
 
 namespace GameState.Data
@@ -10,11 +10,11 @@ namespace GameState.Data
         public GameStateType stateType;
 
         [Header("Scenes to Load")]
-        public List<SceneAsset> scenesToLoad;
-        public List<SceneAsset> netScenesToLoad;
+        public List<string> scenesToLoad;
+        public List<string> netScenesToLoad;
 
         [Header("Scenes persistent")]
-        public List<SceneAsset> scenesToKeep;
-        public List<SceneAsset> netScenesToKeep;
+        public List<string> scenesToKeep;
+        public List<string> netScenesToKeep;
     }
 }
