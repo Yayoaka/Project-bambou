@@ -602,8 +602,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fcf3c11fe55d494ea4571066505344c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Spawner.EnemySpawner
-  prefab: {fileID: 8461315490994381656, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
-  count: 1000
+  prefab: {fileID: 4428415101058413187, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
+  data: {fileID: 11400000, guid: 0203f89a36524204da5f78a5df11f6ab, type: 2}
+  count: 40
   radius: 100
 --- !u!114 &929036779
 MonoBehaviour:
@@ -723,7 +724,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1110230333}
   - component: {fileID: 1110230336}
-  - component: {fileID: 1110230335}
   - component: {fileID: 1110230334}
   m_Layer: 0
   m_Name: Camera
@@ -791,14 +791,6 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!81 &1110230335
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1110230332}
-  m_Enabled: 1
 --- !u!20 &1110230336
 Camera:
   m_ObjectHideFlags: 0

@@ -1,15 +1,9 @@
 using Interfaces;
+using Stats.Data;
 using UnityEngine;
 
 namespace Health
 {
-    public enum HealthEventType
-    {
-        Physical,
-        Magical,
-        True,
-        Healing,
-    }
     public struct HealthEventData
     {
         public float Amount;

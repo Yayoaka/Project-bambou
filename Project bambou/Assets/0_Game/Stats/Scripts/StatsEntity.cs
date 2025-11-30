@@ -1,5 +1,6 @@
 using Health;
 using Skills;
+using Stats.Data;
 using UnityEngine;
 
 namespace Stats

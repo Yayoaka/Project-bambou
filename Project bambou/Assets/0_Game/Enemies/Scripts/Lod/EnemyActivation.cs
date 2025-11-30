@@ -1,28 +1,38 @@
 using Enemies.Visual;
+using Entity;
 using UnityEngine;
 using UnityEngine.AI;
 
 namespace Enemies.Lod
 {
-    public class EnemyActivation : MonoBehaviour
+    public class EnemyActivation : EntityComponent<EnemyBehaviour>
     {
-        public EnemyPoseFollower PoseFollower;
-        public NavMeshAgent nav;
-        public Collider[] colliders;
+        private EnemyPoseFollower _poseFollower;
+        private NavMeshAgent _nav;
+        private Collider _collider;
+
+        public override void Init(EnemyBehaviour owner)
+        {
+            base.Init(owner);
+            
+            _poseFollower = GetComponentInChildren<EnemyPoseFollower>();
+            _nav = GetComponent<NavMeshAgent>();
+            _collider = GetComponent<Collider>();
+        }
 
         private void SetActiveState(bool visible)
         {
-            PoseFollower.enabled = visible;
+            _poseFollower.enabled = visible;
             
             if (visible)
             {
-                if (nav) nav.enabled = true;
-                foreach (var c in colliders) c.enabled = true;
+                if (_nav) _nav.enabled = true;
+                if (_collider) _collider.enabled = true;
             }
             else
             {
-                if (nav) nav.enabled = false;
-                foreach (var c in colliders) c.enabled = false;
+                if (_nav) _nav.enabled = false;
+                if (_collider) _collider.enabled = false;
             }
         }
 

@@ -2,6 +2,7 @@ using System;
 using Enemies;
 using Entity;
 using Health.CombatText;
+using Stats.Data;
 using Unity.Netcode;
 using UnityEngine;
 

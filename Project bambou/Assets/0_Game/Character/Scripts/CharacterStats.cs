@@ -2,6 +2,7 @@ using Entity;
 using Health;
 using Skills;
 using Stats;
+using Stats.Data;
 using UnityEngine;
 
 namespace Character

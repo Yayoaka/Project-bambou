@@ -1,3 +1,4 @@
+using Enemies.Data;
 using UnityEngine;
 
 namespace Enemies.Spawner
@@ -5,7 +6,8 @@ namespace Enemies.Spawner
     public class EnemySpawner : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private GameObject prefab;
+        [SerializeField] private EnemyBehaviour prefab;
+        [SerializeField] private EnemyDataSO data;
         [SerializeField] private int count = 50;
         [SerializeField] private float radius = 20f;
 
@@ -23,7 +25,8 @@ namespace Enemies.Spawner
         void SpawnOne()
         {
             var pos = RandomPosition();
-            Instantiate(prefab, pos, Quaternion.identity);
+            var enemy = Instantiate(prefab, pos, Quaternion.identity);
+            enemy.Init(data);
         }
 
         Vector3 RandomPosition()

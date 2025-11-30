@@ -1,8 +1,12 @@
 using System;
 using System.Globalization;
+using Data;
 using DG.Tweening;
+using GameState.Data;
+using Stats.Data;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 namespace Health.CombatText
 {
@@ -10,8 +14,7 @@ namespace Health.CombatText
     {
         [SerializeField] private CanvasGroup textCanvasGroup;
         [SerializeField] private TMPro.TMP_Text healthEventText;
-        [SerializeField] private GameObject critGameObject;
-        [SerializeField] private Image critImage;
+        [SerializeField] private GameObject textContainer;
         
         private Sequence _textSequence;
         
@@ -21,27 +24,15 @@ namespace Health.CombatText
         {
             IsAvailable = false;
             
-            transform.position = data.HitPoint + Vector3.up * 0.5f;
+            transform.position = data.HitPoint + Vector3.up * 0.5f + new Vector3(Random.value, Random.value, Random.value);
             
-            healthEventText.text = Mathf.Round(data.Amount).ToString(CultureInfo.InvariantCulture);
-            healthEventText.color = data.Type switch
-            {
-                HealthEventType.Physical => Color.darkOrange,
-                HealthEventType.Magical => Color.lightSlateBlue,
-                HealthEventType.True => Color.azure,
-                HealthEventType.Healing => Color.chartreuse,
-                _ => Color.black
-            };
+            textContainer.transform.localScale = data.Critical ? Vector3.one * 0.9f : Vector3.one * 0.7f;
+            
+            var color = GetColor(data.Type);
 
-            critGameObject.SetActive(data.Critical);
-            critImage.color = data.Type switch
-            {
-                HealthEventType.Physical => Color.darkOrange,
-                HealthEventType.Magical => Color.lightSlateBlue,
-                HealthEventType.True => Color.azure,
-                HealthEventType.Healing => Color.chartreuse,
-                _ => Color.black
-            };
+            healthEventText.text = (data.Critical ? $"<sprite index=0 color=#{ColorUtility.ToHtmlStringRGBA(color)}>" : "") +
+                                   Mathf.Round(data.Amount).ToString(CultureInfo.InvariantCulture);
+            healthEventText.color = color;
             
             textCanvasGroup.alpha = 0;
             if (UnityEngine.Camera.main != null) transform.rotation = UnityEngine.Camera.main.transform.rotation;
@@ -74,6 +65,12 @@ namespace Health.CombatText
         {
             gameObject.SetActive(false);
             IsAvailable = true;
+        }
+
+        private Color GetColor(HealthEventType type)
+        {
+            var database = GameDatabase.Get<StatsDatabase>();
+            return database.GetEvent(type).Color;
         }
     }
 }
