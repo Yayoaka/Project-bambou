@@ -1,31 +1,29 @@
 using UnityEngine;
 
-public class CharacterAnimationController : MonoBehaviour
+namespace Character
 {
-    [SerializeField] private Animator animator;
-    private int _hashSpeed;
-    private int _hashSkillTrigger;
-    private Vector2 _lastMoveInput = Vector2.zero;
+    public class CharacterAnimationController : CharacterComponent
+    {
+        [SerializeField] private Animator animator;
+        private int _hashSpeed;
+        private int _hashSkillTrigger;
+        private Vector2 _lastMoveInput = Vector2.zero;
 
-    void Awake()
-    {
-        _hashSpeed = Animator.StringToHash("Speed");
-    }
+        void Awake()
+        {
+            _hashSpeed = Animator.StringToHash("Speed");
+        }
 
-    public void SetMoveInput(Vector2 move)
-    {
-        _lastMoveInput = move;
-        float speed = move.magnitude;
-        if (animator != null) animator.SetFloat(_hashSpeed, speed, 0.05f, Time.deltaTime);
-    }
-    
-    public void TriggerRoll()
-    {
-        animator.SetTrigger("roll");
-    }
+        public void SetMoveInput(Vector2 move)
+        {
+            _lastMoveInput = move;
+            float speed = move.magnitude;
+            if (animator != null) animator.SetFloat(_hashSpeed, speed, 0.05f, Time.deltaTime);
+        }
 
-    public void TriggerSkill(int index)
-    {
-        if (animator != null) animator.SetTrigger("Spell" + index);
+        public void TriggerSkill(int index)
+        {
+            if (animator != null) animator.SetTrigger("Spell" + index);
+        }
     }
 }

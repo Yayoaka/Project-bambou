@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Character
 {
-    public class CharacterMovementController : NetworkBehaviour
+    public class CharacterMovementController : CharacterComponent
     {
         [SerializeField] private float moveSpeed = 5f;
         public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }

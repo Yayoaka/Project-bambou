@@ -1,4 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
+using Health;
+using Interfaces;
+using Stats;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -6,28 +10,87 @@ namespace Skills
 {
     public class Zone : NetworkBehaviour
     {
-        private float _duration;
-        private int _damages = 10;
-        
-        public void Init(EffectData data)
+        private EffectData _data;
+        private IStatsEntity _sourceStats;
+        private IAffectable _sourceEntity;
+
+        private readonly HashSet<IAffectable> _targetsInside = new();
+        private readonly List<IAffectable> _processingList = new();
+
+        private Coroutine _damageRoutine;
+        private Coroutine _destroyRoutine;
+
+        public void Init(EffectData data, IStatsEntity sourceStats, IAffectable sourceEntity)
         {
-            _duration = data.duration;
-            StartCoroutine(DestroyCoroutine());
+            if (!IsServer) return;
+
+            _data = data;
+            _sourceStats = sourceStats;
+            _sourceEntity = sourceEntity;
+
+            _damageRoutine = StartCoroutine(DamageLoop());
+            _destroyRoutine = StartCoroutine(DestroyAfterDelay());
         }
-        
-        private IEnumerator DestroyCoroutine()
+
+        private IEnumerator DestroyAfterDelay()
         {
-            yield return new WaitForSeconds(_duration);
+            yield return new WaitForSeconds(_data.duration);
+
+            if (_damageRoutine != null)
+                StopCoroutine(_damageRoutine);
+
             GetComponent<NetworkObject>().Despawn();
         }
+
+        private IEnumerator DamageLoop()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(_data.tickDelay);
+
+                if (_targetsInside.Count > 0)
+                {
+                    // Copy so iterator is safe
+                    _processingList.Clear();
+                    _processingList.AddRange(_targetsInside);
+
+                    var isCrit = _sourceStats.ComputeCrit(_data.effectType);
+                    
+                    var data = new HealthEventData()
+                    {
+                        Amount = _sourceStats.ComputeStat(_data.healthModification, isCrit),
+                        Critical = isCrit,
+                        Source = _sourceEntity,
+                        Type = _data.effectType
+                    };
+
+                    foreach (var target in _processingList)
+                        target.Damage(data);
+                }
+
+                if (!_data.loop)
+                    break;
+            }
+        }
+
+        #region Trigger
 
         private void OnTriggerEnter(Collider other)
         {
             if (!IsServer) return;
 
-            if(!other.CompareTag("Enemy")) return;
-            
-            other.GetComponent<IEnemy>().Damage(_damages);
+            if (other.TryGetComponent(out IAffectable affectable))
+                _targetsInside.Add(affectable);
         }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (!IsServer) return;
+
+            if (other.TryGetComponent(out IAffectable affectable))
+                _targetsInside.Remove(affectable);
+        }
+
+        #endregion
     }
 }

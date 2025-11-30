@@ -1,15 +1,18 @@
+using System;
 using System.Collections.Generic;
+using Character;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using CharacterController = Character.CharacterController;
 using Random = UnityEngine.Random;
 
 public class PlayerCharacterManager : NetworkBehaviour
 {
-    [SerializeField] private CharacterController championPrefab;
+    [SerializeField] private CharacterBehaviour championPrefab;
 
-    private readonly Dictionary<ulong, CharacterController> playerCharacters = new();
+    private readonly Dictionary<ulong, CharacterBehaviour> playerCharacters = new();
+    
+    public static event Action<GameObject> OnPlayerSpawned;
 
     private void OnDestroy()
     {
@@ -53,6 +56,8 @@ public class PlayerCharacterManager : NetworkBehaviour
         playerCharacters.Add(clientId, character);
 
         character.NetworkObject.SpawnWithOwnership(clientId);
+        
+        OnPlayerSpawned?.Invoke(character.gameObject);
     }
 
 

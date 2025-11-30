@@ -4,9 +4,9 @@ using UnityEngine.InputSystem;
 
 namespace Character.Input
 {
-    public class CharacterInputController : NetworkBehaviour
+    public class CharacterInputController : CharacterComponent
     {
-        private CharacterController _character;
+        private CharacterBehaviour _character;
         private UnityEngine.Camera _cam;
 
         public override void OnNetworkSpawn()
@@ -29,7 +29,7 @@ namespace Character.Input
             _character.Rotate(GetMousePosition);
         }
 
-        public void SetCharacter(CharacterController newCharacter)
+        public void SetCharacter(CharacterBehaviour newCharacter)
         {
             _character = newCharacter;
         }

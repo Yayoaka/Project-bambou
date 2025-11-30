@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Character.State
 {
-    public class CharacterState : MonoBehaviour
+    public class CharacterState : CharacterComponent
     {
         public bool IsStunned { get; private set; }
         public bool IsRooted { get; private set; }

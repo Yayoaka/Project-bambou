@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Character
 {
-    public class CharacterSkills : NetworkBehaviour
+    public class CharacterSkills : CharacterComponent
     {
         private SpellData[] _spells;
         private float[] _cooldowns;
@@ -97,7 +97,7 @@ namespace Character
                 SetZoneParentClientRpc(netObj.NetworkObjectId, NetworkObjectId);
             }
 
-            obj.GetComponent<Zone>().Init(effect);
+            obj.GetComponent<Zone>().Init(effect, CharacterBehaviour.Stats, CharacterBehaviour);
         }
         
         [Rpc(SendTo.NotServer, RequireOwnership = false)]
