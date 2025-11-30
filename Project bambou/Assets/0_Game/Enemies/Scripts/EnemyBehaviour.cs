@@ -102,7 +102,7 @@ namespace Enemies
 
         public override void OnNetworkSpawn()
         {
-            if (IsClient && !_isInitialized)
+            if (!IsServer && !_isInitialized)
             {
                 InitEnemy(_enemyId.Value.Value);
             }
