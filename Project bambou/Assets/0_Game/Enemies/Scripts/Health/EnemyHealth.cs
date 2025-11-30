@@ -1,30 +1,38 @@
 using System;
+using Character;
 using Entity;
 using Health;
 using Health.CombatText;
+using Unity.Netcode;
 using UnityEngine;
 
-namespace Character
+namespace Enemies.Health
 {
-    public class CharacterHealth : EntityComponent<CharacterBehaviour>, IHealthComponent
+    public class EnemyHealth : EntityComponent<EnemyBehaviour>, IHealthComponent
     {
-        public float MaxHealth { get; private set; }
-
+        public float MaxHealth { get; } = 10;
         public float CurrentHealth { get; private set; }
 
         public bool IsAlive => CurrentHealth > 0;
 
-        public event Action<HealthEventData> OnHit;
         public event Action OnDeath;
+        public event Action<HealthEventData> OnHit;
+
+        public override void Init(EnemyBehaviour owner)
+        {
+            base.Init(owner);
+            
+            CurrentHealth = MaxHealth;
+        }
         
         public void ApplyDamage(HealthEventData data)
         {
             if (!IsAlive) return;
 
-            var finalDamage = Owner.Stats.ComputeReceivedStat(data.Amount, data.Type);
+            //var finalDamage = EntityBehaviour.healthComponent.Stats.ComputeReceivedStat(data.Amount, data.Type);
 
-            CurrentHealth -= Mathf.Clamp(finalDamage, 0, MaxHealth);
-
+            //CurrentHealth -= Mathf.Clamp(finalDamage, 0, MaxHealth);
+            
             data.HitPoint = transform.position;
             CombatTextSystem.Instance.DoDamageText(data);
             
@@ -33,10 +41,10 @@ namespace Character
             if (CurrentHealth <= 0)
                 HandleDeath(data);
         }
-        
+
         public void HandleDeath(HealthEventData data)
         {
-            OnDeath?.Invoke();
+            throw new NotImplementedException();
         }
     }
 }

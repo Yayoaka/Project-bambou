@@ -1,8 +1,9 @@
+using Entity;
 using UnityEngine;
 
 namespace Character.State
 {
-    public class CharacterState : CharacterComponent
+    public class CharacterState : EntityComponent<CharacterBehaviour>
     {
         public bool IsStunned { get; private set; }
         public bool IsRooted { get; private set; }

@@ -1,13 +1,17 @@
 using System;
+using Enemies;
+using Entity;
 using Health.CombatText;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Health
 {
-    public class HealthComponent : MonoBehaviour, IHealthComponent
+    public class HealthComponent : NetworkBehaviour, IHealthComponent
     {
         [SerializeField] private float maxHealth = 100;
 
+        public float MaxHealth { get; }
         public float CurrentHealth { get; private set; }
         public bool IsAlive => CurrentHealth > 0;
 
@@ -35,7 +39,7 @@ namespace Health
         {
             if (!IsAlive) return;
 
-            var finalDamage = data.Amount; // placeholder
+            var finalDamage = data.Amount;
             CurrentHealth -= finalDamage;
 
             data.HitPoint = transform.position;
@@ -47,10 +51,9 @@ namespace Health
                 HandleDeath(data);
         }
 
-        protected virtual void HandleDeath(HealthEventData data)
+        public virtual void HandleDeath(HealthEventData data)
         {
             OnDeath?.Invoke();
-            // Base death logic if needed
         }
     }
 }

@@ -1,10 +1,11 @@
+using Entity;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Character.Input
 {
-    public class CharacterInputController : CharacterComponent
+    public class CharacterInputController : EntityComponent<CharacterBehaviour>
     {
         private CharacterBehaviour _character;
         private UnityEngine.Camera _cam;

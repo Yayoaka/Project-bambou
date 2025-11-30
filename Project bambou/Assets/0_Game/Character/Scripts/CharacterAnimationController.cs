@@ -1,17 +1,18 @@
+using Entity;
 using UnityEngine;
 
 namespace Character
 {
-    public class CharacterAnimationController : CharacterComponent
+    public class CharacterAnimationController : EntityComponent<CharacterBehaviour>
     {
-        [SerializeField] private Animator animator;
+        private Animator animator;
         private int _hashSpeed;
         private int _hashSkillTrigger;
         private Vector2 _lastMoveInput = Vector2.zero;
 
-        void Awake()
+        public void GetAnimator()
         {
-            _hashSpeed = Animator.StringToHash("Speed");
+            animator = GetComponentInChildren<Animator>();
         }
 
         public void SetMoveInput(Vector2 move)

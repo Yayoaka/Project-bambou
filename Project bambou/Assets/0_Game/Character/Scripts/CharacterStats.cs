@@ -1,3 +1,4 @@
+using Entity;
 using Health;
 using Skills;
 using Stats;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace Character
 {
-    public class CharacterStats : CharacterComponent, IStatsEntity
+    public class CharacterStats : EntityComponent<CharacterBehaviour>, IStatsEntity
     {
         private Data.Stats _stats;
 
