@@ -1,25 +1,23 @@
+using System;
 using UnityEngine;
 
 namespace Enemies.Data
 {
     [CreateAssetMenu(menuName = "Enemies/New Entity")]
-    public class EnemyDataSO : ScriptableObject
+    [Serializable]
+    public class EnemyDataSo : ScriptableObject
     {
         [Header("Identity")]
-        public string Id;
+        public string id;
 
         [Header("Stats")]
-        public float MaxHealth;
-        public float MoveSpeed;
-        public float AttackDamage;
-        public float AttackRange;
+        public float maxHealth;
+        public float moveSpeed;
+        public float attackDamage;
+        public float attackRange;
         
         [Header("Prefabs")]
-        public GameObject VisualPrefab;
-
-        //Maybe later son
-        /*[Header("Behavior")]
-        public EnemyBehaviorTreeSO BehaviorTree;
-        public Shader ShaderOverride;*/
+        public GameObject visualPrefab;
+        public GameObject deathVisual;
     }
 }

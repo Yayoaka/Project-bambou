@@ -7,6 +7,7 @@ namespace Enemies.Lod
 {
     public class EnemyActivation : EntityComponent<EnemyBehaviour>
     {
+        //TODO not working anymore but no time yet
         private EnemyPoseFollower _poseFollower;
         private NavMeshAgent _nav;
         private Collider _collider;
@@ -20,7 +21,7 @@ namespace Enemies.Lod
             _collider = GetComponent<Collider>();
         }
 
-        private void SetActiveState(bool visible)
+        public void SetActiveState(bool visible)
         {
             _poseFollower.enabled = visible;
             

@@ -967,7 +967,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8203521488455717014}
   - component: {fileID: 8445208541227111689}
-  - component: {fileID: 7691191923258046769}
   m_Layer: 6
   m_Name: Rat_Mesh
   m_TagString: Untagged
@@ -1098,31 +1097,6 @@ SkinnedMeshRenderer:
     m_Center: {x: 0.111643195, y: 0.12544477, z: 0.00000017881393}
     m_Extent: {x: 3.5731492, y: 2.2443953, z: 1.0737803}
   m_DirtyAABB: 0
---- !u!114 &7691191923258046769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5249627049745644214}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 0
-  InScenePlacedSourceGlobalObjectIdHash: 0
-  DeferredDespawnTick: 0
-  Ownership: 1
-  AlwaysReplicateAsRoot: 0
-  SynchronizeTransform: 1
-  ActiveSceneSynchronization: 0
-  SceneMigrationSynchronization: 1
-  SpawnWithObservers: 1
-  DontDestroyWithOwner: 0
-  AutoObjectParentSync: 1
-  SyncOwnerTransformWhenParented: 1
-  AllowOwnerToParent: 0
 --- !u!1 &5267490703256136110
 GameObject:
   m_ObjectHideFlags: 0

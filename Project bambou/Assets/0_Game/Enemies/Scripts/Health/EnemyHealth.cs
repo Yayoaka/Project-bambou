@@ -29,9 +29,7 @@ namespace Enemies.Health
         {
             if (!IsAlive) return;
 
-            //var finalDamage = EntityBehaviour.healthComponent.Stats.ComputeReceivedStat(data.Amount, data.Type);
-
-            //CurrentHealth -= Mathf.Clamp(finalDamage, 0, MaxHealth);
+            CurrentHealth -= Mathf.Clamp(data.Amount, 0, MaxHealth);
             
             data.HitPoint = transform.position;
             CombatTextSystem.Instance.DoDamageText(data);
@@ -44,7 +42,17 @@ namespace Enemies.Health
 
         public void HandleDeath(HealthEventData data)
         {
-            throw new NotImplementedException();
+            if (!IsServer) return;
+            
+            SpawnDeathEffectRpc();
+            
+            OnDeath?.Invoke();
+        }
+
+        [Rpc(SendTo.Everyone, RequireOwnership = false)]
+        private void SpawnDeathEffectRpc()
+        {
+            Instantiate(Owner.Data.deathVisual, transform.position, Quaternion.identity);
         }
     }
 }
