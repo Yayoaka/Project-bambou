@@ -58,7 +58,7 @@ namespace Character
                 switch (effect.type)
                 {
                     case SpellType.Projectile:
-                        CastProjectile(effect, direction);
+                        CastProjectile(effect, mousePosition, direction);
                         break;
                     case SpellType.Zone:
                         CastZone(effect, mousePosition, direction);
@@ -69,16 +69,17 @@ namespace Character
             if (spell.Animate) CallAnimationRpc(index);
         }
 
-        private void CastProjectile(EffectData effect, Vector3 direction)
+        private void CastProjectile(EffectData effect, Vector3 mousePosition, Vector3 direction)
         {
             if (!IsServer) return;
-            
-            var obj = Instantiate(effect.effectPrefab, transform.position + Vector3.up * 1.2f, Quaternion.LookRotation(direction));
+
+            var obj = Instantiate(effect.effectPrefab, effect.onCursor ? mousePosition : transform.position,
+                effect.toCursor ? Quaternion.LookRotation(direction) : Quaternion.identity);
             var netObj = obj.GetComponent<NetworkObject>();
         
             netObj.Spawn();
 
-            obj.GetComponent<Projectile>().Initialize(direction);
+            obj.GetComponent<Projectile>().Init(effect, Owner.Stats, Owner, direction);
         }
         
         private void CastZone(EffectData effect, Vector3 mousePosition, Vector3 direction)

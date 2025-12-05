@@ -82,7 +82,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character
   ShowTopMostFoldoutHeaderGroup: 1
-  data: {fileID: 11400000, guid: 747be8e1d140281408a4c696b33cbe60, type: 2}
+  data: {fileID: 11400000, guid: 0fe2c636d5a9caa42b932eb9739cf32c, type: 2}
 --- !u!114 &4636341468856982575
 MonoBehaviour:
   m_ObjectHideFlags: 0
