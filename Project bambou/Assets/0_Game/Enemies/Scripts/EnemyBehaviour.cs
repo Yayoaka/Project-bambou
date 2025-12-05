@@ -33,8 +33,6 @@ namespace Enemies
         public override void OnDestroy()
         {
             base.OnDestroy();
-            
-            _healthComponent.OnDeath -= OnKill;
         }
 
         public void Init(EnemyDataSo data)
@@ -98,6 +96,8 @@ namespace Enemies
         private void KillRpc()
         { 
             Destroy(_visual);
+            
+            _healthComponent.OnDeath -= OnKill;
         }
 
         public override void OnNetworkSpawn()
