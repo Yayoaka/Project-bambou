@@ -3,10 +3,12 @@ using UnityEngine.AI;
 using Enemies.Tick;
 using Enemies.Lod;
 using Enemies.Visual;
+using Entity;
+using Stats.Data;
 
 namespace Enemies.AI
 {
-    public class EnemyAI : MonoBehaviour, ITickable, ILODComponent
+    public class EnemyAI : EntityComponent<EnemyBehaviour>, ITickable, ILODComponent
     {
         [Header("References")]
         [SerializeField] private NavMeshAgent nav;
@@ -54,6 +56,15 @@ namespace Enemies.AI
         {
             if (EnemyLODSystem.Instance != null) EnemyLODSystem.Instance.Unregister(this);
             if (EnemyTickSystem.Instance != null) EnemyTickSystem.Instance.Unregister(this);
+
+            Owner.Stats.OnStatsChanged += UpdateSpeed;
+        }
+
+        public override void LateInit()
+        {
+            base.LateInit();
+
+            Owner.Stats.OnStatsChanged += UpdateSpeed;
         }
 
         // ----------------------------------------------------------
@@ -133,5 +144,10 @@ namespace Enemies.AI
         }
 
         public Vector3 Position => transform.position;
+
+        private void UpdateSpeed()
+        {
+            nav.speed = Owner.Stats.GetStat(StatType.MoveSpeed);
+        }
     }
 }

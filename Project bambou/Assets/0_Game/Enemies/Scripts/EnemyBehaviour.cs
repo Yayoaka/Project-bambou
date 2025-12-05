@@ -1,4 +1,5 @@
 using Data;
+using Enemies.AI;
 using Enemies.Data;
 using Enemies.Lod;
 using Entity;
@@ -21,8 +22,9 @@ namespace Enemies
             NetworkVariableWritePermission.Server
         );
 
+        public IStatsComponent Stats;
+        public EnemyAI ai;
         private HealthComponent _health;
-        private IStatsComponent _stats;
         private EnemyActivation _activation;
 
         private GameObject _visual;
@@ -44,9 +46,13 @@ namespace Enemies
 
         private void InitEnemy(string id)
         {
+            Stats = GetComponent<IStatsComponent>();
             _health = GetComponent<HealthComponent>();
-            _stats = GetComponent<IStatsComponent>();
             _activation = InitComponent<EnemyActivation>();
+            ai = InitComponent<EnemyAI>();
+            
+            _activation.LateInit();
+            ai.LateInit();
 
             _health.OnDeath += OnKill;
             
@@ -69,7 +75,7 @@ namespace Enemies
             }
 
             _visual = Instantiate(data.visualPrefab, transform);
-            _stats.SetStats(data.stats);
+            Stats.SetStats(data.stats);
         }
 
         private void OnKill()

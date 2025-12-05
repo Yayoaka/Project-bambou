@@ -1,3 +1,4 @@
+using System;
 using Effect;
 using Effect.Stats.Data;
 using Stats.Data;
@@ -6,6 +7,8 @@ namespace Stats
 {
     public interface IStatsComponent
     {
+        public event Action OnStatsChanged;
+        
         float GetStat(StatType type);
 
         public void SetStats(StatsData data);

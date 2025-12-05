@@ -23,7 +23,7 @@ namespace Character
         public CharacterInputController InputController { get; private set; }
         public CharacterState State { get; private set; }
         public CharacterVisual Visual { get; private set; }
-        public StatsComponent Stats { get; private set; }
+        public IStatsComponent Stats { get; private set; }
 
         private void Awake()
         {
@@ -33,7 +33,7 @@ namespace Character
             Skills = InitComponent<CharacterSkills>();
             InputController = InitComponent<CharacterInputController>();
             State = InitComponent<CharacterState>();
-            Stats = GetComponent<StatsComponent>();
+            Stats = GetComponent<IStatsComponent>();
             
             Movement.LateInit();
             AnimationController.LateInit();
