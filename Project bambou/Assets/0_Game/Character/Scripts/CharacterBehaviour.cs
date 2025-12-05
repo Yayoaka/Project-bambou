@@ -34,6 +34,12 @@ namespace Character
             InputController = InitComponent<CharacterInputController>();
             State = InitComponent<CharacterState>();
             Stats = GetComponent<StatsComponent>();
+            
+            Movement.LateInit();
+            AnimationController.LateInit();
+            Skills.LateInit();
+            InputController.LateInit();
+            State.LateInit();
         }
 
         public override void OnNetworkSpawn()
@@ -66,13 +72,13 @@ namespace Character
 
             Visual = Instantiate(prefab, transform);
             AnimationController.GetAnimator();
-            Stats.SetStats(data.Stats);
         }
 
         private void SetData()
         {
             Skills.SetSpells(data.Spells);
             Skills.SetAnimationController(AnimationController);
+            Stats.SetStats(data.Stats);
         }
         
         public void Move(Vector2 input)

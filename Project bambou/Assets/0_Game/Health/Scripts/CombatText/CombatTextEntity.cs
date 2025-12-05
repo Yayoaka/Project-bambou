@@ -19,6 +19,12 @@ namespace Health.CombatText
         
         public void Init(HealthEventData data)
         {
+            InitRpc(data);
+        }
+
+        [Rpc(SendTo.Everyone)]
+        private void InitRpc(HealthEventData data)
+        {
             transform.position = data.HitPoint 
                                  + Vector3.up * 0.5f 
                                  + new Vector3(Random.value - 0.5f, Random.value * 0.3f, Random.value - 0.5f);
@@ -69,13 +75,20 @@ namespace Health.CombatText
 
         private void ResetTextAnimation()
         {
-            NetworkObjectPool.Instance.Return(NetworkObject);
+            if(IsServer)
+                NetworkObjectPool.Instance.Return(NetworkObject);
         }
 
         private Color GetColor(EffectType type)
         {
             var database = GameDatabase.Get<StatsDatabase>();
             return database.GetEvent(type).Color;
+        }
+
+        public override void OnNetworkDespawn()
+        {
+            _textSequence.Kill(true);
+            base.OnNetworkDespawn();
         }
     }
 }

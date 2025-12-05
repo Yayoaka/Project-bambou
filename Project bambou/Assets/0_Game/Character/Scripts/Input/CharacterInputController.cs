@@ -8,7 +8,7 @@ namespace Character.Input
     public class CharacterInputController : EntityComponent<CharacterBehaviour>
     {
         private CharacterBehaviour _character;
-        private UnityEngine.Camera _cam;
+        private static UnityEngine.Camera Cam => UnityEngine.Camera.main;
 
         public override void OnNetworkSpawn()
         {
@@ -19,8 +19,6 @@ namespace Character.Input
                 enabled = false;
                 return;
             }
-
-            _cam = UnityEngine.Camera.main;
         }
         
         private void Update()
@@ -74,7 +72,7 @@ namespace Character.Input
         {
             get
             {
-                var ray = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+                var ray = Cam.ScreenPointToRay(Mouse.current.position.ReadValue());
                 var plane = new Plane(Vector3.up, _character.transform.position);
 
                 if (!plane.Raycast(ray, out var dist)) return _character.transform.forward;
@@ -87,7 +85,7 @@ namespace Character.Input
 
         public Vector3 GetMouseDirection()
         {
-            var ray = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
+            var ray = Cam.ScreenPointToRay(Mouse.current.position.ReadValue());
             var plane = new Plane(Vector3.up, _character.transform.position);
 
             if (!plane.Raycast(ray, out var dist)) return _character.transform.forward;

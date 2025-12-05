@@ -72,6 +72,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Skills.Zone
   ShowTopMostFoldoutHeaderGroup: 1
+  duration: 5
+  tickDelay: 1
+  loop: 1
 --- !u!1001 &8266527459868805954
 PrefabInstance:
   m_ObjectHideFlags: 0

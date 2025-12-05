@@ -30,12 +30,12 @@ namespace Character
 
         public void SetSpells(SpellData[] spells)
         {
-            if (!IsServer) return;
-
             _spells = spells;
             _cooldowns = new float[_spells.Length];
             _autoCastRoutines = new Coroutine[_spells.Length];
 
+            if (!IsOwner) return;
+            
             // Auto-cast initialisation
             for (int i = 0; i < spells.Length; i++)
             {
@@ -56,13 +56,13 @@ namespace Character
 
         [Rpc(SendTo.Server, RequireOwnership = false)]
         private void TryCastServerRpc(
-            int index, Vector3 mousePosition, Vector3 direction, RpcParams rpcParams = default)
+            int index, Vector3 mousePosition, Vector3 direction, bool fromAuto = false, RpcParams rpcParams = default)
         {
             var sender = rpcParams.Receive.SenderClientId;
             if (sender != OwnerClientId)
                 return;
 
-            if (!CanCast(index))
+            if (!CanCast(index) && !fromAuto) //Not Cheat safe but no time fuck that
                 return;
 
             Cast(index, mousePosition, direction);
@@ -81,12 +81,7 @@ namespace Character
             {
                 yield return new WaitForSeconds(spell.cooldown);
 
-                if (!IsServer) yield break;
-
-                if (!CanCast(index))
-                    continue;
-
-                Cast(index, Owner.InputController.GetMousePosition, Owner.InputController.GetMouseDirection());
+                TryCastServerRpc(index, Owner.InputController.GetMousePosition, Owner.InputController.GetMouseDirection(), fromAuto: true);
             }
         }
 
@@ -99,7 +94,7 @@ namespace Character
 
             // Apply gameplay effects instantly
             foreach (var effect in spell.gameplayEffects)
-                EffectExecutor.Execute(effect, _stats, _affectable, _affectable, Vector3.zero);
+                EffectExecutor.Execute(effect, _stats, NetworkObjectId, _affectable, Vector3.zero);
 
             // Casted effects (projectile / zone)
             foreach (var cast in spell.castEffects)
@@ -132,7 +127,7 @@ namespace Character
             obj.GetComponent<Projectile>().Init(
                 cast.appliedEffects,
                 _stats,
-                _affectable,
+                NetworkObjectId,
                 (Vector3)finalDir);
         }
 
@@ -156,7 +151,7 @@ namespace Character
                 SetZoneParentClientRpc(netObj.NetworkObjectId, NetworkObjectId);
             }
 
-            obj.GetComponent<Zone>().Init(cast.appliedEffects, _stats, _affectable);
+            obj.GetComponent<Zone>().Init(cast.appliedEffects, _stats, NetworkObjectId);
         }
 
         [Rpc(SendTo.NotServer, RequireOwnership = false)]

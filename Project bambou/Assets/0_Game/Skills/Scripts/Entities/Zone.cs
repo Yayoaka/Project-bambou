@@ -19,7 +19,7 @@ namespace Skills.Entities
 
         private List<EffectData> _effects;
         private IStatsComponent _sourceStats;
-        private IAffectable _source;
+        private ulong _sourceId;
 
         private readonly HashSet<IAffectable> _targetsInside = new();
         private readonly List<IAffectable> _buffer = new();
@@ -30,13 +30,13 @@ namespace Skills.Entities
         public void Init(
             List<EffectData> appliedEffects,
             IStatsComponent stats,
-            IAffectable source)
+            ulong sourceId)
         {
             if (!IsServer) return;
 
             _effects = appliedEffects;
             _sourceStats = stats;
-            _source = source;
+            _sourceId = sourceId;
 
             _tickRoutine = StartCoroutine(TickLoop());
             _destroyRoutine = StartCoroutine(DestroyAfterDelay());
@@ -64,7 +64,7 @@ namespace Skills.Entities
                 foreach (var target in _buffer)
                 {
                     foreach (var e in _effects)
-                        EffectExecutor.Execute(e, _sourceStats, _source, target, Vector3.zero);
+                        EffectExecutor.Execute(e, _sourceStats, _sourceId, target, Vector3.zero);
                 }
 
                 if (!loop)

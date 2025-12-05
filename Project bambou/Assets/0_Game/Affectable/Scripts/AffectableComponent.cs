@@ -91,12 +91,12 @@ namespace Affectable
         // -------------------------------------------------------
         // DOT
         // -------------------------------------------------------
-        public void ApplyDot(EffectData e, IStatsComponent sourceStats, IAffectable source)
+        public void ApplyDot(EffectData e, IStatsComponent sourceStats, ulong sourceId)
         {
-            StartCoroutine(DotRoutine(e, sourceStats, source));
+            StartCoroutine(DotRoutine(e, sourceStats, sourceId));
         }
 
-        private IEnumerator DotRoutine(EffectData e, IStatsComponent sourceStats, IAffectable source)
+        private IEnumerator DotRoutine(EffectData e, IStatsComponent sourceStats, ulong sourceId)
         {
             float elapsed = 0f;
 
@@ -112,7 +112,7 @@ namespace Affectable
                 {
                     Amount = dmg,
                     Critical = crit,
-                    Source = source,
+                    SourceId = sourceId,
                     Type = e.effectType,
                     HitPoint = transform.position
                 };
@@ -124,12 +124,12 @@ namespace Affectable
         // -------------------------------------------------------
         // HOT
         // -------------------------------------------------------
-        public void ApplyHot(EffectData e, IStatsComponent sourceStats, IAffectable source)
+        public void ApplyHot(EffectData e, IStatsComponent sourceStats, ulong sourceId)
         {
-            StartCoroutine(HotRoutine(e, sourceStats, source));
+            StartCoroutine(HotRoutine(e, sourceStats, sourceId));
         }
 
-        private IEnumerator HotRoutine(EffectData e, IStatsComponent sourceStats, IAffectable source)
+        private IEnumerator HotRoutine(EffectData e, IStatsComponent sourceStats, ulong sourceId)
         {
             float elapsed = 0f;
 
@@ -144,7 +144,7 @@ namespace Affectable
                 {
                     Amount = healAmount,
                     Critical = false,
-                    Source = source,
+                    SourceId = sourceId,
                     Type = EffectType.Heal,
                     HitPoint = transform.position
                 };
@@ -188,7 +188,7 @@ namespace Affectable
         // -------------------------------------------------------
         // TAUNT
         // -------------------------------------------------------
-        public void ApplyTaunt(IAffectable source, float duration)
+        public void ApplyTaunt(ulong sourceId, float duration)
         {
             // hook AI later
         }

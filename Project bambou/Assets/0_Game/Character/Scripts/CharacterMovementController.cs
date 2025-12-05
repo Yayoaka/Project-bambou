@@ -1,5 +1,6 @@
 using System;
 using Entity;
+using Stats.Data;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -7,22 +8,33 @@ namespace Character
 {
     public class CharacterMovementController : EntityComponent<CharacterBehaviour>
     {
-        [SerializeField] private float moveSpeed = 5f;
-        public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }
+        private float _moveSpeed = 5f;
 
         [SerializeField] private Rigidbody rb;
-        private Vector3 moveDirection;
+        private Vector3 _moveDirection;
+
+        public override void LateInit()
+        {
+            base.LateInit();
+
+            Owner.Stats.OnStatsChanged += UpdateSpeed;
+        }
+
+        private new void OnDestroy()
+        {
+            Owner.Stats.OnStatsChanged -= UpdateSpeed;
+        }
 
         public void Move(Vector2 input)
         {
-            moveDirection.Set(input.x, 0f, input.y);
+            _moveDirection.Set(input.x, 0f, input.y);
         }
 
         private void FixedUpdate()
         {
-            if (moveDirection.sqrMagnitude > 0.01f)
+            if (_moveDirection.sqrMagnitude > 0.01f)
             {
-                var newPosition = rb.position + moveDirection * moveSpeed * Time.fixedDeltaTime;
+                var newPosition = rb.position + _moveDirection * _moveSpeed * Time.fixedDeltaTime;
                 rb.MovePosition(newPosition);
             }
         }
@@ -39,6 +51,11 @@ namespace Character
                 var rot = Quaternion.LookRotation(direction);
                 rb.MoveRotation(rot);
             }
+        }
+
+        private void UpdateSpeed()
+        {
+            _moveSpeed = Owner.Stats.GetStat(StatType.MoveSpeed);
         }
     }
 }

@@ -11,5 +11,7 @@ namespace Entity
         {
             Owner = owner;
         }
+
+        public virtual void LateInit(){}
     }
 }

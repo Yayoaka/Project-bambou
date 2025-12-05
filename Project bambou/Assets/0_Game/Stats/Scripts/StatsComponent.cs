@@ -1,28 +1,40 @@
+using System;
 using Buff;
 using UnityEngine;
 using Effect;
 using Effect.Stats.Data;
 using Stats.Data;
+using Random = UnityEngine.Random;
 
 namespace Stats
 {
     [RequireComponent(typeof(BuffComponent))]
     public class StatsComponent : MonoBehaviour, IStatsComponent
     {
+        public event Action OnStatsChanged;
+        
         private StatsData _baseStats;   // injecté via SetStats
         private BuffComponent _buffs;
 
         private void Awake()
         {
             _buffs = GetComponent<BuffComponent>();
+            _buffs.OnBuffChanged += UpdateStats;
         }
 
+        private void OnDestroy()
+        {
+            _buffs.OnBuffChanged -= UpdateStats;
+        }
+        
         // ------------------------------------------------------
         //        Inject stats depuis un ScriptableObject
         // ------------------------------------------------------
         public void SetStats(StatsData data)
         {
             _baseStats = data;
+            
+            OnStatsChanged?.Invoke();
         }
 
         // ------------------------------------------------------
@@ -93,6 +105,11 @@ namespace Stats
         public float ModifyOutgoingEffect(float value, EffectModifierType modifier)
         {
             return value; // sera amélioré plus tard si besoin
+        }
+
+        private void UpdateStats(BuffEntry entry)
+        {
+            OnStatsChanged?.Invoke();
         }
     }
 }

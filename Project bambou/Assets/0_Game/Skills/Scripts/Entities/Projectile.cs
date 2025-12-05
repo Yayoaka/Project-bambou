@@ -18,16 +18,16 @@ namespace Skills.Entities
         private float _timer;
 
         private IStatsComponent _sourceStats;
-        private IAffectable _sourceEntity;
+        private ulong _sourceId;
         private List<EffectData> _effectsOnHit;
 
         private readonly HashSet<IAffectable> _alreadyHit = new();
 
-        public void Init(List<EffectData> effectsOnHit, IStatsComponent stats, IAffectable source, Vector3 dir)
+        public void Init(List<EffectData> effectsOnHit, IStatsComponent stats, ulong sourceId, Vector3 dir)
         {
             _effectsOnHit = effectsOnHit;
             _sourceStats = stats;
-            _sourceEntity = source;
+            _sourceId = sourceId;
             _direction = dir.normalized;
         }
 
@@ -55,7 +55,7 @@ namespace Skills.Entities
             _alreadyHit.Add(target);
 
             foreach (var e in _effectsOnHit)
-                EffectExecutor.Execute(e, _sourceStats, _sourceEntity, target, Vector3.zero);
+                EffectExecutor.Execute(e, _sourceStats, _sourceId, target, Vector3.zero);
 
             if (destroyOnHit)
                 GetComponent<NetworkObject>().Despawn();

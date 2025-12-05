@@ -13,18 +13,18 @@ namespace Skills
         public static void Execute(
             EffectData data,
             IStatsComponent sourceStats,
-            IAffectable source,
+            ulong sourceId,
             IAffectable target,
             Vector3 posOrDir)
         {
             switch (data.kind)
             {
                 case EffectKind.Damage:
-                    ApplyDamage(data, sourceStats, source, target);
+                    ApplyDamage(data, sourceStats, sourceId, target);
                     break;
 
                 case EffectKind.Heal:
-                    ApplyHeal(data, sourceStats, source, target);
+                    ApplyHeal(data, sourceStats, sourceId, target);
                     break;
 
                 case EffectKind.Shield:
@@ -50,15 +50,15 @@ namespace Skills
                     break;
 
                 case EffectKind.Taunt:
-                    target?.ApplyTaunt(source, data.duration);
+                    target?.ApplyTaunt(sourceId, data.duration);
                     break;
 
                 case EffectKind.Dot:
-                    ApplyDot(data, sourceStats, source, target);
+                    ApplyDot(data, sourceStats, sourceId, target);
                     break;
 
                 case EffectKind.Hot:
-                    ApplyHot(data, sourceStats, source, target);
+                    ApplyHot(data, sourceStats, sourceId, target);
                     break;
 
                 case EffectKind.Knockback:
@@ -95,7 +95,7 @@ namespace Skills
             return Mathf.Max(0, value);
         }
 
-        private static void ApplyDamage(EffectData data, IStatsComponent stats, IAffectable source, IAffectable target)
+        private static void ApplyDamage(EffectData data, IStatsComponent stats, ulong sourceId, IAffectable target)
         {
             if (target == null) return;
 
@@ -108,14 +108,14 @@ namespace Skills
             {
                 Amount = amount,
                 Critical = crit,
-                Source = source,
+                SourceId = sourceId,
                 Type = data.effectType
             };
 
             target.Damage(evt);
         }
 
-        private static void ApplyHeal(EffectData data, IStatsComponent stats, IAffectable source, IAffectable target)
+        private static void ApplyHeal(EffectData data, IStatsComponent stats, ulong sourceId, IAffectable target)
         {
             if (target == null) return;
 
@@ -125,19 +125,19 @@ namespace Skills
             {
                 Amount = amount,
                 Critical = false,
-                Source = source,
+                SourceId = sourceId,
                 Type = EffectType.Heal
             });
         }
 
-        private static void ApplyDot(EffectData data, IStatsComponent stats, IAffectable source, IAffectable target)
+        private static void ApplyDot(EffectData data, IStatsComponent stats, ulong sourceId, IAffectable target)
         {
-            target?.ApplyDot(data, stats, source);
+            target?.ApplyDot(data, stats, sourceId);
         }
 
-        private static void ApplyHot(EffectData data, IStatsComponent stats, IAffectable source, IAffectable target)
+        private static void ApplyHot(EffectData data, IStatsComponent stats, ulong sourceId, IAffectable target)
         {
-            target?.ApplyHot(data, stats, source);
+            target?.ApplyHot(data, stats, sourceId);
         }
     }
 }

@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Stats.Data;
 using UnityEngine;
 
@@ -10,6 +12,8 @@ namespace Buff
         private readonly List<BuffEntry> _buffs = new();
 
         private Coroutine _cleanupRoutine;
+        
+        public event Action<BuffEntry> OnBuffChanged;
 
         private void OnEnable()
         {
@@ -28,13 +32,16 @@ namespace Buff
         // ------------------------------------------
         public void AddBuff(StatType stat, float amount, float duration, bool isPercent = false)
         {
-            _buffs.Add(new BuffEntry
+            var buff = new BuffEntry
             {
                 Stat = stat,
                 Amount = amount,
                 IsPercentage = isPercent,
                 ExpireTime = Time.time + duration
-            });
+            };
+            _buffs.Add(buff);
+            
+            OnBuffChanged?.Invoke(buff);
         }
 
         // ------------------------------------------
@@ -53,7 +60,11 @@ namespace Buff
                 for (int i = _buffs.Count - 1; i >= 0; i--)
                 {
                     if (_buffs[i].ExpireTime <= now)
-                        _buffs.RemoveAt(i);
+                    {
+                        var buff = _buffs[i];
+                        _buffs.Remove(buff);
+                        OnBuffChanged?.Invoke(buff);
+                    }
                 }
             }
         }
@@ -63,14 +74,11 @@ namespace Buff
         // ------------------------------------------
         public float GetModifiedStat(StatType stat, float baseValue)
         {
-            float flat = 0f;
-            float percent = 0f;
+            var flat = 0f;
+            var percent = 0f;
 
-            foreach (var b in _buffs)
+            foreach (var b in _buffs.Where(b => b.Stat == stat))
             {
-                if (b.Stat != stat)
-                    continue;
-
                 if (b.IsPercentage)
                     percent += b.Amount;
                 else

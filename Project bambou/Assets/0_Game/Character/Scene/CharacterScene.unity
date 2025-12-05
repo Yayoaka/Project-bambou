@@ -273,7 +273,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Network.NetworkObjectPool
   items:
   - prefab: {fileID: -885932881952830235, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
-    prewarmCount: 50
+    prewarmCount: 40
   - prefab: {fileID: 8462419456474281451, guid: 6d9e1934c2317b74889f6881add340fc, type: 3}
     prewarmCount: 50
 --- !u!4 &115682250

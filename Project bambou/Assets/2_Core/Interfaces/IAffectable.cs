@@ -23,13 +23,13 @@ namespace Interfaces
         void RemoveDebuffs();
 
         // DOT / HOT
-        void ApplyDot(EffectData data, IStatsComponent sourceStats, IAffectable source);
-        void ApplyHot(EffectData data, IStatsComponent sourceStats, IAffectable source);
+        void ApplyDot(EffectData data, IStatsComponent sourceStats, ulong sourceId);
+        void ApplyHot(EffectData data, IStatsComponent sourceStats, ulong sourceId);
 
         // Crowd control
         void ApplyStun(float duration);
         void ApplyRoot(float duration);
-        void ApplyTaunt(IAffectable source, float duration);
+        void ApplyTaunt(ulong sourceId, float duration);
 
         // Knockback
         void Knockback(Vector3 force);
