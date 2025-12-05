@@ -6,12 +6,13 @@ using Character.Visual;
 using Entity;
 using Health;
 using Interfaces;
+using Stats;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace Character
 {
-    public class CharacterBehaviour : EntityBehaviour<CharacterBehaviour>, IAffectable
+    public class CharacterBehaviour : EntityBehaviour<CharacterBehaviour>
     {
         [SerializeField] private CharacterData data;
 
@@ -22,18 +23,17 @@ namespace Character
         public CharacterInputController InputController { get; private set; }
         public CharacterState State { get; private set; }
         public CharacterVisual Visual { get; private set; }
-        public CharacterHealth Health { get; private set; }
-        public CharacterStats Stats { get; private set; }
+        public StatsComponent Stats { get; private set; }
 
         private void Awake()
         {
+            // Initialise tous les modules
             Movement = InitComponent<CharacterMovementController>();
             AnimationController = InitComponent<CharacterAnimationController>();
             Skills = InitComponent<CharacterSkills>();
             InputController = InitComponent<CharacterInputController>();
             State = InitComponent<CharacterState>();
-            Health = InitComponent<CharacterHealth>();
-            Stats = InitComponent<CharacterStats>();
+            Stats = GetComponent<StatsComponent>();
         }
 
         public override void OnNetworkSpawn()
@@ -45,7 +45,7 @@ namespace Character
             {
                 if (InputController != null)
                     InputController.enabled = false;
-                
+
                 return;
             }
             
@@ -77,10 +77,8 @@ namespace Character
         
         public void Move(Vector2 input)
         {
-            if (!IsOwner) return;
-
-            if (State.IsStunned)
-                return;
+            if (!IsOwner) return;    
+            if (State.IsStunned) return;
 
             Movement.Move(input);
         }
@@ -88,9 +86,7 @@ namespace Character
         public void Rotate(Vector3 input)
         {
             if (!IsOwner) return;
-            
-            if (State.IsStunned)
-                return;
+            if (State.IsStunned) return;
             
             Movement.RotateToMouse(input);
         }
@@ -98,15 +94,9 @@ namespace Character
         public void TryUseSkill(int index, Vector3 mousePosition, Vector3 direction)
         {
             if (!IsOwner) return;
-
             if (State.IsStunned) return;
 
             Skills.TryCast(index, mousePosition, direction);
-        }
-
-        public void Damage(HealthEventData healthEventData)
-        {
-            Health.ApplyDamage(healthEventData);
         }
     }
 }

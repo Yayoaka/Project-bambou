@@ -1,8 +1,7 @@
 using System;
-using Enemies;
-using Entity;
+using Effect.Stats.Data;
 using Health.CombatText;
-using Stats.Data;
+using Interfaces;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -10,49 +9,74 @@ namespace Health
 {
     public class HealthComponent : NetworkBehaviour, IHealthComponent
     {
-        [SerializeField] private float maxHealth = 100;
+        [SerializeField] private float baseMaxHealth = 100f;
 
-        public float MaxHealth { get; }
+        public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
-        public bool IsAlive => CurrentHealth > 0;
+        public bool IsAlive => CurrentHealth > 0f;
 
         public event Action<HealthEventData> OnHit;
         public event Action OnDeath;
 
-        protected virtual void Awake()
-        {
-            CurrentHealth = maxHealth;
-        }
+        private Stats.IStatsComponent _stats;
 
-        [ContextMenu("Do Damage")]
-        private void DoDamage()
+        private void Awake()
         {
-            ApplyDamage(new HealthEventData()
-            {
-                Amount = 12,
-                Critical = false,
-                Type = HealthEventType.Physical,
-                Source = null
-            });
+            MaxHealth = baseMaxHealth;
+            CurrentHealth = MaxHealth;
+
+            _stats = GetComponent<Stats.IStatsComponent>();
         }
 
         public void ApplyDamage(HealthEventData data)
         {
-            if (!IsAlive) return;
+            if (!IsAlive)
+                return;
 
-            var finalDamage = data.Amount;
+            float amount = data.Amount;
+
+            if (_stats != null)
+            {
+                amount = _stats.ComputeDamageTaken(amount, data.Type);
+                amount = _stats.ModifyOutgoingEffect(amount, EffectModifierType.IncomingDamage);
+            }
+
+            float finalDamage = Mathf.Max(0, amount);
             CurrentHealth -= finalDamage;
 
+            data.Amount = finalDamage;
             data.HitPoint = transform.position;
-            CombatTextSystem.Instance.DoDamageText(data);
-            
+
+            CombatTextSystem.Instance.DoText(data);
             OnHit?.Invoke(data);
 
-            if (CurrentHealth <= 0)
+            if (CurrentHealth <= 0f)
                 HandleDeath(data);
         }
 
-        public virtual void HandleDeath(HealthEventData data)
+        public void ApplyHeal(HealthEventData data)
+        {
+            if (!IsAlive)
+                return;
+
+            float healAmount = data.Amount;
+
+            if (_stats != null)
+            {
+                healAmount = _stats.ModifyOutgoingEffect(healAmount, EffectModifierType.OutgoingHeal);
+            }
+
+            healAmount = Mathf.Max(0, healAmount);
+            CurrentHealth = Mathf.Min(CurrentHealth + healAmount, MaxHealth);
+
+            data.Amount = healAmount;
+            data.HitPoint = transform.position;
+
+            CombatTextSystem.Instance.DoText(data);
+            OnHit?.Invoke(data);
+        }
+
+        public void HandleDeath(HealthEventData data)
         {
             OnDeath?.Invoke();
         }

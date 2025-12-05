@@ -1,23 +1,11 @@
 using Character.Visual;
 using Skills;
+using Skills.Data;
+using Stats.Data;
 using UnityEngine;
 
 namespace Character.Data
 {
-    [System.Serializable]
-    public class Stats
-    {
-        public float health;
-        public float abilityDamage;
-        public float abilityPower;
-        public float armorResistance;
-        public float magicResistance;
-        public float critChance;
-        public float critMultiplier;
-        public float moveSpeed;
-        public float attackSpeed;
-    }
-    
     [CreateAssetMenu(fileName = "CharacterData", menuName = "Characters/CharacterData", order = 0)]
     public class CharacterData : ScriptableObject
     {
@@ -26,13 +14,13 @@ namespace Character.Data
         [SerializeField] private Sprite characterIcon;
         [SerializeField] private CharacterVisual characterVisualPrefab;
         [SerializeField] private SpellData[] spells;
-        [SerializeField] private Stats stats;
+        [SerializeField] private StatsData stats;
 
         public string CharacterName => characterName;
         public string CharacterDescription => characterDescription;
         public Sprite CharacterIcon => characterIcon;
         public CharacterVisual CharacterVisualPrefab => characterVisualPrefab;
         public SpellData[] Spells => spells;
-        public Stats Stats => stats;
+        public StatsData Stats => stats;
     }
 }

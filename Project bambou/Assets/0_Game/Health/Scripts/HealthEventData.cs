@@ -1,3 +1,4 @@
+using Effect;
 using Interfaces;
 using Stats.Data;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace Health
         public float Amount;
         public Vector3 HitPoint;
         public IAffectable Source;
-        public HealthEventType Type;
+        public EffectType Type;
         public bool Critical;
     }
 }

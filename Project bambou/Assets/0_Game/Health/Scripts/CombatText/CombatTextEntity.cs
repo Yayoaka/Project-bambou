@@ -1,16 +1,15 @@
-using System;
-using System.Globalization;
 using Data;
 using DG.Tweening;
-using GameState.Data;
+using Effect;
+using Network;
 using Stats.Data;
+using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 namespace Health.CombatText
 {
-    public class CombatTextEntity : MonoBehaviour
+    public class CombatTextEntity : NetworkBehaviour
     {
         [SerializeField] private CanvasGroup textCanvasGroup;
         [SerializeField] private TMPro.TMP_Text healthEventText;
@@ -18,31 +17,38 @@ namespace Health.CombatText
         
         private Sequence _textSequence;
         
-        public bool IsAvailable {get; private set;}
-        
         public void Init(HealthEventData data)
         {
-            IsAvailable = false;
-            
-            transform.position = data.HitPoint + Vector3.up * 0.5f + new Vector3(Random.value, Random.value, Random.value);
-            
-            textContainer.transform.localScale = data.Critical ? Vector3.one * 0.9f : Vector3.one * 0.7f;
-            
+            transform.position = data.HitPoint 
+                                 + Vector3.up * 0.5f 
+                                 + new Vector3(Random.value - 0.5f, Random.value * 0.3f, Random.value - 0.5f);
+
+            textContainer.transform.localScale = data.Critical ? 
+                Vector3.one * 1.1f : 
+                Vector3.one * 0.8f;
+
             var color = GetColor(data.Type);
 
-            healthEventText.text = (data.Critical ? $"<sprite index=0 color=#{ColorUtility.ToHtmlStringRGBA(color)}>" : "") +
-                                   Mathf.Round(data.Amount).ToString(CultureInfo.InvariantCulture);
+            string txt = Mathf.RoundToInt(data.Amount).ToString();
+
+            if (data.Critical)
+                txt = $"<sprite index=0 color=#{ColorUtility.ToHtmlStringRGBA(color)}>{txt}";
+
+            healthEventText.text = txt;
             healthEventText.color = color;
-            
+
             textCanvasGroup.alpha = 0;
-            if (UnityEngine.Camera.main != null) transform.rotation = UnityEngine.Camera.main.transform.rotation;
+
+            var cam = UnityEngine.Camera.main;
+            if (cam != null)
+                transform.rotation = cam.transform.rotation;
 
             PlayTextAnimation();
         }
 
         private void PlayTextAnimation()
         {
-            _textSequence?.Kill();
+            _textSequence?.Kill(true);
             
             _textSequence = DOTween.Sequence();
 
@@ -56,18 +62,17 @@ namespace Health.CombatText
 
             _textSequence.Insert(1, textCanvasGroup.DOFade(0, 0.5f));
 
-            _textSequence.onKill += ResetTextAnimation;
+            _textSequence.onComplete += ResetTextAnimation;
             
             _textSequence.Play();
         }
 
         private void ResetTextAnimation()
         {
-            gameObject.SetActive(false);
-            IsAvailable = true;
+            NetworkObjectPool.Instance.Return(NetworkObject);
         }
 
-        private Color GetColor(HealthEventType type)
+        private Color GetColor(EffectType type)
         {
             var database = GameDatabase.Get<StatsDatabase>();
             return database.GetEvent(type).Color;

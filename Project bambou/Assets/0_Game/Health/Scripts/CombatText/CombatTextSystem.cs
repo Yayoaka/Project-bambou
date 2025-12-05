@@ -1,5 +1,6 @@
 using System.Collections.Generic;
-using System.Linq;
+using Network;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Health.CombatText
@@ -19,29 +20,18 @@ namespace Health.CombatText
 
         #endregion
         
-        [SerializeField] private CombatTextEntity textEntityPrefab;
+        [SerializeField] private NetworkObject textEntityPrefab;
         
         private readonly List<CombatTextEntity> _textPool = new();
         
-        public void DoDamageText(HealthEventData healthEventData)
+        public void DoText(HealthEventData healthEventData)
         {
-            var textEntity = GetTextEntity();
+            var textEntity = NetworkObjectPool.Instance.Get(textEntityPrefab);
+
+            textEntity.Spawn();
             
-            textEntity.Init(healthEventData);
-        }
-
-        private CombatTextEntity GetTextEntity()
-        {
-            if (_textPool.FirstOrDefault(x => x.IsAvailable) is { } textEntity) return textEntity;
-
-            return AddTextEntityToPool();
-        }
-
-        private CombatTextEntity AddTextEntityToPool()
-        {
-            var combatTextEntity = Instantiate(textEntityPrefab, transform);
-            _textPool.Add(combatTextEntity);
-            return combatTextEntity;
+            var text = textEntity.GetComponent<CombatTextEntity>();
+            text.Init(healthEventData);
         }
     }
 }

@@ -1,49 +1,41 @@
 using Data;
 using Enemies.Data;
-using Enemies.Health;
 using Enemies.Lod;
 using Entity;
 using Health;
-using Interfaces;
 using Network;
-using Stats.Data;
+using Stats;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace Enemies
 {
-    public class EnemyBehaviour : EntityBehaviour<EnemyBehaviour>, IAffectable
+    public class EnemyBehaviour : EntityBehaviour<EnemyBehaviour>
     {
-        public EnemyDataSo  Data { get; private set; }
-        
+        public EnemyDataSo Data { get; private set; }
+
         private NetworkVariable<FixedString64Bytes> _enemyId = new(
             default,
             NetworkVariableReadPermission.Everyone,
             NetworkVariableWritePermission.Server
         );
-        
-        private EnemyHealth _healthComponent;
+
+        private HealthComponent _health;
+        private IStatsComponent _stats;
         private EnemyActivation _activation;
 
         private GameObject _visual;
-        
         private bool _isInitialized;
-
-        public override void OnDestroy()
-        {
-            base.OnDestroy();
-        }
 
         public void Init(EnemyDataSo data)
         {
-            if (IsServer)
-            {
-                _enemyId.Value = data.id;
-                InitRpc(data.id);
-            }
+            if (!IsServer) return;
+
+            _enemyId.Value = data.id;
+            InitRpc(data.id);
         }
-        
+
         [Rpc(SendTo.Everyone, RequireOwnership = false)]
         private void InitRpc(string id)
         {
@@ -52,52 +44,52 @@ namespace Enemies
 
         private void InitEnemy(string id)
         {
-            _healthComponent = InitComponent<EnemyHealth>();
+            _health = GetComponent<HealthComponent>();
+            _stats = GetComponent<IStatsComponent>();
             _activation = InitComponent<EnemyActivation>();
 
-            _healthComponent.OnDeath += OnKill;
+            _health.OnDeath += OnKill;
             
             var database = GameDatabase.Get<EnemyDatabase>();
             Data = database.GetEnemy(id);
+
             SpawnVisual(Data);
-            
+
             _isInitialized = true;
         }
-        
+
         private void SpawnVisual(EnemyDataSo data)
         {
             if (_visual != null) return;
 
-            var prefab = data.visualPrefab;
-            if (prefab == null)
+            if (data.visualPrefab == null)
             {
-                Debug.LogError("CharacterVisualPrefab is missing in CharacterData!");
+                Debug.LogError("Missing visualPrefab in EnemyData!");
                 return;
             }
 
-            _visual = Instantiate(prefab, transform);
-        }
-
-        public void Damage(HealthEventData healthEventData)
-        {
-            _healthComponent.ApplyDamage(healthEventData);
+            _visual = Instantiate(data.visualPrefab, transform);
         }
 
         private void OnKill()
         {
-            if (IsServer)
-            {
-                KillRpc();
-                NetworkObjectPool.Instance.Return(NetworkObject);
-            }
+            if (!IsServer) return;
+
+            KillRpc();
+
+            NetworkObjectPool.Instance.Return(NetworkObject);
         }
-        
+
         [Rpc(SendTo.Everyone, RequireOwnership = false)]
         private void KillRpc()
-        { 
-            Destroy(_visual);
-            
-            _healthComponent.OnDeath -= OnKill;
+        {
+            if (Data.deathVisual != null)
+                Instantiate(Data.deathVisual, transform.position, Quaternion.identity);
+
+            if (_visual != null)
+                Destroy(_visual);
+
+            _health.OnDeath -= OnKill;
         }
 
         public override void OnNetworkSpawn()

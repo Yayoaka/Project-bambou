@@ -1,22 +1,15 @@
 using System;
 using System.Linq;
 using Data;
+using Effect;
 using UnityEngine;
 
 namespace Stats.Data
 {
-    public enum HealthEventType
-    {
-        Physical,
-        Magical,
-        True,
-        Healing,
-    }
-
     [Serializable]
     public struct EventData
     {
-        public HealthEventType Type;
+        public EffectType Type;
         public string Name;
         public Color Color;
     }
@@ -28,7 +21,7 @@ namespace Stats.Data
         
         public EventData[] Events => _events;
 
-        public EventData GetEvent(HealthEventType type)
+        public EventData GetEvent(EffectType type)
         {
             return Events.FirstOrDefault(x => x.Type == type);
         }

@@ -21,13 +21,13 @@ namespace Enemies.Spawner
             }
         }
 
-        void SpawnAll()
+        private void SpawnAll()
         {
             for (var i = 0; i < count; i++)
                 SpawnOne();
         }
 
-        void SpawnOne()
+        private void SpawnOne()
         {
             var pos = RandomPosition();
             
@@ -41,7 +41,7 @@ namespace Enemies.Spawner
             pooled.GetComponent<EnemyBehaviour>().Init(data);
         }
 
-        Vector3 RandomPosition()
+        private Vector3 RandomPosition()
         {
             var angle = Random.Range(0f, Mathf.PI * 2f);
             var dist = Random.Range(0f, radius);
