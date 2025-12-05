@@ -3,6 +3,7 @@ using Character.Data;
 using Character.Input;
 using Character.State;
 using Character.Visual;
+using Entity;
 using Health;
 using Interfaces;
 using Unity.Netcode;
@@ -10,7 +11,7 @@ using UnityEngine;
 
 namespace Character
 {
-    public class CharacterBehaviour : NetworkBehaviour, IAffectable
+    public class CharacterBehaviour : EntityBehaviour<CharacterBehaviour>, IAffectable
     {
         [SerializeField] private CharacterData data;
 
@@ -26,20 +27,13 @@ namespace Character
 
         private void Awake()
         {
-            Movement = GetComponent<CharacterMovementController>();
-            Skills = GetComponent<CharacterSkills>();
-            InputController = GetComponent<CharacterInputController>();
-            State = GetComponent<CharacterState>();
-            Health = GetComponent<CharacterHealth>();
-            Stats = GetComponent<CharacterStats>();
-            
-            Movement.Init(this);
-            Skills.Init(this);
-            InputController.Init(this);
-            State.Init(this);
-            Health.Init(this);
-            Stats.Init(this);
-            Stats.SetStats(data.Stats);
+            Movement = InitComponent<CharacterMovementController>();
+            AnimationController = InitComponent<CharacterAnimationController>();
+            Skills = InitComponent<CharacterSkills>();
+            InputController = InitComponent<CharacterInputController>();
+            State = InitComponent<CharacterState>();
+            Health = InitComponent<CharacterHealth>();
+            Stats = InitComponent<CharacterStats>();
         }
 
         public override void OnNetworkSpawn()
@@ -71,8 +65,8 @@ namespace Character
             }
 
             Visual = Instantiate(prefab, transform);
-            AnimationController = Visual.GetComponent<CharacterAnimationController>();
-            AnimationController.Init(this);
+            AnimationController.GetAnimator();
+            Stats.SetStats(data.Stats);
         }
 
         private void SetData()

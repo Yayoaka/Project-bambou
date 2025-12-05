@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 7301557644388068056}
   - component: {fileID: 5442849667919207785}
   - component: {fileID: 2525342968106190495}
+  - component: {fileID: 8417061010593134762}
   - component: {fileID: 1710644263214642812}
   - component: {fileID: 6431743065237693542}
   - component: {fileID: 4064493778673570902}
@@ -161,6 +162,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ac1a39c108a4ec1b0e07b384ebdd042, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.CharacterHealth
+  ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &8417061010593134762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471502131686496270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70f81fa82c13fe94682bb3ad99f6ec91, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Character.CharacterAnimationController
   ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &1710644263214642812
 MonoBehaviour:

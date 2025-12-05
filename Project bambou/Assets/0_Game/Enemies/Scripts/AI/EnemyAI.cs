@@ -86,7 +86,8 @@ namespace Enemies.AI
             if (_target == null)
                 return;
 
-            nav.SetDestination(_target.position);
+            if (nav.isOnNavMesh) 
+                nav.SetDestination(_target.position);
         }
 
         bool ShouldRepath()

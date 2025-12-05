@@ -1,10 +1,11 @@
 using System;
+using Entity;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace Character
 {
-    public class CharacterMovementController : CharacterComponent
+    public class CharacterMovementController : EntityComponent<CharacterBehaviour>
     {
         [SerializeField] private float moveSpeed = 5f;
         public float MoveSpeed { get => moveSpeed; set => moveSpeed = value; }

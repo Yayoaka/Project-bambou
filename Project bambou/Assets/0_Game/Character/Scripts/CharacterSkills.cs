@@ -1,10 +1,11 @@
+using Entity;
 using Skills;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace Character
 {
-    public class CharacterSkills : CharacterComponent
+    public class CharacterSkills : EntityComponent<CharacterBehaviour>
     {
         private SpellData[] _spells;
         private float[] _cooldowns;
@@ -97,7 +98,7 @@ namespace Character
                 SetZoneParentClientRpc(netObj.NetworkObjectId, NetworkObjectId);
             }
 
-            obj.GetComponent<Zone>().Init(effect, CharacterBehaviour.Stats, CharacterBehaviour);
+            obj.GetComponent<Zone>().Init(effect, Owner.Stats, Owner);
         }
         
         [Rpc(SendTo.NotServer, RequireOwnership = false)]

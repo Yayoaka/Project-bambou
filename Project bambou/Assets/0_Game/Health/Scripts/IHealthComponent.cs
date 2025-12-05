@@ -1,8 +1,16 @@
+using System;
+
 namespace Health
 {
     public interface IHealthComponent
     {
-        void ApplyDamage(HealthEventData data);
+        float MaxHealth { get; }
+        float CurrentHealth { get; }
+        
         bool IsAlive { get; }
+        event Action OnDeath;
+        event Action<HealthEventData> OnHit;
+        void ApplyDamage(HealthEventData data);
+        void HandleDeath(HealthEventData data);
     }
 }

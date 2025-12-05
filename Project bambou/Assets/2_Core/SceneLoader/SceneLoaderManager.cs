@@ -43,8 +43,8 @@ namespace SceneLoader
 
         #region Private Variables
         
-        private readonly List<SceneAsset> _currentLocalScenes = new();
-        private readonly List<SceneAsset> _currentNetScenes = new();
+        private readonly List<string> _currentLocalScenes = new();
+        private readonly List<string> _currentNetScenes = new();
         
         [SerializeField] private GameStateType defaultState;
         
@@ -68,7 +68,6 @@ namespace SceneLoader
 
         private IEnumerator LoadRoutine(GameStateData state)
         {
-
             var scenesToKeepLocal = state.scenesToKeep;
             var desiredLocal = state.scenesToLoad;
 
@@ -76,9 +75,9 @@ namespace SceneLoader
                 .Where(s => !desiredLocal.Contains(s) && !scenesToKeepLocal.Contains(s))
                 .ToList();
 
-            foreach (var scene in localToUnload)
+            foreach (var sceneName in localToUnload)
             {
-                yield return UnloadLocalScene(scene);
+                yield return UnloadLocalScene(sceneName);
             }
 
             var scenesToKeepNet = state.netScenesToKeep;
@@ -90,22 +89,22 @@ namespace SceneLoader
 
             if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
             {
-                foreach (var scene in netToUnload)
+                foreach (var sceneName in netToUnload)
                 {
-                    yield return UnloadNetScene(scene);
+                    yield return UnloadNetScene(sceneName);
                 }
             }
 
-            foreach (var sceneAsset in state.scenesToLoad.Where(sceneAsset => !_currentLocalScenes.Contains(sceneAsset)))
+            foreach (var sceneName in desiredLocal.Where(scene => !_currentLocalScenes.Contains(scene)))
             {
-                yield return LoadLocalScene(sceneAsset);
+                yield return LoadLocalScene(sceneName);
             }
 
             if (NetworkManager.Singleton != null && NetworkManager.Singleton.IsServer)
             {
-                foreach (var sceneAsset in state.netScenesToLoad.Where(sceneAsset => !_currentNetScenes.Contains(sceneAsset)))
+                foreach (var sceneName in desiredNet.Where(sceneAsset => !_currentNetScenes.Contains(sceneAsset)))
                 {
-                    yield return LoadNetScene(sceneAsset);
+                    yield return LoadNetScene(sceneName);
                 }
             }
 
@@ -116,9 +115,9 @@ namespace SceneLoader
 
         #region Local Scene Loading
 
-        IEnumerator LoadLocalScene(SceneAsset scene)
+        IEnumerator LoadLocalScene(string sceneName)
         {
-            var op = SceneManager.LoadSceneAsync(scene.name, LoadSceneMode.Additive);
+            var op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
             if (op == null)
                 yield break;
@@ -126,18 +125,18 @@ namespace SceneLoader
             while (!op.isDone)
                 yield return null;
 
-            if (!_currentLocalScenes.Contains(scene))
-                _currentLocalScenes.Add(scene);
+            if (!_currentLocalScenes.Contains(sceneName))
+                _currentLocalScenes.Add(sceneName);
         }
 
-        IEnumerator UnloadLocalScene(SceneAsset scene)
+        IEnumerator UnloadLocalScene(string sceneName)
         {
-            var op = SceneManager.UnloadSceneAsync(scene.name);
+            var op = SceneManager.UnloadSceneAsync(sceneName);
 
             while (!op.isDone)
                 yield return null;
 
-            _currentLocalScenes.Remove(scene);
+            _currentLocalScenes.Remove(sceneName);
             OnScenesUnloaded?.Invoke();
         }
 
@@ -145,21 +144,21 @@ namespace SceneLoader
 
         #region Netcode Scene Loading
 
-        private IEnumerator LoadNetScene(SceneAsset scene)
+        private IEnumerator LoadNetScene(string sceneName)
         {
             var done = false;
             
-            Debug.Log($"Loading scene {scene.name}");
+            Debug.Log($"Loading scene {sceneName}");
 
             NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += OnLoaded;
 
-            NetworkManager.Singleton.SceneManager.LoadScene(scene.name, LoadSceneMode.Additive);
+            NetworkManager.Singleton.SceneManager.LoadScene(sceneName, LoadSceneMode.Additive);
 
             while (!done)
                 yield return null;
 
-            if (!_currentNetScenes.Contains(scene))
-                _currentNetScenes.Add(scene);
+            if (!_currentNetScenes.Contains(sceneName))
+                _currentNetScenes.Add(sceneName);
             yield break;
 
             void OnLoaded(
@@ -168,7 +167,7 @@ namespace SceneLoader
                 List<ulong> clientsCompleted,
                 List<ulong> clientsTimedOut)
             {
-                if (scene.name != loadedScene) return;
+                if (sceneName != loadedScene) return;
 
                 done = true;
 
@@ -176,27 +175,27 @@ namespace SceneLoader
             }
         }
 
-        private IEnumerator UnloadNetScene(SceneAsset sceneAsset)
+        private IEnumerator UnloadNetScene(string sceneName)
         {
             var done = false;
 
             NetworkManager.Singleton.SceneManager.OnUnloadEventCompleted += OnUnloaded;
 
-            var scene = SceneManager.GetSceneByName(sceneAsset.name);
+            var scene = SceneManager.GetSceneByName(sceneName);
             
             NetworkManager.Singleton.SceneManager.UnloadScene(scene);
 
             while (!done)
                 yield return null;
 
-            _currentNetScenes.Remove(sceneAsset);
+            _currentNetScenes.Remove(sceneName);
             OnScenesUnloaded?.Invoke();
             yield break;
 
             void OnUnloaded(string unloadedScene, LoadSceneMode mode, List<ulong> clientsCompleted,
                 List<ulong> clientsTimedOut)
             {
-                if (unloadedScene != sceneAsset.name)
+                if (unloadedScene != sceneName)
                     return;
 
                 done = true;

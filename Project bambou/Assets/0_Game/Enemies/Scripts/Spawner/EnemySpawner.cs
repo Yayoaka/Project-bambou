@@ -1,17 +1,24 @@
+using Enemies.Data;
+using Network;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Enemies.Spawner
 {
-    public class EnemySpawner : MonoBehaviour
+    public class EnemySpawner : NetworkBehaviour
     {
         [Header("Settings")]
-        [SerializeField] private GameObject prefab;
+        [SerializeField] private NetworkObject prefab;
+        [SerializeField] private EnemyDataSo data;
         [SerializeField] private int count = 50;
         [SerializeField] private float radius = 20f;
 
-        void Start()
+        public override void OnNetworkSpawn()
         {
-            SpawnAll();
+            if (IsServer)
+            {
+                SpawnAll();
+            }
         }
 
         void SpawnAll()
@@ -23,7 +30,15 @@ namespace Enemies.Spawner
         void SpawnOne()
         {
             var pos = RandomPosition();
-            Instantiate(prefab, pos, Quaternion.identity);
+            
+            var pooled = NetworkObjectPool.Instance.Get(prefab);
+            
+            pooled.transform.position = pos;
+            pooled.transform.rotation = Quaternion.identity;
+
+            pooled.Spawn();
+
+            pooled.GetComponent<EnemyBehaviour>().Init(data);
         }
 
         Vector3 RandomPosition()
