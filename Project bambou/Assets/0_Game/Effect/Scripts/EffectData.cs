@@ -1,27 +1,27 @@
 using System;
-using System.Collections.Generic;
-using Skills.Data;
+using Stats.Data;
 using UnityEngine;
 
 namespace Effect
 {
     [Serializable]
+#if UNITY_EDITOR
+    [UnityEditor.CustomPropertyDrawer(typeof(EffectData))]
+#endif
     public class EffectData
     {
+        [HideInInspector] public float baseValue;
+        [HideInInspector] public float percentAD;
+        [HideInInspector] public float percentAP;
+        [HideInInspector] public StatType targetStat;
+        [HideInInspector] public bool isPercent;
+
+        [HideInInspector] public float duration;
+        [HideInInspector] public float tickDelay;
+        [HideInInspector] public bool loop;
+
+        [HideInInspector] public EffectType effectType;
+
         public EffectKind kind;
-
-        [Header("Base power (raw damage / heal)")]
-        public float baseValue;
-
-        [Header("Scaling")]
-        [Tooltip("Range between 0 and 1")]public float percentAD;
-        [Tooltip("Range between 0 and 1")]public float percentAP;
-
-        [Header("Periodic (dot/hot)")]
-        public float duration;
-        public float tickDelay = 1f;
-        public bool loop;
-
-        public EffectType effectType;
     }
 }

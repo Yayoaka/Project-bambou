@@ -4,7 +4,6 @@ using Interfaces;
 using Skills.Data;
 using Stats;
 using Stats.Data;
-using Stats.Data.Stats.Data;
 using UnityEngine;
 
 namespace Skills
@@ -33,11 +32,21 @@ namespace Skills
                     break;
 
                 case EffectKind.Buff:
-                    target?.AddBuff(ComputeEffectValue(data, sourceStats), data.duration);
+                    target?.AddBuff(
+                        stat: data.targetStat,
+                        amount: ComputeEffectValue(data, sourceStats),
+                        duration: data.duration,
+                        percent: data.isPercent
+                    );
                     break;
 
                 case EffectKind.Debuff:
-                    target?.AddDebuff(ComputeEffectValue(data, sourceStats), data.duration);
+                    target?.AddDebuff(
+                        stat: data.targetStat,
+                        amount: ComputeEffectValue(data, sourceStats),
+                        duration: data.duration,
+                        percent: data.isPercent
+                    );
                     break;
 
                 case EffectKind.Taunt:

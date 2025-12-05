@@ -14,9 +14,6 @@ namespace Effect
         Stun,
         Root,
         Cleanse,
-        Vulnerability,
-
-        SpawnProjectile,
-        SpawnZone
+        Vulnerability
     }
 }

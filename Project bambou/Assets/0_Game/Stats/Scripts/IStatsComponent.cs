@@ -1,12 +1,14 @@
 using Effect;
 using Effect.Stats.Data;
-using Stats.Data.Stats.Data;
+using Stats.Data;
 
 namespace Stats
 {
     public interface IStatsComponent
     {
         float GetStat(StatType type);
+
+        public void SetStats(StatsData data);
 
         bool ComputeCrit(EffectType type);
         float GetCritMultiplier(EffectType type);

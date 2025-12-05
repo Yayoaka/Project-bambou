@@ -1,100 +1,98 @@
+using Buff;
 using UnityEngine;
 using Effect;
 using Effect.Stats.Data;
 using Stats.Data;
-using Stats.Data.Stats.Data;
 
 namespace Stats
 {
+    [RequireComponent(typeof(BuffComponent))]
     public class StatsComponent : MonoBehaviour, IStatsComponent
     {
-        [Header("Offensive Stats")]
-        [SerializeField] private float attackDamage = 20f;
-        [SerializeField] private float abilityPower = 15f;
+        private StatsData _baseStats;   // injecté via SetStats
+        private BuffComponent _buffs;
 
-        [Header("Critical")]
-        [SerializeField] private float critChance = 0.10f;      // 10%
-        [SerializeField] private float critMultiplier = 2.0f;   // 200%
-
-        [Header("Defensive Stats")]
-        [SerializeField] private float armor = 10f;
-        [SerializeField] private float magicResist = 10f;
-
-        [Header("Outgoing Modifiers")]
-        [SerializeField] private float outgoingDamageModifier = 1f;
-        [SerializeField] private float outgoingHealModifier = 1f;
-        [SerializeField] private float outgoingShieldModifier = 1f;
-
-        public void SetStats(StatsData s)
+        private void Awake()
         {
-            attackDamage = s.abilityDamage;
-            abilityPower = s.abilityPower;
-
-            critChance = s.critChance;
-            critMultiplier = s.critMultiplier;
-
-            armor = s.armorResistance;
-            magicResist = s.magicResistance;
+            _buffs = GetComponent<BuffComponent>();
         }
 
+        // ------------------------------------------------------
+        //        Inject stats depuis un ScriptableObject
+        // ------------------------------------------------------
+        public void SetStats(StatsData data)
+        {
+            _baseStats = data;
+        }
+
+        // ------------------------------------------------------
+        //                GET STAT (buff-aware)
+        // ------------------------------------------------------
         public float GetStat(StatType type)
         {
-            return type switch
+            if (_baseStats == null)
             {
-                StatType.AttackDamage  => attackDamage,
-                StatType.AbilityPower  => abilityPower,
+                Debug.LogError($"{name} : StatsComponent appelé avant SetStats() !");
+                return 0;
+            }
 
-                StatType.CritChance    => critChance,
-                StatType.CritMultiplier => critMultiplier,
+            float baseValue = type switch
+            {
+                StatType.AttackDamage   => _baseStats.abilityDamage,
+                StatType.AbilityPower   => _baseStats.abilityPower,
 
-                StatType.Armor         => armor,
-                StatType.MagicResist   => magicResist,
+                StatType.CritChance     => _baseStats.critChance,
+                StatType.CritMultiplier => _baseStats.critMultiplier,
+
+                StatType.Armor          => _baseStats.armorResistance,
+                StatType.MagicResist    => _baseStats.magicResistance,
+
+                StatType.MaxHealth      => _baseStats.health,
+                StatType.AttackSpeed    => _baseStats.attackSpeed,
+                StatType.MoveSpeed      => _baseStats.moveSpeed,
 
                 _ => 0f
             };
+
+            return _buffs.GetModifiedStat(type, baseValue);
         }
 
+        // ------------------------------------------------------
+        //                CRITICAL
+        // ------------------------------------------------------
         public bool ComputeCrit(EffectType type)
         {
-            return Random.value < critChance;
+            return Random.value < GetStat(StatType.CritChance);
         }
 
         public float GetCritMultiplier(EffectType type)
         {
-            return critMultiplier;
+            return GetStat(StatType.CritMultiplier);
         }
 
         public float ComputeDamageDealt(float rawDamage, bool crit)
         {
-            return crit ? rawDamage * critMultiplier : rawDamage;
+            return crit ? rawDamage * GetCritMultiplier(EffectType.Physical) : rawDamage;
         }
 
+        // ------------------------------------------------------
+        //                MITIGATION
+        // ------------------------------------------------------
         public float ComputeDamageTaken(float rawDamage, EffectType type)
         {
-            return type switch
+            float defense = type switch
             {
-                EffectType.Physical => ApplyMitigation(rawDamage, armor),
-                EffectType.Magical  => ApplyMitigation(rawDamage, magicResist),
-                EffectType.True     => rawDamage,
-                EffectType.Heal     => rawDamage,
-                _                   => rawDamage
+                EffectType.Physical => GetStat(StatType.Armor),
+                EffectType.Magical  => GetStat(StatType.MagicResist),
+                _                   => 0
             };
-        }
 
-        private float ApplyMitigation(float rawDamage, float defense)
-        {
             return Mathf.Max(0f, rawDamage * (100f / (100f + defense)));
         }
 
-        public float ModifyOutgoingEffect(float value, EffectModifierType type)
+        public float ModifyOutgoingEffect(float value, EffectModifierType modifier)
         {
-            return type switch
-            {
-                EffectModifierType.OutgoingDamage => value * outgoingDamageModifier,
-                EffectModifierType.OutgoingHeal   => value * outgoingHealModifier,
-                EffectModifierType.OutgoingShield => value * outgoingShieldModifier,
-                _                                  => value
-            };
+            return value; // sera amélioré plus tard si besoin
         }
     }
 }

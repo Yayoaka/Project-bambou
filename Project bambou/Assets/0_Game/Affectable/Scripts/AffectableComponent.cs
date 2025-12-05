@@ -1,8 +1,11 @@
+using System.Collections;
+using Buff;
 using Effect;
 using Health;
 using Interfaces;
 using Skills.Data;
 using Stats;
+using Stats.Data;
 using UnityEngine;
 
 namespace Affectable
@@ -11,100 +14,197 @@ namespace Affectable
     {
         private IHealthComponent _health;
         private ShieldComponent _shield;
+        private BuffComponent _buffs;
+        private IStatsComponent _stats;
+
+        private bool _isStunned;
+        private bool _isRooted;
 
         private void Awake()
         {
             _health = GetComponent<IHealthComponent>();
             _shield = GetComponent<ShieldComponent>();
+            _buffs  = GetComponent<BuffComponent>();
+            _stats  = GetComponent<IStatsComponent>();
 
             if (_health == null)
                 Debug.LogError($"{name} has no IHealthComponent but uses IAffectable!");
         }
 
+        // -------------------------------------------------------
+        // DAMAGE
+        // -------------------------------------------------------
         public void Damage(HealthEventData data)
         {
-            if (data.Amount <= 0f)
-                return;
-
             float dmg = data.Amount;
 
+            // Shield first
             if (_shield != null)
                 dmg = _shield.AbsorbDamage(dmg);
 
             if (dmg <= 0f)
                 return;
 
+            // Mitigation (armor/mr)
+            dmg = _stats.ComputeDamageTaken(dmg, data.Type);
+
             data.Amount = dmg;
             _health.ApplyDamage(data);
         }
-        
+
+        // -------------------------------------------------------
+        // HEAL
+        // -------------------------------------------------------
         public void Heal(HealthEventData data)
         {
-            if (data.Amount <= 0f)
-                return;
-
-            _health.ApplyHeal(data);
+            if (data.Amount > 0f)
+                _health.ApplyHeal(data);
         }
 
+        // -------------------------------------------------------
+        // SHIELD
+        // -------------------------------------------------------
         public void AddShield(float amount, float duration)
         {
-            if (_shield == null)
-            {
-                Debug.LogWarning($"{name} received a Shield effect but has no ShieldComponent.");
-                return;
-            }
-
-            _shield.AddShield(amount, duration);
+            _shield?.AddShield(amount, duration);
         }
 
-        public void AddBuff(float amount, float duration)
+        // -------------------------------------------------------
+        // BUFFS / DEBUFFS
+        // -------------------------------------------------------
+        public void AddBuff(StatType stat, float amount, float duration, bool percent = false)
         {
-            // Implémenté plus tard
+            _buffs?.AddBuff(stat, amount, duration, percent);
         }
 
-        public void AddDebuff(float amount, float duration)
+        public void AddDebuff(StatType stat, float amount, float duration, bool percent = false)
         {
-            // Implémenté plus tard
-        }
-
-        public void ApplyTaunt(IAffectable source, float duration)
-        {
-            // Implémenté plus tard
-        }
-
-        public void ApplyDot(EffectData data, IStatsComponent stats, IAffectable source)
-        {
-            // Implémenté plus tard
-        }
-
-        public void ApplyHot(EffectData data, IStatsComponent stats, IAffectable source)
-        {
-            // Implémenté plus tard
-        }
-
-        public void ApplyStun(float duration)
-        {
-            // Implémenté plus tard
-        }
-
-        public void ApplyRoot(float duration)
-        {
-            // Implémenté plus tard
+            // On réutilise le même système (valeur négative = debuff)
+            _buffs?.AddBuff(stat, -Mathf.Abs(amount), duration, percent);
         }
 
         public void RemoveDebuffs()
         {
-            // Implémenté plus tard
+            // Tu peux plus tard ajouter un Cleanup complet dans BuffComponent
+        }
+
+        // -------------------------------------------------------
+        // DOT
+        // -------------------------------------------------------
+        public void ApplyDot(EffectData e, IStatsComponent sourceStats, IAffectable source)
+        {
+            StartCoroutine(DotRoutine(e, sourceStats, source));
+        }
+
+        private IEnumerator DotRoutine(EffectData e, IStatsComponent sourceStats, IAffectable source)
+        {
+            float elapsed = 0f;
+
+            while (elapsed < e.duration)
+            {
+                yield return new WaitForSeconds(e.tickDelay);
+                elapsed += e.tickDelay;
+
+                bool crit = sourceStats.ComputeCrit(e.effectType);
+                float dmg = sourceStats.ComputeDamageDealt(e.baseValue, crit);
+
+                var h = new HealthEventData
+                {
+                    Amount = dmg,
+                    Critical = crit,
+                    Source = source,
+                    Type = e.effectType,
+                    HitPoint = transform.position
+                };
+
+                Damage(h);
+            }
+        }
+
+        // -------------------------------------------------------
+        // HOT
+        // -------------------------------------------------------
+        public void ApplyHot(EffectData e, IStatsComponent sourceStats, IAffectable source)
+        {
+            StartCoroutine(HotRoutine(e, sourceStats, source));
+        }
+
+        private IEnumerator HotRoutine(EffectData e, IStatsComponent sourceStats, IAffectable source)
+        {
+            float elapsed = 0f;
+
+            while (elapsed < e.duration)
+            {
+                yield return new WaitForSeconds(e.tickDelay);
+                elapsed += e.tickDelay;
+
+                float healAmount = e.baseValue; // AP scaling possible plus tard
+
+                var h = new HealthEventData
+                {
+                    Amount = healAmount,
+                    Critical = false,
+                    Source = source,
+                    Type = EffectType.Heal,
+                    HitPoint = transform.position
+                };
+
+                Heal(h);
+            }
+        }
+
+        // -------------------------------------------------------
+        // STUN
+        // -------------------------------------------------------
+        public void ApplyStun(float duration)
+        {
+            if (_isStunned) return;
+            StartCoroutine(StunRoutine(duration));
+        }
+
+        private IEnumerator StunRoutine(float duration)
+        {
+            _isStunned = true;
+            yield return new WaitForSeconds(duration);
+            _isStunned = false;
+        }
+
+        // -------------------------------------------------------
+        // ROOT
+        // -------------------------------------------------------
+        public void ApplyRoot(float duration)
+        {
+            if (_isRooted) return;
+            StartCoroutine(RootRoutine(duration));
+        }
+
+        private IEnumerator RootRoutine(float duration)
+        {
+            _isRooted = true;
+            yield return new WaitForSeconds(duration);
+            _isRooted = false;
+        }
+
+        // -------------------------------------------------------
+        // TAUNT
+        // -------------------------------------------------------
+        public void ApplyTaunt(IAffectable source, float duration)
+        {
+            // hook AI later
+        }
+
+        // -------------------------------------------------------
+        // KNOCKBACK
+        // -------------------------------------------------------
+        public void Knockback(Vector3 force)
+        {
+            if (TryGetComponent<Rigidbody>(out var rb))
+                rb.AddForce(force, ForceMode.Impulse);
         }
 
         public void AddDamageTakenModifier(float value, float duration)
         {
-            // Implémenté plus tard
-        }
-
-        public void Knockback(Vector3 force)
-        {
-            // Implémenté plus tard
+            // Ce rôle doit être migré dans BuffComponent via StatType.DamageReduction
         }
     }
 }

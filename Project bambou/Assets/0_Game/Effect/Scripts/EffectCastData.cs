@@ -4,23 +4,30 @@ using UnityEngine;
 
 namespace Effect
 {
+    public enum CastDirectionMode
+    {
+        Default,
+        ToCursor,
+        ToClosestEnemy,
+        ToAnyTarget
+    }
+
     [Serializable]
     public class EffectCastData
     {
-        [Header("Projectile")]
-        public bool spawnProjectile;
-        public GameObject projectilePrefab;
+        [HideInInspector]public CastDirectionMode castDirectionMode = CastDirectionMode.Default;
 
-        [Header("Zone")]
-        public bool spawnZone;
-        public GameObject zonePrefab;
+        [HideInInspector]public float targetSearchRange = 10f;
 
-        [Header("Spawn Params")]
-        public bool onCursor;
-        public bool toCursor;
-        public bool followCaster;
+        [HideInInspector]public bool spawnProjectile;
+        [HideInInspector]public GameObject projectilePrefab;
 
-        [Header("Effects applied by this cast")]
-        public List<EffectData> appliedEffects = new();
+        [HideInInspector]public bool spawnZone;
+        [HideInInspector]public GameObject zonePrefab;
+
+        [HideInInspector]public bool onCursor;
+        [HideInInspector]public bool followCaster;
+
+        [HideInInspector]public List<EffectData> appliedEffects = new();
     }
 }

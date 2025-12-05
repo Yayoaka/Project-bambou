@@ -6,15 +6,6 @@ using UnityEngine;
 
 namespace Skills.Data
 {
-    [Serializable]
-    public struct HealthModificationData
-    {
-        public float baseAbilityDamage;
-        public float baseAbilityPower;
-        public float bonusDamagePercentage;
-        public float bonusPowerPercentage;
-    }
-    
     [CreateAssetMenu(fileName = "SpellData", menuName = "Spells/SpellData")]
     public class SpellData : ScriptableObject
     {
@@ -24,6 +15,7 @@ namespace Skills.Data
         public Sprite spellIcon;
         public float cooldown;
         public bool animate;
+        public bool autoCast;
 
         [Header("Effects applied immediately on cast")]
         public List<EffectData> gameplayEffects = new();

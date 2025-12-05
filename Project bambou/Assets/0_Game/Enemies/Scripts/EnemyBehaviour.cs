@@ -69,6 +69,7 @@ namespace Enemies
             }
 
             _visual = Instantiate(data.visualPrefab, transform);
+            _stats.SetStats(data.stats);
         }
 
         private void OnKill()

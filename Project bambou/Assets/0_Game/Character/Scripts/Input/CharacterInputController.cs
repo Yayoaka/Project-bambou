@@ -70,7 +70,7 @@ namespace Character.Input
             _character.TryUseSkill(2, GetMousePosition, dir);
         }
 
-        private Vector3 GetMousePosition
+        public Vector3 GetMousePosition
         {
             get
             {
@@ -85,7 +85,7 @@ namespace Character.Input
             }
         }
 
-        private Vector3 GetMouseDirection()
+        public Vector3 GetMouseDirection()
         {
             var ray = _cam.ScreenPointToRay(Mouse.current.position.ReadValue());
             var plane = new Plane(Vector3.up, _character.transform.position);

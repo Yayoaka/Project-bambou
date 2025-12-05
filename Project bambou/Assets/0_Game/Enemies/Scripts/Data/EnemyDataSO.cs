@@ -1,4 +1,5 @@
 using System;
+using Stats.Data;
 using UnityEngine;
 
 namespace Enemies.Data
@@ -11,10 +12,7 @@ namespace Enemies.Data
         public string id;
 
         [Header("Stats")]
-        public float maxHealth;
-        public float moveSpeed;
-        public float attackDamage;
-        public float attackRange;
+        public StatsData stats;
         
         [Header("Prefabs")]
         public GameObject visualPrefab;

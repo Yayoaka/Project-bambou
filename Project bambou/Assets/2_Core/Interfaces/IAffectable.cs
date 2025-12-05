@@ -1,29 +1,40 @@
 using Effect;
 using Health;
-using Stats;
 using UnityEngine;
+using Stats.Data;
+using Skills.Data;
+using Stats;
 
 namespace Interfaces
 {
     public interface IAffectable
     {
+        // Damage / Heal
         void Damage(HealthEventData data);
         void Heal(HealthEventData data);
 
+        // Shield
         void AddShield(float amount, float duration);
-        void AddBuff(float amount, float duration);
-        void AddDebuff(float amount, float duration);
 
-        void ApplyTaunt(IAffectable source, float duration);
+        // Buff / Debuff (nouvelle signature)
+        void AddBuff(StatType stat, float amount, float duration, bool percent = false);
+        void AddDebuff(StatType stat, float amount, float duration, bool percent = false);
 
-        void ApplyDot(EffectData data, IStatsComponent stats, IAffectable source);
-        void ApplyHot(EffectData data, IStatsComponent stats, IAffectable source);
+        void RemoveDebuffs();
 
+        // DOT / HOT
+        void ApplyDot(EffectData data, IStatsComponent sourceStats, IAffectable source);
+        void ApplyHot(EffectData data, IStatsComponent sourceStats, IAffectable source);
+
+        // Crowd control
         void ApplyStun(float duration);
         void ApplyRoot(float duration);
-        void RemoveDebuffs();
-        void AddDamageTakenModifier(float value, float duration);
+        void ApplyTaunt(IAffectable source, float duration);
 
+        // Knockback
         void Knockback(Vector3 force);
+
+        // Can stay or be removed (migrated to BuffComponent)
+        void AddDamageTakenModifier(float value, float duration);
     }
 }
