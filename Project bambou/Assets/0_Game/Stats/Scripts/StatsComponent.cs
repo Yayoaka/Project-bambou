@@ -62,6 +62,10 @@ namespace Stats
                 StatType.MaxHealth      => _baseStats.health,
                 StatType.AttackSpeed    => _baseStats.attackSpeed,
                 StatType.MoveSpeed      => _baseStats.moveSpeed,
+                
+                StatType.ProjectileCount => _baseStats.projectileCount,
+                StatType.ProjectileSpeedMultiplier => _baseStats.projectileSpeedMultiplier,
+                StatType.ProjectileSize => _baseStats.projectileSize,
 
                 _ => 0f
             };

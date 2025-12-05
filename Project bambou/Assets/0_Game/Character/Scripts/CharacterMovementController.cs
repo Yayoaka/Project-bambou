@@ -8,7 +8,9 @@ namespace Character
 {
     public class CharacterMovementController : EntityComponent<CharacterBehaviour>
     {
-        private float _moveSpeed = 5f;
+        private NetworkVariable<float> _moveSpeed = new(5f, 
+            NetworkVariableReadPermission.Everyone,
+            NetworkVariableWritePermission.Server);
 
         [SerializeField] private Rigidbody rb;
         private Vector3 _moveDirection;
@@ -34,7 +36,7 @@ namespace Character
         {
             if (_moveDirection.sqrMagnitude > 0.01f)
             {
-                var newPosition = rb.position + _moveDirection * _moveSpeed * Time.fixedDeltaTime;
+                var newPosition = rb.position + _moveDirection * _moveSpeed.Value * Time.fixedDeltaTime;
                 rb.MovePosition(newPosition);
             }
         }
@@ -55,7 +57,8 @@ namespace Character
 
         private void UpdateSpeed()
         {
-            _moveSpeed = Owner.Stats.GetStat(StatType.MoveSpeed);
+            if(IsServer) //SyncVar server only
+                _moveSpeed.Value = Owner.Stats.GetStat(StatType.MoveSpeed);
         }
     }
 }

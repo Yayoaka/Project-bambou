@@ -3,7 +3,7 @@ namespace Stats.Data
     [System.Serializable]
     public class StatsData
     {
-        public float health;
+        public int health;
         public float abilityDamage;
         public float abilityPower;
         public float armorResistance;
@@ -12,5 +12,8 @@ namespace Stats.Data
         public float critMultiplier;
         public float moveSpeed;
         public float attackSpeed;
+        public int projectileCount;
+        public float projectileSpeedMultiplier;
+        public float projectileSize;
     }
 }

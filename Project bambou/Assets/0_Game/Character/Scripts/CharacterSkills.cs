@@ -1,4 +1,6 @@
+using System;
 using System.Collections;
+using System.Collections.Generic;
 using Effect;
 using Entity;
 using Interfaces;
@@ -6,8 +8,10 @@ using Skills;
 using Skills.Data;
 using Skills.Entities;
 using Stats;
+using Stats.Data;
 using Unity.Netcode;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Character
 {
@@ -19,12 +23,10 @@ namespace Character
 
         private CharacterAnimationController _anim;
 
-        private IStatsComponent _stats;
         private IAffectable _affectable;
 
         private void Awake()
         {
-            _stats = GetComponent<IStatsComponent>();
             _affectable = GetComponent<IAffectable>();
         }
 
@@ -51,6 +53,8 @@ namespace Character
 
         public void TryCast(int index, Vector3 mousePosition, Vector3 direction)
         {
+            if (_spells[index].autoCast) return;
+            
             TryCastServerRpc(index, mousePosition, direction);
         }
 
@@ -94,7 +98,7 @@ namespace Character
 
             // Apply gameplay effects instantly
             foreach (var effect in spell.gameplayEffects)
-                EffectExecutor.Execute(effect, _stats, NetworkObjectId, _affectable, Vector3.zero);
+                EffectExecutor.Execute(effect, Owner.Stats, NetworkObjectId, _affectable, Vector3.zero);
 
             // Casted effects (projectile / zone)
             foreach (var cast in spell.castEffects)
@@ -113,22 +117,29 @@ namespace Character
         private void SpawnProjectile(EffectCastData cast, Vector3 mousePos, Vector3 dir)
         {
             var spawnPos = cast.onCursor ? mousePos : transform.position;
-            
+
             var finalDir = ResolveDirection(cast.castDirectionMode, mousePos, cast.targetSearchRange);
-            
-            if(finalDir == null) return;
-            
-            var spawnRot = Quaternion.LookRotation((Vector3)finalDir);
+            if (finalDir == null) return;
 
-            var obj = Instantiate(cast.projectilePrefab, spawnPos, spawnRot);
-            var netObj = obj.GetComponent<NetworkObject>();
-            netObj.Spawn();
+            var directions = GetProjectileDirections((Vector3)finalDir, Convert.ToInt32(Owner.Stats.GetStat(StatType.ProjectileCount)));
 
-            obj.GetComponent<Projectile>().Init(
-                cast.appliedEffects,
-                _stats,
-                NetworkObjectId,
-                (Vector3)finalDir);
+            foreach (var projDir in directions)
+            {
+                var rot = Quaternion.LookRotation(projDir);
+                var obj = Instantiate(cast.projectilePrefab, spawnPos, rot);
+
+                obj.transform.localScale = Vector3.one * Owner.Stats.GetStat(StatType.ProjectileSize);
+
+                var netObj = obj.GetComponent<NetworkObject>();
+                netObj.Spawn();
+
+                obj.GetComponent<Projectile>().Init(
+                    cast.appliedEffects,
+                    Owner.Stats,
+                    NetworkObjectId,
+                    projDir
+                );
+            }
         }
 
         private void SpawnZone(EffectCastData cast, Vector3 mousePos, Vector3 dir)
@@ -142,6 +153,9 @@ namespace Character
             var spawnRot = Quaternion.LookRotation((Vector3)finalDir);
 
             var obj = Instantiate(cast.zonePrefab, spawnPos, spawnRot);
+
+            obj.transform.localScale = Vector3.one * Owner.Stats.GetStat(StatType.ProjectileSize);
+            
             var netObj = obj.GetComponent<NetworkObject>();
             netObj.Spawn();
 
@@ -151,7 +165,7 @@ namespace Character
                 SetZoneParentClientRpc(netObj.NetworkObjectId, NetworkObjectId);
             }
 
-            obj.GetComponent<Zone>().Init(cast.appliedEffects, _stats, NetworkObjectId);
+            obj.GetComponent<Zone>().Init(cast.appliedEffects, Owner.Stats, NetworkObjectId);
         }
 
         [Rpc(SendTo.NotServer, RequireOwnership = false)]
@@ -221,6 +235,33 @@ namespace Character
             var randomIndex = Random.Range(0, hits.Length);
 
             return (hits[randomIndex].transform.position - pos).normalized;
+        }
+        
+        private List<Vector3> GetProjectileDirections(Vector3 baseDir, int count)
+        {
+            var list = new List<Vector3>();
+
+            if (count <= 1)
+            {
+                list.Add(baseDir.normalized);
+                return list;
+            }
+
+            // Angle entre chaque projectile
+            var step = 360f / count;
+
+            // Base rotation to align spread around forward direction
+            var baseRot = Quaternion.LookRotation(baseDir);
+
+            for (var i = 0; i < count; i++)
+            {
+                var angle = step * i;
+                var rot = baseRot * Quaternion.Euler(0f, angle, 0f);
+
+                list.Add(rot * Vector3.forward);
+            }
+
+            return list;
         }
     }
 }

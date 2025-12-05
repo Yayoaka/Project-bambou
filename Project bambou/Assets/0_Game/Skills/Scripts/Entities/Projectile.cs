@@ -3,6 +3,7 @@ using Effect;
 using Interfaces;
 using Skills.Data;
 using Stats;
+using Stats.Data;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -29,6 +30,8 @@ namespace Skills.Entities
             _sourceStats = stats;
             _sourceId = sourceId;
             _direction = dir.normalized;
+
+            speed *= stats.GetStat(StatType.ProjectileSpeedMultiplier);
         }
 
         private void Update()

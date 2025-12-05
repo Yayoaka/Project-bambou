@@ -85,7 +85,7 @@ namespace Buff
                     flat += b.Amount;
             }
 
-            return (baseValue + flat) * (1 + percent);
+            return (baseValue + flat) * (percent == 0 ? 1 : percent);
         }
     }
 }
