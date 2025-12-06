@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Effect;
 using Entity;
+using HUD;
 using Interfaces;
 using Skills;
 using Skills.Data;
@@ -44,6 +45,8 @@ namespace Character
                 if (spells[i].autoCast)
                     _autoCastRoutines[i] = StartCoroutine(AutoCastRoutine(i));
             }
+            
+            CharacterHUDManager.instance.SetSpells(spells);
         }
 
         public void SetAnimationController(CharacterAnimationController controller)
