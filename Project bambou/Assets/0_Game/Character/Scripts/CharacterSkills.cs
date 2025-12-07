@@ -47,7 +47,7 @@ namespace Character
                     _autoCastRoutines[i] = StartCoroutine(AutoCastRoutine(i));
             }
 
-            CharacterHUDManager.instance.SetSpells(spells);
+            CharacterHUDManager.Instance.SetSpells(spells);
         }
 
         public void SetAnimationController(CharacterAnimationController controller)

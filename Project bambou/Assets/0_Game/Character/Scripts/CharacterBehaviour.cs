@@ -10,7 +10,6 @@ using Stats;
 using Unity.Netcode;
 using UnityEngine;
 using Upgrades;
-using Upgrades.Scripts;
 using Upgrades.WeaponUpgrades.Data;
 
 namespace Character
@@ -84,6 +83,8 @@ namespace Character
             Skills.SetAnimationController(AnimationController);
             Stats.SetStats(data.Stats);
             Skills.SetSpells(data.Spells); //CALL IT AFTER SET STATS
+            
+            UpgradesManager.Instance.RegisterPlayer(OwnerClientId, Upgrade);
         }
         
         public void Move(Vector2 input)

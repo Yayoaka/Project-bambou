@@ -12,7 +12,6 @@ using Interfaces;
 using Skills;
 using Skills.Entities;
 using Stats.Data;
-using Upgrades.Scripts;
 using Random = UnityEngine.Random;
 
 namespace Upgrades
