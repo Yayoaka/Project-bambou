@@ -13,9 +13,10 @@ namespace Skills.Entities
     public class Zone : NetworkBehaviour
     {
         [Header("Zone Settings")]
-        [SerializeField] private float duration = 3f;
-        [SerializeField] private float tickDelay = 1f;
-        [SerializeField] private bool loop = true;
+        private float _duration;
+        private float _firstTickDelay;
+        private float _tickDelay;
+        private bool _loop;
 
         private List<EffectData> _effects;
         private IStatsComponent _sourceStats;
@@ -28,15 +29,20 @@ namespace Skills.Entities
         private Coroutine _destroyRoutine;
 
         public void Init(
-            List<EffectData> appliedEffects,
+            EffectCastData cast,
             IStatsComponent stats,
             ulong sourceId)
         {
             if (!IsServer) return;
 
-            _effects = appliedEffects;
+            _effects = cast.appliedEffects;
             _sourceStats = stats;
             _sourceId = sourceId;
+            _duration = cast.zoneLifetime;
+            _firstTickDelay = cast.firstTickDelay;
+            _tickDelay = cast.tickRate;
+            _loop = cast.loop;
+            
 
             _tickRoutine = StartCoroutine(TickLoop());
             _destroyRoutine = StartCoroutine(DestroyAfterDelay());
@@ -44,7 +50,7 @@ namespace Skills.Entities
 
         private IEnumerator DestroyAfterDelay()
         {
-            yield return new WaitForSeconds(duration);
+            yield return new WaitForSeconds(_duration);
 
             if (_tickRoutine != null)
                 StopCoroutine(_tickRoutine);
@@ -54,10 +60,10 @@ namespace Skills.Entities
 
         private IEnumerator TickLoop()
         {
+            yield return new WaitForSeconds(_firstTickDelay);
+            
             while (true)
             {
-                yield return new WaitForSeconds(tickDelay);
-
                 _buffer.Clear();
                 _buffer.AddRange(_targetsInside);
 
@@ -67,8 +73,10 @@ namespace Skills.Entities
                         EffectExecutor.Execute(e, _sourceStats, _sourceId, target, Vector3.zero);
                 }
 
-                if (!loop)
+                if (!_loop)
                     break;
+                
+                yield return new WaitForSeconds(_tickDelay);
             }
         }
 

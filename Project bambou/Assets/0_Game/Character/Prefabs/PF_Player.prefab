@@ -21,10 +21,11 @@ GameObject:
   - component: {fileID: 2320339193218563711}
   - component: {fileID: 9075700504475403070}
   - component: {fileID: 2525342968106190495}
-  - component: {fileID: 5442849667919207785}
+  - component: {fileID: 5567926824821909677}
   - component: {fileID: 4064493778673570902}
   - component: {fileID: 6431743065237693542}
   - component: {fileID: 4820019110717564034}
+  - component: {fileID: 6434261374770777849}
   m_Layer: 0
   m_Name: PF_Player
   m_TagString: Player
@@ -59,7 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 1414751124
+  GlobalObjectIdHash: 2222523463
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 1
@@ -132,6 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Character
   ShowTopMostFoldoutHeaderGroup: 1
   data: {fileID: 11400000, guid: 0fe2c636d5a9caa42b932eb9739cf32c, type: 2}
+  test: {fileID: 11400000, guid: da04160995ec26e46aec612bfb418041, type: 2}
 --- !u!114 &4636341468856982575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,7 +160,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterMovementController
   ShowTopMostFoldoutHeaderGroup: 1
-  moveSpeed: 5
   rb: {fileID: 4064493778673570902}
 --- !u!114 &2914592469210038041
 MonoBehaviour:
@@ -211,15 +212,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d1805047b7c4de5be91ba6df3389ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stats.StatsEntity
-  attackDamage: 20
-  abilityPower: 15
-  critChance: 0.1
-  critMultiplier: 2
-  armor: 10
-  magicResist: 10
-  outgoingDamageModifier: 1
-  outgoingHealModifier: 1
-  outgoingShieldModifier: 1
 --- !u!114 &2320339193218563711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,7 +250,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Character.CharacterHealth
   ShowTopMostFoldoutHeaderGroup: 1
   baseMaxHealth: 100
---- !u!114 &5442849667919207785
+--- !u!114 &5567926824821909677
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -267,18 +259,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2471502131686496270}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d1805047b7c4de5be91ba6df3389ae0, type: 3}
+  m_Script: {fileID: 11500000, guid: 6db3f3dbc8e0421eb7c57d623d7d54f4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Character.CharacterStats
-  attackDamage: 20
-  abilityPower: 15
-  critChance: 0.1
-  critMultiplier: 2
-  armor: 10
-  magicResist: 10
-  outgoingDamageModifier: 1
-  outgoingHealModifier: 1
-  outgoingShieldModifier: 1
+  m_EditorClassIdentifier: Assembly-CSharp::Upgrades.UpgradeComponent
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!54 &4064493778673570902
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -437,3 +421,15 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6434261374770777849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471502131686496270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0328cd374b44b2e8d8f6520aab8fe1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Buff.BuffComponent

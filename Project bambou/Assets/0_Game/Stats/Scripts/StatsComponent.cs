@@ -4,6 +4,7 @@ using UnityEngine;
 using Effect;
 using Effect.Stats.Data;
 using Stats.Data;
+using Upgrades;
 using Random = UnityEngine.Random;
 
 namespace Stats
@@ -15,16 +16,24 @@ namespace Stats
         
         private StatsData _baseStats;   // injecté via SetStats
         private BuffComponent _buffs;
+        private UpgradeComponent _upgrade;
 
         private void Awake()
         {
             _buffs = GetComponent<BuffComponent>();
             _buffs.OnBuffChanged += UpdateStats;
+            
+            if (TryGetComponent(out UpgradeComponent upgrade))
+            {
+                _upgrade = upgrade;
+                _upgrade.OnUpgradesChanged += UpdateStats;
+            }
         }
 
         private void OnDestroy()
         {
             _buffs.OnBuffChanged -= UpdateStats;
+            if (_upgrade) _upgrade.OnUpgradesChanged -= UpdateStats;
         }
         
         // ------------------------------------------------------
@@ -61,6 +70,7 @@ namespace Stats
 
                 StatType.MaxHealth      => _baseStats.health,
                 StatType.AttackSpeed    => _baseStats.attackSpeed,
+                StatType.Haste         => _baseStats.haste,
                 StatType.MoveSpeed      => _baseStats.moveSpeed,
                 
                 StatType.ProjectileCount => _baseStats.projectileCount,
@@ -111,7 +121,7 @@ namespace Stats
             return value; // sera amélioré plus tard si besoin
         }
 
-        private void UpdateStats(BuffEntry entry)
+        private void UpdateStats()
         {
             OnStatsChanged?.Invoke();
         }

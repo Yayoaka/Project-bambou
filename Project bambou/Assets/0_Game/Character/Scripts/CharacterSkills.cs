@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Effect;
@@ -23,7 +22,6 @@ namespace Character
         private Coroutine[] _autoCastRoutines;
 
         private CharacterAnimationController _anim;
-
         private IAffectable _affectable;
 
         private void Awake()
@@ -31,6 +29,9 @@ namespace Character
             _affectable = GetComponent<IAffectable>();
         }
 
+        // =====================================================================
+        // INITIALISATION
+        // =====================================================================
         public void SetSpells(SpellData[] spells)
         {
             _spells = spells;
@@ -38,14 +39,14 @@ namespace Character
             _autoCastRoutines = new Coroutine[_spells.Length];
 
             if (!IsOwner) return;
-            
-            // Auto-cast initialisation
+
+            // Auto-cast setup
             for (int i = 0; i < spells.Length; i++)
             {
                 if (spells[i].autoCast)
                     _autoCastRoutines[i] = StartCoroutine(AutoCastRoutine(i));
             }
-            
+
             CharacterHUDManager.instance.SetSpells(spells);
         }
 
@@ -54,10 +55,13 @@ namespace Character
             _anim = controller;
         }
 
+        // =====================================================================
+        // CAST INPUT
+        // =====================================================================
         public void TryCast(int index, Vector3 mousePosition, Vector3 direction)
         {
             if (_spells[index].autoCast) return;
-            
+
             TryCastServerRpc(index, mousePosition, direction);
         }
 
@@ -65,11 +69,11 @@ namespace Character
         private void TryCastServerRpc(
             int index, Vector3 mousePosition, Vector3 direction, bool fromAuto = false, RpcParams rpcParams = default)
         {
-            var sender = rpcParams.Receive.SenderClientId;
+            ulong sender = rpcParams.Receive.SenderClientId;
             if (sender != OwnerClientId)
                 return;
 
-            if (!CanCast(index) && !fromAuto) //Not Cheat safe but no time fuck that
+            if (!CanCast(index) && !fromAuto)
                 return;
 
             Cast(index, mousePosition, direction);
@@ -80,6 +84,9 @@ namespace Character
             return _cooldowns[index] <= Time.time;
         }
 
+        // =====================================================================
+        // AUTO CAST
+        // =====================================================================
         private IEnumerator AutoCastRoutine(int index)
         {
             var spell = _spells[index];
@@ -87,11 +94,13 @@ namespace Character
             while (true)
             {
                 yield return new WaitForSeconds(spell.cooldown);
-
-                TryCastServerRpc(index, Owner.InputController.GetMousePosition, Owner.InputController.GetMouseDirection(), fromAuto: true);
+                TryCastServerRpc(index, Owner.InputController.GetMousePosition, Owner.InputController.GetMouseDirection(), true);
             }
         }
 
+        // =====================================================================
+        // CAST EXECUTION (SERVER)
+        // =====================================================================
         private void Cast(int index, Vector3 mousePos, Vector3 dir)
         {
             if (!IsServer) return;
@@ -99,85 +108,22 @@ namespace Character
             var spell = _spells[index];
             _cooldowns[index] = Time.time + spell.cooldown;
 
-            // Apply gameplay effects instantly
+            // Gameplay effects
             foreach (var effect in spell.gameplayEffects)
                 EffectExecutor.Execute(effect, Owner.Stats, NetworkObjectId, _affectable, Vector3.zero);
 
-            // Casted effects (projectile / zone)
+            // Cast effects
             foreach (var cast in spell.castEffects)
             {
                 if (cast.spawnProjectile)
-                    SpawnProjectile(cast, mousePos, dir);
+                    SpawnProjectile(cast, mousePos);
 
                 if (cast.spawnZone)
-                    SpawnZone(cast, mousePos, dir);
+                    SpawnZone(cast, mousePos);
             }
 
             if (spell.animate)
                 CallAnimationRpc(index);
-        }
-
-        private void SpawnProjectile(EffectCastData cast, Vector3 mousePos, Vector3 dir)
-        {
-            var spawnPos = cast.onCursor ? mousePos : transform.position;
-
-            var finalDir = ResolveDirection(cast.castDirectionMode, mousePos, cast.targetSearchRange);
-            if (finalDir == null) return;
-
-            var directions = GetProjectileDirections((Vector3)finalDir, Convert.ToInt32(Owner.Stats.GetStat(StatType.ProjectileCount)));
-
-            foreach (var projDir in directions)
-            {
-                var rot = Quaternion.LookRotation(projDir);
-                var obj = Instantiate(cast.projectilePrefab, spawnPos, rot);
-
-                obj.transform.localScale = Vector3.one * Owner.Stats.GetStat(StatType.ProjectileSize);
-
-                var netObj = obj.GetComponent<NetworkObject>();
-                netObj.Spawn();
-
-                obj.GetComponent<Projectile>().Init(
-                    cast.appliedEffects,
-                    Owner.Stats,
-                    NetworkObjectId,
-                    projDir
-                );
-            }
-        }
-
-        private void SpawnZone(EffectCastData cast, Vector3 mousePos, Vector3 dir)
-        {
-            var spawnPos = cast.onCursor ? mousePos : transform.position;
-            
-            var finalDir = ResolveDirection(cast.castDirectionMode, mousePos, cast.targetSearchRange);
-            
-            if(finalDir == null) return;
-            
-            var spawnRot = Quaternion.LookRotation((Vector3)finalDir);
-
-            var obj = Instantiate(cast.zonePrefab, spawnPos, spawnRot);
-
-            obj.transform.localScale = Vector3.one * Owner.Stats.GetStat(StatType.ProjectileSize);
-            
-            var netObj = obj.GetComponent<NetworkObject>();
-            netObj.Spawn();
-
-            if (cast.followCaster)
-            {
-                obj.transform.SetParent(transform);
-                SetZoneParentClientRpc(netObj.NetworkObjectId, NetworkObjectId);
-            }
-
-            obj.GetComponent<Zone>().Init(cast.appliedEffects, Owner.Stats, NetworkObjectId);
-        }
-
-        [Rpc(SendTo.NotServer, RequireOwnership = false)]
-        private void SetZoneParentClientRpc(ulong zoneId, ulong parentId)
-        {
-            var zone = NetworkManager.Singleton.SpawnManager.SpawnedObjects[zoneId].transform;
-            var parent = NetworkManager.Singleton.SpawnManager.SpawnedObjects[parentId].transform;
-
-            zone.SetParent(parent);
         }
 
         [Rpc(SendTo.ClientsAndHost, RequireOwnership = false)]
@@ -185,28 +131,139 @@ namespace Character
         {
             _anim.TriggerSkill(index + 1);
         }
-        
-        private Vector3? ResolveDirection(CastDirectionMode mode, Vector3 mousePos, float range)
+
+        // =====================================================================
+        // PROJECTILES
+        // =====================================================================
+        private void SpawnProjectile(EffectCastData cast, Vector3 mousePos)
+        {
+            // POSITION
+            Vector3 spawnPos = ResolveSpawnPosition(cast.castMode, mousePos, cast.targetSearchRange);
+
+            // DIRECTION
+            Vector3? dirBase = ResolveDirection(cast.castMode, mousePos, cast.targetSearchRange);
+            if (dirBase == null) return;
+
+            int totalCount = cast.additionalProjectileCount + Mathf.RoundToInt(Owner.Stats.GetStat(StatType.ProjectileCount));
+            List<Vector3> dirs = GetSpreadDirections(dirBase.Value, totalCount);
+
+            foreach (var d in dirs)
+            {
+                Quaternion rot = Quaternion.LookRotation(d);
+                GameObject obj = Instantiate(cast.projectilePrefab, spawnPos, rot);
+
+                obj.transform.localScale = Vector3.one * Owner.Stats.GetStat(StatType.ProjectileSize);
+
+                var netObj = obj.GetComponent<NetworkObject>();
+                netObj.Spawn();
+
+                obj.GetComponent<Projectile>().Init(
+                    cast,
+                    Owner.Stats,
+                    NetworkObjectId,
+                    d
+                );
+            }
+        }
+
+        // =====================================================================
+        // ZONES
+        // =====================================================================
+        private void SpawnZone(EffectCastData cast, Vector3 mousePos)
+        {
+            Vector3 basePos = ResolveSpawnPosition(cast.castMode, mousePos, cast.targetSearchRange);
+
+            Vector3? dirBase = ResolveDirection(cast.castMode, mousePos, cast.targetSearchRange);
+            if (dirBase == null) return;
+
+            int totalZones = cast.additionalZoneCount + Mathf.RoundToInt(Owner.Stats.GetStat(StatType.ProjectileCount));
+
+            List<Vector3> dirs = GetSpreadDirections(dirBase.Value, totalZones);
+
+            foreach (var d in dirs)
+            {
+                Vector3 spawnPos = basePos + d * 0.1f;
+                Quaternion rot = Quaternion.LookRotation(d);
+
+                GameObject obj = Instantiate(cast.zonePrefab, spawnPos, rot);
+                obj.transform.localScale = Vector3.one * Owner.Stats.GetStat(StatType.ProjectileSize);
+
+                var netObj = obj.GetComponent<NetworkObject>();
+                netObj.Spawn();
+
+                if (cast.followCaster)
+                {
+                    obj.transform.SetParent(transform);
+                    SetZoneParentClientRpc(netObj.NetworkObjectId, NetworkObjectId);
+                }
+
+                obj.GetComponent<Zone>().Init(cast, Owner.Stats, NetworkObjectId);
+            }
+        }
+
+        [Rpc(SendTo.NotServer, RequireOwnership = false)]
+        private void SetZoneParentClientRpc(ulong zoneId, ulong parentId)
+        {
+            Transform zone = NetworkManager.Singleton.SpawnManager.SpawnedObjects[zoneId].transform;
+            Transform parent = NetworkManager.Singleton.SpawnManager.SpawnedObjects[parentId].transform;
+            zone.SetParent(parent);
+        }
+
+        // =====================================================================
+        // POSITION RESOLUTION
+        // =====================================================================
+        private Vector3 ResolveSpawnPosition(CastMode mode, Vector3 mousePos, float range)
         {
             switch (mode)
             {
-                case CastDirectionMode.ToCursor:
+                case CastMode.OnCursor:
+                    return mousePos;
+
+                case CastMode.OnClosestEnemy:
+                    var c = GetClosestEnemyTransform(range);
+                    return c ? c.position : transform.position;
+
+                case CastMode.OnAnyTarget:
+                    var r = GetRandomEnemyTransform(range);
+                    return r ? r.position : transform.position;
+
+                default:
+                    return transform.position;
+            }
+        }
+
+        // =====================================================================
+        // DIRECTION RESOLUTION
+        // =====================================================================
+        private Vector3? ResolveDirection(CastMode mode, Vector3 mousePos, float range)
+        {
+            switch (mode)
+            {
+                case CastMode.ToCursor:
                     return (mousePos - transform.position).normalized;
 
-                case CastDirectionMode.ToClosestEnemy:
+                case CastMode.ToClosestEnemy:
                     return GetClosestEnemyDirection(range);
-                
-                case CastDirectionMode.ToAnyTarget:
+
+                case CastMode.ToAnyTarget:
                     return GetRandomEnemyDirection(range);
+
+                case CastMode.OnCursor:
+                case CastMode.OnClosestEnemy:
+                case CastMode.OnAnyTarget:
+                    return transform.forward; // direction irrelevant
 
                 default:
                     return transform.forward;
             }
         }
-        
-        private Vector3? GetClosestEnemyDirection(float range)
+
+        // =====================================================================
+        // ENEMY HELPERS
+        // =====================================================================
+        private Transform GetClosestEnemyTransform(float range)
         {
-            var pos = transform.position;
+            Vector3 pos = transform.position;
             Collider[] hits = Physics.OverlapSphere(pos, range, LayerMask.GetMask("Enemy"));
 
             float bestDist = Mathf.Infinity;
@@ -222,27 +279,38 @@ namespace Character
                 }
             }
 
-            if (best == null)
-                return null;
-
-            return (best.position - pos).normalized;
+            return best;
         }
-        
-        private Vector3? GetRandomEnemyDirection(float range)
+
+        private Transform GetRandomEnemyTransform(float range)
         {
-            var pos = transform.position;
+            Vector3 pos = transform.position;
             Collider[] hits = Physics.OverlapSphere(pos, range, LayerMask.GetMask("Enemy"));
 
             if (hits.Length == 0) return null;
-            
-            var randomIndex = Random.Range(0, hits.Length);
-
-            return (hits[randomIndex].transform.position - pos).normalized;
+            return hits[Random.Range(0, hits.Length)].transform;
         }
-        
-        private List<Vector3> GetProjectileDirections(Vector3 baseDir, int count)
+
+        private Vector3? GetClosestEnemyDirection(float range)
         {
-            var list = new List<Vector3>();
+            var t = GetClosestEnemyTransform(range);
+            if (!t) return null;
+            return (t.position - transform.position).normalized;
+        }
+
+        private Vector3? GetRandomEnemyDirection(float range)
+        {
+            var t = GetRandomEnemyTransform(range);
+            if (!t) return null;
+            return (t.position - transform.position).normalized;
+        }
+
+        // =====================================================================
+        // SPREAD LOGIC
+        // =====================================================================
+        private List<Vector3> GetSpreadDirections(Vector3 baseDir, int count)
+        {
+            List<Vector3> list = new();
 
             if (count <= 1)
             {
@@ -250,17 +318,13 @@ namespace Character
                 return list;
             }
 
-            // Angle entre chaque projectile
-            var step = 360f / count;
+            float step = 360f / count;
+            Quaternion baseRot = Quaternion.LookRotation(baseDir);
 
-            // Base rotation to align spread around forward direction
-            var baseRot = Quaternion.LookRotation(baseDir);
-
-            for (var i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
-                var angle = step * i;
-                var rot = baseRot * Quaternion.Euler(0f, angle, 0f);
-
+                float angle = step * i;
+                Quaternion rot = baseRot * Quaternion.Euler(0f, angle, 0f);
                 list.Add(rot * Vector3.forward);
             }
 

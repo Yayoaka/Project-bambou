@@ -9,6 +9,9 @@ using Interfaces;
 using Stats;
 using Unity.Netcode;
 using UnityEngine;
+using Upgrades;
+using Upgrades.Scripts;
+using Upgrades.WeaponUpgrades.Data;
 
 namespace Character
 {
@@ -24,6 +27,7 @@ namespace Character
         public CharacterState State { get; private set; }
         public CharacterVisual Visual { get; private set; }
         public IStatsComponent Stats { get; private set; }
+        public IUpgradeComponent Upgrade { get; private set; }
 
         private void Awake()
         {
@@ -34,6 +38,7 @@ namespace Character
             InputController = InitComponent<CharacterInputController>();
             State = InitComponent<CharacterState>();
             Stats = GetComponent<IStatsComponent>();
+            Upgrade = GetComponent<IUpgradeComponent>();
             
             Movement.LateInit();
             AnimationController.LateInit();
@@ -76,9 +81,9 @@ namespace Character
 
         private void SetData()
         {
-            Skills.SetSpells(data.Spells);
             Skills.SetAnimationController(AnimationController);
             Stats.SetStats(data.Stats);
+            Skills.SetSpells(data.Spells); //CALL IT AFTER SET STATS
         }
         
         public void Move(Vector2 input)

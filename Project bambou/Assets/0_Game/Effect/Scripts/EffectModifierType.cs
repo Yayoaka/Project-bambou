@@ -18,8 +18,7 @@ namespace Effect
 
             // Utility
             MovementSpeed,
-            AttackSpeed,
-            CooldownReduction
+            AttackSpeed
         }
     }
 }

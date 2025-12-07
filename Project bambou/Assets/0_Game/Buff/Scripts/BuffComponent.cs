@@ -13,7 +13,7 @@ namespace Buff
 
         private Coroutine _cleanupRoutine;
         
-        public event Action<BuffEntry> OnBuffChanged;
+        public event Action OnBuffChanged;
 
         private void OnEnable()
         {
@@ -41,7 +41,7 @@ namespace Buff
             };
             _buffs.Add(buff);
             
-            OnBuffChanged?.Invoke(buff);
+            OnBuffChanged?.Invoke();
         }
 
         // ------------------------------------------
@@ -63,7 +63,7 @@ namespace Buff
                     {
                         var buff = _buffs[i];
                         _buffs.Remove(buff);
-                        OnBuffChanged?.Invoke(buff);
+                        OnBuffChanged?.Invoke();
                     }
                 }
             }

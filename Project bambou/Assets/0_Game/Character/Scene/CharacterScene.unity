@@ -655,7 +655,7 @@ MonoBehaviour:
   ShowTopMostFoldoutHeaderGroup: 1
   prefab: {fileID: -885932881952830235, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
   data: {fileID: 11400000, guid: 0203f89a36524204da5f78a5df11f6ab, type: 2}
-  count: 100
+  count: 500
   radius: 100
 --- !u!114 &929036779
 MonoBehaviour:

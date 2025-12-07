@@ -11,9 +11,9 @@ namespace Skills.Entities
 {
     public class Projectile : NetworkBehaviour
     {
-        [SerializeField] private float speed = 10f;
-        [SerializeField] private float lifetime = 3f;
-        [SerializeField] private bool destroyOnHit = true;
+        private float _speed = 10f;
+        private float _lifetime = 3f;
+        private bool _destroyOnHit = true;
 
         private Vector3 _direction;
         private float _timer;
@@ -24,24 +24,27 @@ namespace Skills.Entities
 
         private readonly HashSet<IAffectable> _alreadyHit = new();
 
-        public void Init(List<EffectData> effectsOnHit, IStatsComponent stats, ulong sourceId, Vector3 dir)
+        public void Init(EffectCastData cast, IStatsComponent stats, ulong sourceId, Vector3 dir)
         {
-            _effectsOnHit = effectsOnHit;
+            _effectsOnHit = cast.appliedEffects;
             _sourceStats = stats;
             _sourceId = sourceId;
             _direction = dir.normalized;
+            _speed = cast.projectileSpeed;
+            _lifetime = cast.projectileLifetime;
+            _destroyOnHit = cast.destroyOnHit;
 
-            speed *= stats.GetStat(StatType.ProjectileSpeedMultiplier);
+            _speed *= stats.GetStat(StatType.ProjectileSpeedMultiplier);
         }
 
         private void Update()
         {
             if (!IsServer) return;
 
-            transform.position += _direction * (speed * Time.deltaTime);
+            transform.position += _direction * (_speed * Time.deltaTime);
 
             _timer += Time.deltaTime;
-            if (_timer >= lifetime)
+            if (_timer >= _lifetime)
                 GetComponent<NetworkObject>().Despawn();
         }
 
@@ -60,7 +63,7 @@ namespace Skills.Entities
             foreach (var e in _effectsOnHit)
                 EffectExecutor.Execute(e, _sourceStats, _sourceId, target, Vector3.zero);
 
-            if (destroyOnHit)
+            if (_destroyOnHit)
                 GetComponent<NetworkObject>().Despawn();
         }
     }

@@ -12,6 +12,7 @@ namespace Stats.Data
         public float critMultiplier;
         public float moveSpeed;
         public float attackSpeed;
+        public int haste;
         public int projectileCount;
         public float projectileSpeedMultiplier;
         public float projectileSize;

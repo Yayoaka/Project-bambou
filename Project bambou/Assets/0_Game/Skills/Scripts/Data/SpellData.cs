@@ -11,6 +11,7 @@ namespace Skills.Data
     {
         [Header("Info")]
         public string spellName;
+        [Multiline]
         public string spellDescription;
         public Sprite spellIcon;
         public float cooldown;

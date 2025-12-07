@@ -27,7 +27,6 @@ namespace Stats.Data
         // --- CUSTOM (expand later) ---
         LifeSteal,
         Tenacity,
-        CooldownReduction,
         ProjectileCount,
         ProjectileSize,
         ProjectileSpeedMultiplier,
