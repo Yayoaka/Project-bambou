@@ -76,7 +76,7 @@ namespace Character
             if (!CanCast(index) && !fromAuto)
                 return;
 
-            Cast(index, mousePosition, direction);
+            Cast(index, mousePosition, fromAuto, direction);
         }
 
         private bool CanCast(int index)
@@ -93,7 +93,7 @@ namespace Character
 
             while (true)
             {
-                yield return new WaitForSeconds(spell.cooldown);
+                yield return new WaitForSeconds(spell.cooldown / Owner.Stats.GetStat(StatType.AttackSpeed));
                 TryCastServerRpc(index, Owner.InputController.GetMousePosition, Owner.InputController.GetMouseDirection(), true);
             }
         }
@@ -101,12 +101,12 @@ namespace Character
         // =====================================================================
         // CAST EXECUTION (SERVER)
         // =====================================================================
-        private void Cast(int index, Vector3 mousePos, Vector3 dir)
+        private void Cast(int index, Vector3 mousePos, bool fromAuto, Vector3 dir)
         {
             if (!IsServer) return;
 
             var spell = _spells[index];
-            _cooldowns[index] = Time.time + spell.cooldown;
+            if (!fromAuto) _cooldowns[index] = Time.time + spell.cooldown / Owner.Stats.GetStat(StatType.Haste);
 
             // Gameplay effects
             foreach (var effect in spell.gameplayEffects)

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Character;
 using UnityEngine;
 using Unity.Netcode;
@@ -39,6 +40,7 @@ namespace Upgrades
             public int Id;
             public WeaponUpgradeData Data;
             public Coroutine Loop;
+            public int Lvl;
         }
 
         private void Awake()
@@ -56,6 +58,8 @@ namespace Upgrades
             if (_passives.Contains(data))
                 return;
 
+            data.Lvl = 1;
+            
             _passives.Add(data);
 
             foreach (var effect in data.PassiveEffects)
@@ -68,6 +72,28 @@ namespace Upgrades
                     Vector3.zero
                 );
             }
+
+            OnUpgradesChanged?.Invoke();
+        }
+        
+        public void UpgradePassive(PassiveUpgradeData data, int level)
+        {
+            if (!_passives.Contains(data))
+                return;
+
+            var passive = _passives.First(x => x == data);
+
+            passive.Lvl = level;
+
+            var effect = passive.PassiveEffects[level - 1];
+                
+            EffectExecutor.Execute(
+                effect,
+                _stats,
+                _character.NetworkObjectId,
+                null,
+                Vector3.zero
+            );
 
             OnUpgradesChanged?.Invoke();
         }
@@ -90,7 +116,8 @@ namespace Upgrades
             var instance = new WeaponInstance
             {
                 Id = _nextWeaponId++,
-                Data = data
+                Data = data,
+                Lvl = 1
             };
 
             _weapons.Add(instance);
@@ -100,9 +127,39 @@ namespace Upgrades
             OnUpgradesChanged?.Invoke();
         }
 
-        public float GetStat(StatType type)
+        public void UpgradeWeapon(WeaponUpgradeData weapon, int level)
         {
-            return _stats.GetStat(type);
+            if (!IsServer)
+            {
+                Debug.LogWarning($"{name} : AddWeapon should be called on server.");
+                return;
+            }
+
+            var foundWeapon = _weapons.FirstOrDefault(x => x.Data == weapon);
+            
+            if (foundWeapon == null)
+                return;
+
+            foundWeapon.Lvl = level;
+            OnUpgradesChanged?.Invoke();
+        }
+
+        public (float, float) GetStat(StatType type)
+        {
+            var flat = 0f;
+            var percent = 0f;
+            
+            foreach (var passive in _passives.Where(x => x.PassiveEffects.Any(x => x.targetStat == type)))
+            {
+                var effect = passive.PassiveEffects[passive.Lvl - 1];
+                
+                if (effect.isPercent)
+                    percent += effect.baseValue;
+                else
+                    flat += effect.baseValue;
+            }
+            
+            return (flat, percent);
         }
 
         // ----------------------------------------------------------
@@ -114,7 +171,6 @@ namespace Upgrades
                 yield break;
 
             var data = instance.Data;
-            var cast = data.WeaponEffects[0]; // simple: first effect as main cast
 
             var baseCooldown = data.Cooldown;
             if (baseCooldown <= 0f)
@@ -159,21 +215,23 @@ namespace Upgrades
             if (sender != OwnerClientId)
                 return;
 
-            if (!_weaponById.TryGetValue(weaponId, out var instance))
-                return;
-
-            var cast = instance.Data.WeaponEffects[0];
-            ExecuteWeaponCast(cast, cursor, direction);
+            
+            ExecuteWeaponCast(weaponId, cursor, direction);
         }
 
         // ----------------------------------------------------------
         // WEAPON CAST EXECUTION (SERVER)
         // ----------------------------------------------------------
-        private void ExecuteWeaponCast(EffectCastData cast, Vector3 cursorPos, Vector3 inputDir)
+        private void ExecuteWeaponCast(int weaponId, Vector3 cursorPos, Vector3 inputDir)
         {
             if (!IsServer)
                 return;
 
+            if (!_weaponById.TryGetValue(weaponId, out var instance))
+                return;
+
+            var cast = instance.Data.WeaponEffects[instance.Lvl - 1];
+            
             // ---------- SPECIAL CASE : MULTI-TARGET ----------
             if (cast.castMode == CastMode.OnAnyTarget)
             {

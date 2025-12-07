@@ -80,7 +80,22 @@ namespace Stats
                 _ => 0f
             };
 
-            return _buffs.GetModifiedStat(type, baseValue);
+            var buffs = _buffs.GetStatValue(type);
+
+            var flat = buffs.Item1;
+            var percent = buffs.Item2;
+            
+            if (_upgrade)
+            {
+                var upgrades = _upgrade.GetStat(type);
+
+                flat += upgrades.Item1;
+                percent += upgrades.Item2;
+            }
+            
+            var total = (baseValue + flat) * (1 + percent);
+
+            return total;
         }
 
         // ------------------------------------------------------

@@ -9,10 +9,12 @@ namespace Buff
 {
     public class BuffComponent : MonoBehaviour
     {
-        private readonly List<BuffEntry> _buffs = new();
+        private readonly List<BuffEntry> _permanentBuffs = new();
+
+        private readonly List<BuffEntry> _timedBuffs = new();
 
         private Coroutine _cleanupRoutine;
-        
+
         public event Action OnBuffChanged;
 
         private void OnEnable()
@@ -27,9 +29,6 @@ namespace Buff
                 StopCoroutine(_cleanupRoutine);
         }
 
-        // ------------------------------------------
-        // Ajouter un buff
-        // ------------------------------------------
         public void AddBuff(StatType stat, float amount, float duration, bool isPercent = false)
         {
             var buff = new BuffEntry
@@ -39,17 +38,25 @@ namespace Buff
                 IsPercentage = isPercent,
                 ExpireTime = Time.time + duration
             };
-            _buffs.Add(buff);
-            
+
+            if (duration > 0)
+            {
+                _timedBuffs.Add(buff);
+            }
+            else
+            {
+                _permanentBuffs.Add(buff);
+            }
+
             OnBuffChanged?.Invoke();
         }
 
-        // ------------------------------------------
-        // Coroutine de nettoyage
-        // ------------------------------------------
+        // --------------------------------------------------------
+        // CLEAN TIMED BUFFS
+        // --------------------------------------------------------
         private IEnumerator CleanupLoop()
         {
-            WaitForSeconds wait = new WaitForSeconds(0.25f);
+            var wait = new WaitForSeconds(0.25f);
 
             while (true)
             {
@@ -57,27 +64,27 @@ namespace Buff
 
                 float now = Time.time;
 
-                for (int i = _buffs.Count - 1; i >= 0; i--)
+                for (int i = _timedBuffs.Count - 1; i >= 0; i--)
                 {
-                    if (_buffs[i].ExpireTime <= now)
+                    if (_timedBuffs[i].ExpireTime <= now)
                     {
-                        var buff = _buffs[i];
-                        _buffs.Remove(buff);
+                        _timedBuffs.RemoveAt(i);
                         OnBuffChanged?.Invoke();
                     }
                 }
             }
         }
 
-        // ------------------------------------------
-        // Calcul stat finale
-        // ------------------------------------------
-        public float GetModifiedStat(StatType stat, float baseValue)
+        // --------------------------------------------------------
+        // GET FINAL STAT
+        // --------------------------------------------------------
+        public (float, float) GetStatValue(StatType stat)
         {
-            var flat = 0f;
-            var percent = 0f;
+            float flat = 0f;
+            float percent = 0f;
 
-            foreach (var b in _buffs.Where(b => b.Stat == stat))
+            // Permanent
+            foreach (var b in _permanentBuffs.Where(b => b.Stat == stat))
             {
                 if (b.IsPercentage)
                     percent += b.Amount;
@@ -85,7 +92,16 @@ namespace Buff
                     flat += b.Amount;
             }
 
-            return (baseValue + flat) * (percent == 0 ? 1 : percent);
+            // Timed
+            foreach (var b in _timedBuffs.Where(b => b.Stat == stat))
+            {
+                if (b.IsPercentage)
+                    percent += b.Amount;
+                else
+                    flat += b.Amount;
+            }
+
+            return (flat, percent);
         }
     }
 }

@@ -75,14 +75,15 @@ namespace Upgrades
                 var pdata = kvp.Value;
 
                 var choices = GenerateUpgradeChoices(pdata, 3);
-                var packed = PackChoices(choices);
+                var packedIndexes = PackChoices(choices);
+                var packedLvls = PackLevels(choices, pdata);
 
                 if (choices.Count == 0)
                     continue;
 
                 _pendingUpgradeChoices.Add(clientId);
 
-                SendChoicesClientRpc(packed);
+                SendChoicesClientRpc(packedIndexes, packedLvls, RpcTarget.Single(clientId, RpcTargetUse.Temp));
             }
 
             // Si personne n'a de choix (bizarre mais possible)
@@ -114,11 +115,12 @@ namespace Upgrades
                 }
 
                 var choice = PickRandom(owned);
-                var packed = PackChoices(new List<UpgradeData> { choice });
+                var packedIndexes = PackChoices(new List<UpgradeData> { choice });
+                var packedLevels = PackLevels(new List<UpgradeData> { choice }, pdata);
 
                 _pendingUpgradeChoices.Add(clientId);
 
-                SendChoicesClientRpc(packed);
+                SendChoicesClientRpc(packedIndexes, packedLevels, RpcTarget.Single(clientId, RpcTargetUse.Temp));
             }
 
             if (_pendingUpgradeChoices.Count == 0)
@@ -129,12 +131,12 @@ namespace Upgrades
         // CLIENT RPC → DISPLAY UI (per-player)
         // ---------------------------------------------------------
 
-        [Rpc(SendTo.Everyone)]
-        private void SendChoicesClientRpc(int[] indices, RpcParams rpcParams = default)
+        [Rpc(SendTo.SpecifiedInParams)]
+        private void SendChoicesClientRpc(int[] indices, int[] levels, RpcParams rpcParams = default)
         {
             var choices = UnpackChoices(indices);
 
-            CharacterHUDManager.Instance.ShowUpgradeChoices(choices, selected =>
+            CharacterHUDManager.Instance.ShowUpgradeChoices(choices, levels, selected =>
             {
                 if (selected == null) return;
 
@@ -178,7 +180,7 @@ namespace Upgrades
             else
             {
                 pdata.Levels[data] = level + 1;
-                ApplyLevelUp(pdata, data);
+                ApplyLevelUp(pdata, data, level + 1);
             }
 
             if (_pendingUpgradeChoices.Count > 0)
@@ -196,23 +198,37 @@ namespace Upgrades
 
         private List<UpgradeData> GenerateUpgradeChoices(PlayerUpgradeData pdata, int count)
         {
-            var owned = pdata.Levels.Keys.ToList();
-            var notOwned = _allUpgrades.Except(owned).ToList();
+            var owned = pdata.Levels
+                .Where(x => x.Value < 5)
+                .Select(x => x.Key)
+                .ToList();
+
+            var notOwned = _allUpgrades.Except(pdata.Levels.Keys).ToList();
 
             var result = new List<UpgradeData>();
 
-            for (var i = 0; i < count; i++)
-            {
-                UpgradeData pick;
+            const float ownedChance = 0.25f;
 
-                if (notOwned.Count > 0)
+            for (int i = 0; i < count; i++)
+            {
+                UpgradeData pick = null;
+
+                bool tryOwned = UnityEngine.Random.value < ownedChance;
+
+                if (tryOwned && owned.Count > 0)
+                {
+                    pick = PickRandom(owned);
+                    owned.Remove(pick);
+                }
+                else if (notOwned.Count > 0)
                 {
                     pick = PickRandom(notOwned);
                     notOwned.Remove(pick);
                 }
-                else
+                else if (owned.Count > 0)
                 {
                     pick = PickRandom(owned);
+                    owned.Remove(pick);
                 }
 
                 if (pick != null)
@@ -221,6 +237,7 @@ namespace Upgrades
 
             return result;
         }
+
 
         private UpgradeData PickRandom(List<UpgradeData> list)
         {
@@ -247,17 +264,18 @@ namespace Upgrades
             }
         }
 
-        private void ApplyLevelUp(PlayerUpgradeData pdata, UpgradeData data)
+
+        private void ApplyLevelUp(PlayerUpgradeData pdata, UpgradeData data, int level)
         {
             switch (data)
             {
                 case PassiveUpgradeData p:
                     // For now, same behavior as new upgrade (can be specialized later)
-                    pdata.UpgradeComp.AddPassive(p);
+                    pdata.UpgradeComp.UpgradePassive(p, level);
                     break;
 
                 case WeaponUpgradeData w:
-                    pdata.UpgradeComp.AddWeapon(w);
+                    pdata.UpgradeComp.UpgradeWeapon(w, level);
                     break;
 
                 default:
@@ -277,6 +295,21 @@ namespace Upgrades
                 indices[i] = _allUpgrades.IndexOf(list[i]);
 
             return indices;
+        }
+        
+        private int[] PackLevels(List<UpgradeData> list, PlayerUpgradeData pdata)
+        {
+            var levels = new int[list.Count];
+
+            for (var i = 0; i < list.Count; i++)
+            {
+                if (pdata.Levels.TryGetValue(list[i], out var lvl))
+                    levels[i] = lvl;
+                else
+                    levels[i] = 0; // pas encore débloqué
+            }
+
+            return levels;
         }
 
         private List<UpgradeData> UnpackChoices(int[] indices)

@@ -4,11 +4,13 @@ namespace Upgrades
     {
         // --- PASSIVES ---
         void AddPassive(PassiveUpgrades.Data.PassiveUpgradeData passive);
+        void UpgradePassive(PassiveUpgrades.Data.PassiveUpgradeData passive, int level);
 
         // --- WEAPONS ---
         void AddWeapon(WeaponUpgrades.Data.WeaponUpgradeData weapon);
+        void UpgradeWeapon(WeaponUpgrades.Data.WeaponUpgradeData weapon, int level);
 
         // --- STAT ACCESS (déléguée à StatsComponent) ---
-        float GetStat(Stats.Data.StatType statType);
+        (float, float) GetStat(Stats.Data.StatType statType);
     }
 }

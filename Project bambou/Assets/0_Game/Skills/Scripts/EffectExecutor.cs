@@ -83,7 +83,7 @@ namespace Skills
             }
         }
 
-        private static float ComputeEffectValue(EffectData data, IStatsComponent stats)
+        public static float ComputeEffectValue(EffectData data, IStatsComponent stats)
         {
             float AD = stats.GetStat(StatType.AttackDamage);
             float AP = stats.GetStat(StatType.AbilityPower);

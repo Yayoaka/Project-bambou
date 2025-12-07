@@ -60,6 +60,7 @@ namespace HUD
         /// </summary>
         public void ShowUpgradeChoices(
             List<UpgradeData> upgrades,
+            int[] levels,
             Action<UpgradeData> onSelected)
         {
             if (upgradeSelectionUI == null)
@@ -68,13 +69,13 @@ namespace HUD
                 return;
             }
 
-            upgradeSelectionUI.Show(upgrades, onSelected);
+            upgradeSelectionUI.Show(upgrades, levels, onSelected);
         }
 
         /// <summary>
         /// Affiche une seule carte d’upgrade (upgrade forcée).
         /// </summary>
-        public void ShowSingleUpgrade(UpgradeData upgrade, Action<UpgradeData> onSelected)
+        public void ShowSingleUpgrade(UpgradeData upgrade, int level, Action<UpgradeData> onSelected)
         {
             if (upgradeSelectionUI == null)
             {
@@ -82,7 +83,7 @@ namespace HUD
                 return;
             }
 
-            upgradeSelectionUI.ShowSingle(upgrade, onSelected);
+            upgradeSelectionUI.ShowSingle(upgrade, level, onSelected);
         }
 
         /// <summary>

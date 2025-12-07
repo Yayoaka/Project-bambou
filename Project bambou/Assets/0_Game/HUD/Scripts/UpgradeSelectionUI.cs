@@ -30,28 +30,30 @@ namespace HUD
         /// <summary>
         /// Affiche plusieurs upgrades (3 le plus souvent).
         /// </summary>
-        public void Show(List<UpgradeData> upgrades, Action<UpgradeData> onSelected)
+        public void Show(List<UpgradeData> upgrades, int[] levels, Action<UpgradeData> onSelected)
         {
             ClearCards();
 
             _onSelected = onSelected;
             panel.alpha = 1;
 
-            foreach (var u in upgrades)
-                CreateCard(u);
+            for (var i = 0; i < upgrades.Count; i++)
+            {
+                CreateCard(upgrades[i], levels[i]);
+            }
         }
 
         /// <summary>
         /// Affiche une seule carte (upgrade forcée).
         /// </summary>
-        public void ShowSingle(UpgradeData upgrade, Action<UpgradeData> onSelected)
+        public void ShowSingle(UpgradeData upgrade, int level, Action<UpgradeData> onSelected)
         {
             ClearCards();
 
             _onSelected = onSelected;
             panel.alpha = 1;
 
-            CreateCard(upgrade);
+            CreateCard(upgrade, level);
         }
 
         /// <summary>
@@ -77,10 +79,10 @@ namespace HUD
         // INTERNAL
         // ------------------------------------------------------------------
 
-        private void CreateCard(UpgradeData data)
+        private void CreateCard(UpgradeData data, int lvl)
         {
             var card = Instantiate(cardPrefab, cardsParent);
-            card.Setup(data, () => OnCardClicked(data));
+            card.Setup(data, lvl, () => OnCardClicked(data));
             _spawnedCards.Add(card);
         }
 

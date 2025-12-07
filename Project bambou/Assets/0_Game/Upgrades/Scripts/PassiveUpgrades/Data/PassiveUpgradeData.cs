@@ -9,5 +9,7 @@ namespace Upgrades.PassiveUpgrades.Data
     public class PassiveUpgradeData : UpgradeData
     {
         public List<EffectData> PassiveEffects = new();
+
+        [HideInInspector] public int Lvl = 1;
     }
 }
