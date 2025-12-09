@@ -59,8 +59,8 @@ namespace Network
             if (q.Count > 0)
             {
                 var obj = q.Dequeue();
-                obj.gameObject.SetActive(true);
                 obj.Spawn();
+                obj.gameObject.SetActive(true);
                 return obj;
             }
 

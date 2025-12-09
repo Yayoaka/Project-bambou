@@ -91,7 +91,7 @@ namespace Character
         {
             var spell = _spells[index];
 
-            while (true)
+            while (IsOwner)
             {
                 yield return new WaitForSeconds(spell.cooldown / Owner.Stats.GetStat(StatType.AttackSpeed));
                 TryCastServerRpc(index, Owner.InputController.GetMousePosition, Owner.InputController.GetMouseDirection(), true);

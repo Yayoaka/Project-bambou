@@ -10,6 +10,7 @@ using Stats;
 using Unity.Collections;
 using Unity.Netcode;
 using UnityEngine;
+using WebSocketSharp;
 
 namespace Enemies
 {
@@ -47,10 +48,10 @@ namespace Enemies
 
         private void InitEnemy(string id)
         {
-            Stats = GetComponent<IStatsComponent>();
-            _health = GetComponent<HealthComponent>();
-            _activation = InitComponent<EnemyActivation>();
-            ai = InitComponent<EnemyAI>();
+            Stats ??= GetComponent<IStatsComponent>();
+            _health ??= GetComponent<HealthComponent>();
+            _activation ??= InitComponent<EnemyActivation>();
+            ai ??= InitComponent<EnemyAI>();
             
             _activation.LateInit();
             ai.LateInit();
@@ -102,13 +103,14 @@ namespace Enemies
 
             if (_visual != null)
                 Destroy(_visual);
+            _visual = null;
 
             _health.OnDeath -= OnKill;
         }
 
         public override void OnNetworkSpawn()
         {
-            if (!IsServer && !_isInitialized)
+            if (!IsServer && !_isInitialized && !_enemyId.Value.Value.IsNullOrEmpty())
             {
                 InitEnemy(_enemyId.Value.Value);
             }

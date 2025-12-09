@@ -21,6 +21,8 @@ GameObject:
   - component: {fileID: 1659294417640511897}
   - component: {fileID: 6356165351385366211}
   - component: {fileID: 8407760253474316313}
+  - component: {fileID: 4988645769713712501}
+  - component: {fileID: -6843079787046953627}
   m_Layer: 6
   m_Name: PF_Enemy
   m_TagString: Untagged
@@ -81,6 +83,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::IEnemy
   ShowTopMostFoldoutHeaderGroup: 1
+  ai: {fileID: 0}
 --- !u!114 &2986730952871065006
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d4e206901a2b7640a432522c6b7309b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.AI.EnemyAI
+  ShowTopMostFoldoutHeaderGroup: 1
   nav: {fileID: 1659294417640511897}
   lodLevel: 0
 --- !u!114 &961213145225754337
@@ -173,15 +177,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d1805047b7c4de5be91ba6df3389ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Stats.StatsEntity
-  attackDamage: 20
-  abilityPower: 15
-  critChance: 0.1
-  critMultiplier: 2
-  armor: 10
-  magicResist: 10
-  outgoingDamageModifier: 1
-  outgoingHealModifier: 1
-  outgoingShieldModifier: 1
 --- !u!195 &1659294417640511897
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -254,3 +249,61 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &4988645769713712501
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461315490994381656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0328cd374b44b2e8d8f6520aab8fe1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Buff.BuffComponent
+--- !u!114 &-6843079787046953627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461315490994381656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e96cb6065543e43c4a752faaa1468eb1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.Components.NetworkTransform
+  ShowTopMostFoldoutHeaderGroup: 1
+  NetworkTransformExpanded: 0
+  AutoOwnerAuthorityTickOffset: 1
+  PositionInterpolationType: 0
+  RotationInterpolationType: 0
+  ScaleInterpolationType: 0
+  PositionLerpSmoothing: 1
+  PositionMaxInterpolationTime: 0.1
+  RotationLerpSmoothing: 1
+  RotationMaxInterpolationTime: 0.1
+  ScaleLerpSmoothing: 1
+  ScaleMaxInterpolationTime: 0.1
+  AuthorityMode: 0
+  TickSyncChildren: 0
+  UseUnreliableDeltas: 0
+  SyncPositionX: 1
+  SyncPositionY: 1
+  SyncPositionZ: 1
+  SyncRotAngleX: 1
+  SyncRotAngleY: 1
+  SyncRotAngleZ: 1
+  SyncScaleX: 1
+  SyncScaleY: 1
+  SyncScaleZ: 1
+  PositionThreshold: 0.001
+  RotAngleThreshold: 0.01
+  ScaleThreshold: 0.01
+  UseQuaternionSynchronization: 0
+  UseQuaternionCompression: 0
+  UseHalfFloatPrecision: 0
+  InLocalSpace: 0
+  SwitchTransformSpaceWhenParented: 0
+  Interpolate: 1
+  SlerpPosition: 0

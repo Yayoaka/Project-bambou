@@ -36,24 +36,13 @@ namespace HUD
 
             _onSelected = onSelected;
             panel.alpha = 1;
+            panel.blocksRaycasts = true;
+            panel.interactable = true;
 
             for (var i = 0; i < upgrades.Count; i++)
             {
                 CreateCard(upgrades[i], levels[i]);
             }
-        }
-
-        /// <summary>
-        /// Affiche une seule carte (upgrade forcée).
-        /// </summary>
-        public void ShowSingle(UpgradeData upgrade, int level, Action<UpgradeData> onSelected)
-        {
-            ClearCards();
-
-            _onSelected = onSelected;
-            panel.alpha = 1;
-
-            CreateCard(upgrade, level);
         }
 
         /// <summary>
@@ -69,9 +58,12 @@ namespace HUD
         /// <summary>
         /// Ferme et nettoie.
         /// </summary>
-        public void Close()
+        public void Hide()
         {
             panel.alpha = 0;
+            panel.blocksRaycasts = false;
+            panel.interactable = false;
+            
             ClearCards();
         }
 

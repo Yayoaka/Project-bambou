@@ -54,6 +54,9 @@ namespace HUD
         #region Upgrade UI
 
         [SerializeField] private UpgradeSelectionUI upgradeSelectionUI;
+        
+        //TODO DO IT BETTER
+        [SerializeField] private CanvasGroup waitingScreen;
 
         /// <summary>
         /// Affiche une sélection de plusieurs upgrades (mode 3 choix).
@@ -72,18 +75,9 @@ namespace HUD
             upgradeSelectionUI.Show(upgrades, levels, onSelected);
         }
 
-        /// <summary>
-        /// Affiche une seule carte d’upgrade (upgrade forcée).
-        /// </summary>
-        public void ShowSingleUpgrade(UpgradeData upgrade, int level, Action<UpgradeData> onSelected)
+        public void HideUpgradeChoices()
         {
-            if (upgradeSelectionUI == null)
-            {
-                Debug.LogError("[HUD] Missing UpgradeSelectionUI reference.");
-                return;
-            }
-
-            upgradeSelectionUI.ShowSingle(upgrade, level, onSelected);
+            upgradeSelectionUI.Hide();
         }
 
         /// <summary>
@@ -94,6 +88,16 @@ namespace HUD
             //TODO Fallback
 
             //upgradeSelectionUI.ShowFallback();
+        }
+
+        public void ShowWaitingScreen()
+        {
+            waitingScreen.alpha = 1f;
+        }
+        
+        public void HideWaitingScreen()
+        {
+            waitingScreen.alpha = 0f;
         }
 
         #endregion
