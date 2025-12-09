@@ -23,13 +23,14 @@ namespace Enemies.Spawner
         public Transform player;
         public float minDistanceFromPlayer = 50f;
         
-        private float timer;
+        private float timer = 1111;
 
         private void Update()
         {
+            if (!IsServer) return;
             
             timer += Time.deltaTime;
-            if (timer >= waveDelay)
+            if (timer >= waveDelay && player != null)
             {
                 timer = 0;
                 SpawnAll();
@@ -39,12 +40,6 @@ namespace Enemies.Spawner
         public override void OnNetworkSpawn()
         {
             PlayerCharacterManager.OnPlayerSpawned += AssignPlayer;
-            
-            if (IsServer)
-            {
-                SpawnAll();
-            }
-            
         }
 
         public void OnDestroy()
@@ -85,8 +80,6 @@ namespace Enemies.Spawner
             
             pooled.transform.position = enemyPos;
             pooled.transform.rotation = Quaternion.identity;
-            
-            pooled.Spawn();
 
             pooled.GetComponent<EnemyBehaviour>().Init(data);
         }
