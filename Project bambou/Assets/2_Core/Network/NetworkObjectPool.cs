@@ -26,39 +26,70 @@ namespace Network
 
             foreach (var item in items)
             {
-                var q = new Queue<NetworkObject>();
-                pool[item.prefab.PrefabIdHash] = q;
+                uint key = item.prefab.PrefabIdHash;
+
+                if (!pool.ContainsKey(key))
+                    pool[key] = new Queue<NetworkObject>();
 
                 for (int i = 0; i < item.prewarmCount; i++)
                 {
-                    var obj = Instantiate(item.prefab);
+                    var obj = Instantiate(item.prefab, transform, true);
                     obj.gameObject.SetActive(false);
-                    q.Enqueue(obj);
+                    pool[key].Enqueue(obj);
                 }
             }
         }
 
+        // ---------------------------------------------------------
+        // GET (auto-register if needed)
+        // ---------------------------------------------------------
         public NetworkObject Get(NetworkObject prefab)
         {
-            var q = pool[prefab.PrefabIdHash];
+            uint key = prefab.PrefabIdHash;
+
+            // Auto-add pool if missing
+            if (!pool.ContainsKey(key))
+            {
+                Debug.LogWarning($"[Pool] Prefab {prefab.name} not registered. Creating pool automatically.");
+                pool[key] = new Queue<NetworkObject>();
+            }
+
+            var q = pool[key];
 
             if (q.Count > 0)
             {
                 var obj = q.Dequeue();
                 obj.gameObject.SetActive(true);
+                obj.Spawn();
                 return obj;
             }
 
-            // pool empty → instantiate new
-            var newObj = Instantiate(prefab);
+            // Instantiate new when empty
+            var newObj = Instantiate(prefab, transform);
+            newObj.Spawn();
             return newObj;
         }
 
+        // ---------------------------------------------------------
+        // RETURN (auto-register if needed)
+        // ---------------------------------------------------------
         public void Return(NetworkObject obj)
         {
+            uint key = obj.PrefabIdHash;
+
+            // Auto-register missing pool
+            if (!pool.ContainsKey(key))
+            {
+                Debug.LogWarning($"[Pool] Returned object {obj.name} had no pool entry. Creating queue automatically.");
+                pool[key] = new Queue<NetworkObject>();
+            }
+
             obj.gameObject.SetActive(false);
-            obj.Despawn(false); // important: do NOT destroy
-            pool[obj.PrefabIdHash].Enqueue(obj);
+
+            // DO NOT destroy
+            obj.Despawn(false);
+
+            pool[key].Enqueue(obj);
         }
     }
 }

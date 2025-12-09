@@ -26,6 +26,7 @@ GameObject:
   - component: {fileID: 6431743065237693542}
   - component: {fileID: 4820019110717564034}
   - component: {fileID: 6434261374770777849}
+  - component: {fileID: -3111670048258660835}
   m_Layer: 0
   m_Name: PF_Player
   m_TagString: Player
@@ -133,7 +134,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Character
   ShowTopMostFoldoutHeaderGroup: 1
   data: {fileID: 11400000, guid: 0fe2c636d5a9caa42b932eb9739cf32c, type: 2}
-  test: {fileID: 11400000, guid: da04160995ec26e46aec612bfb418041, type: 2}
 --- !u!114 &4636341468856982575
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -433,3 +433,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0328cd374b44b2e8d8f6520aab8fe1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Buff.BuffComponent
+--- !u!114 &-3111670048258660835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471502131686496270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf0bae2781f14fc898146e948eb91521, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Collectibles.PlayerCollector
+  ShowTopMostFoldoutHeaderGroup: 1
+  collectRange: 2
+  collectibleMask:
+    serializedVersion: 2
+    m_Bits: 128

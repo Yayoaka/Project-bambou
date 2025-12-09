@@ -1,5 +1,7 @@
 using System;
+using Collectibles;
 using Stats.Data;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Enemies.Data
@@ -17,5 +19,9 @@ namespace Enemies.Data
         [Header("Prefabs")]
         public GameObject visualPrefab;
         public GameObject deathVisual;
+        
+        [Header("Xp Loot")]
+        public NetworkObject xpLoot;
+        public int xpAmount;
     }
 }

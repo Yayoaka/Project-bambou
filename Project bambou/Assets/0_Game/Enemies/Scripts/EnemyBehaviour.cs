@@ -1,3 +1,4 @@
+using Collectibles;
 using Data;
 using Enemies.AI;
 using Enemies.Data;
@@ -82,6 +83,12 @@ namespace Enemies
         {
             if (!IsServer) return;
 
+            var xpNet = NetworkObjectPool.Instance.Get(Data.xpLoot);
+            
+            xpNet.GetComponent<XpCollectible>().Init(Data.xpAmount);
+            
+            xpNet.transform.position = transform.position;
+            
             KillRpc();
 
             NetworkObjectPool.Instance.Return(NetworkObject);

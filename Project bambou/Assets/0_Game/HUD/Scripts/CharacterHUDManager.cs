@@ -91,13 +91,9 @@ namespace HUD
         /// </summary>
         public void ShowSingleUpgradeFallback()
         {
-            if (upgradeSelectionUI == null)
-            {
-                Debug.LogError("[HUD] Missing UpgradeSelectionUI reference.");
-                return;
-            }
+            //TODO Fallback
 
-            upgradeSelectionUI.ShowFallback();
+            //upgradeSelectionUI.ShowFallback();
         }
 
         #endregion
