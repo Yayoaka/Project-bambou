@@ -1128,10 +1128,10 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: a15c53bd92a71f54e8bf1b8d6e45304e, type: 2}
   count: 100
   waveDelay: 30
-  minRadius: 150
-  maxradius: 200
+  minRadius: 20
+  maxradius: 30
   player: {fileID: 0}
-  minDistanceFromPlayer: 50
+  minDistanceFromPlayer: 0
 --- !u!114 &929036779
 MonoBehaviour:
   m_ObjectHideFlags: 0

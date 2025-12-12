@@ -56,8 +56,6 @@ namespace Enemies.AI
         {
             if (EnemyLODSystem.Instance != null) EnemyLODSystem.Instance.Unregister(this);
             if (EnemyTickSystem.Instance != null) EnemyTickSystem.Instance.Unregister(this);
-
-            Owner.Stats.OnStatsChanged -= UpdateSpeed;
         }
 
         public override void LateInit()
