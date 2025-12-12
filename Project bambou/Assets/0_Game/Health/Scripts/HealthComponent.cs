@@ -2,6 +2,7 @@ using System;
 using Effect.Stats.Data;
 using Health.CombatText;
 using Interfaces;
+using Stats.Data;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -9,8 +10,6 @@ namespace Health
 {
     public class HealthComponent : NetworkBehaviour, IHealthComponent
     {
-        [SerializeField] private float baseMaxHealth = 100f;
-
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
         public bool IsAlive => CurrentHealth > 0f;
@@ -22,10 +21,11 @@ namespace Health
 
         private void Awake()
         {
-            MaxHealth = baseMaxHealth;
+            MaxHealth = -1;
             CurrentHealth = MaxHealth;
 
             _stats = GetComponent<Stats.IStatsComponent>();
+            _stats.OnStatsChanged += UpdateStats;
         }
 
         public void ApplyDamage(HealthEventData data)
@@ -74,6 +74,16 @@ namespace Health
 
             CombatTextSystem.Instance.DoText(data);
             OnHit?.Invoke(data);
+        }
+
+        private void UpdateStats()
+        {
+            var maxHealth = _stats.GetStat(StatType.MaxHealth);
+
+            if (Mathf.Approximately(MaxHealth, -1))
+                CurrentHealth = maxHealth;
+            
+            MaxHealth = maxHealth;
         }
 
         public void HandleDeath(HealthEventData data)
