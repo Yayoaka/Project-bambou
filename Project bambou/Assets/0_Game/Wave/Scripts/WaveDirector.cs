@@ -29,7 +29,7 @@ namespace Wave
         {
             if (!IsServer || _currentStep == null) return;
 
-            if (_currentStep.Tick(_context, Time.deltaTime))
+            if (_currentStep.OnStepUpdate(_context, Time.deltaTime))
             {
                 StartNextStep();
             }
@@ -45,7 +45,7 @@ namespace Wave
             }
 
             _currentStep = timeline.steps[_stepIndex];
-            _currentStep.Start(_context);
+            _currentStep.OnStepEnter(_context);
             _stepIndex++;
         }
         

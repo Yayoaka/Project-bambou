@@ -8,12 +8,12 @@ namespace Wave
         public float maxDuration = 10f;
         private float _timer;
 
-        public override void Start(WaveContext context)
+        public override void OnStepEnter(WaveContext context)
         {
             _timer = 0f;
         }
 
-        public override bool Tick(WaveContext context, float deltaTime)
+        public override bool OnStepUpdate(WaveContext context, float deltaTime)
         {
             _timer += deltaTime;
 

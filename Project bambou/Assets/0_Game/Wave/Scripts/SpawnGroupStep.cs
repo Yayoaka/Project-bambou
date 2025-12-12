@@ -15,13 +15,13 @@ namespace Wave
         private int _spawned;
         private float _timer;
 
-        public override void Start(WaveContext context)
+        public override void OnStepEnter(WaveContext context)
         {
             _spawned = 0;
             _timer = 0f;
         }
 
-        public override bool Tick(WaveContext context, float deltaTime)
+        public override bool OnStepUpdate(WaveContext context, float deltaTime)
         {
             _timer += deltaTime;
 

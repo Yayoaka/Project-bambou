@@ -5,9 +5,9 @@ namespace Wave
     [CreateAssetMenu(menuName = "Waves/Steps/Wait Until Clear")]
     public class WaitUntilClearStep : WaveStep
     {
-        public override void Start(WaveContext context) {}
+        public override void OnStepEnter(WaveContext context) {}
 
-        public override bool Tick(WaveContext context, float deltaTime)
+        public override bool OnStepUpdate(WaveContext context, float deltaTime)
         {
             return context.aliveEnemies <= 0;
         }

@@ -4,7 +4,7 @@ namespace Wave
 {
     public abstract class WaveStep : ScriptableObject
     {
-        public abstract void Start(WaveContext context);
-        public abstract bool Tick(WaveContext context, float deltaTime);
+        public abstract void OnStepEnter(WaveContext context);
+        public abstract bool OnStepUpdate(WaveContext context, float deltaTime);
     }
 }
