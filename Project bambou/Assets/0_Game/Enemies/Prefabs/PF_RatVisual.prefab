@@ -1158,6 +1158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 74dc21a725a905549b5dfc2e9abfdb3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.EnemyGhostRigSelector
+  enemyID: rat
 --- !u!1 &5304427065167703649
 GameObject:
   m_ObjectHideFlags: 0
