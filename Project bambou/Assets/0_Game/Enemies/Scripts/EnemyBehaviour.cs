@@ -97,6 +97,8 @@ namespace Enemies
             KillRpc();
 
             NetworkObjectPool.Instance.Return(NetworkObject);
+            
+            EnemyManager.RegisterDeath();
         }
 
         [Rpc(SendTo.Everyone, RequireOwnership = false)]

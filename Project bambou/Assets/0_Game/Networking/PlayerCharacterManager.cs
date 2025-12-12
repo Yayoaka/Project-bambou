@@ -13,6 +13,7 @@ public class PlayerCharacterManager : NetworkBehaviour
     private readonly Dictionary<ulong, CharacterBehaviour> playerCharacters = new();
     
     public static event Action<GameObject> OnPlayerSpawned;
+    public static event Action<GameObject> OnPlayerUnspawned;
 
     private void OnDestroy()
     {
@@ -68,6 +69,7 @@ public class PlayerCharacterManager : NetworkBehaviour
         if (!playerCharacters.TryGetValue(clientId, out var character)) return;
 
         playerCharacters.Remove(clientId);
+        OnPlayerUnspawned?.Invoke(character.gameObject);
         if (character != null) Destroy(character.gameObject);
     }
 }

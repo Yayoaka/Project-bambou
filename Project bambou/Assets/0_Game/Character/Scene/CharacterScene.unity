@@ -1372,6 +1372,8 @@ GameObject:
   - component: {fileID: 929036778}
   - component: {fileID: 929036779}
   - component: {fileID: 929036780}
+  - component: {fileID: 929036782}
+  - component: {fileID: 929036783}
   m_Layer: 0
   m_Name: EnemyManager
   m_TagString: Untagged
@@ -1419,14 +1421,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Spawner.EnemySpawner
   ShowTopMostFoldoutHeaderGroup: 1
-  prefab: {fileID: -885932881952830235, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
-  data: {fileID: 11400000, guid: a15c53bd92a71f54e8bf1b8d6e45304e, type: 2}
-  count: 100
-  waveDelay: 30
   minRadius: 20
-  maxradius: 30
-  player: {fileID: 0}
-  minDistanceFromPlayer: 0
+  maxRadius: 125
+  minDistanceFromPlayers: 50
+  enemyPrefab: {fileID: -885932881952830235, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
 --- !u!114 &929036779
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1464,6 +1462,11 @@ MonoBehaviour:
       - {fileID: 513085737}
       - {fileID: 611027238}
       - {fileID: 1311623360}
+    - key: scarab
+      value:
+      - {fileID: 1908914066}
+      - {fileID: 2088169741}
+      - {fileID: 391001313}
 --- !u!114 &929036781
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1489,6 +1492,32 @@ MonoBehaviour:
   AutoObjectParentSync: 1
   SyncOwnerTransformWhenParented: 1
   AllowOwnerToParent: 0
+--- !u!114 &929036782
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929036775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03d9120f30b74346985e94440a314e30, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.EnemyManager
+--- !u!114 &929036783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 929036775}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd3c7dc7264b4d6f8ae8f96e21324210, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Wave.WaveDirector
+  ShowTopMostFoldoutHeaderGroup: 1
+  timeline: {fileID: 11400000, guid: ab5040220f87fe54bb2423ab5e0bc7f8, type: 2}
 --- !u!1 &1046751963
 GameObject:
   m_ObjectHideFlags: 0
