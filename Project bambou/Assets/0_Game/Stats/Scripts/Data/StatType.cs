@@ -5,6 +5,7 @@ namespace Stats.Data
         // --- OFFENSIVE ---
         AttackDamage,
         AbilityPower,
+        AttackRange,
 
         // --- CRITICAL ---
         CritChance,
@@ -13,11 +14,9 @@ namespace Stats.Data
         // --- DEFENSIVE ---
         Armor,
         MagicResist,
-        DamageReduction,    // réduction flat (%)
 
         // --- RESOURCE (optional) ---
         MaxHealth,
-        MaxMana,
 
         // --- SPEED (optional) ---
         AttackSpeed,
@@ -25,8 +24,6 @@ namespace Stats.Data
         MoveSpeed,
 
         // --- CUSTOM (expand later) ---
-        LifeSteal,
-        Tenacity,
         ProjectileCount,
         ProjectileSize,
         ProjectileSpeedMultiplier,

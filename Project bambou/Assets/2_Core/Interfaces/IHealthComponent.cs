@@ -11,7 +11,7 @@ namespace Interfaces
         bool IsAlive { get; }
         
         event Action OnDeath;
-        event Action<HealthEventData> OnHit;
+        event Action OnHealthChanged;
         
         void ApplyDamage(HealthEventData data);
         void ApplyHeal(HealthEventData data);

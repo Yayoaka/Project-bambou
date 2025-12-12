@@ -1,14 +1,17 @@
 using System;
 using Effect.Stats.Data;
+using Entity;
+using Health;
 using Health.CombatText;
+using HUD;
 using Interfaces;
 using Stats.Data;
 using Unity.Netcode;
 using UnityEngine;
 
-namespace Health
+namespace Character
 {
-    public class HealthComponent : NetworkBehaviour, IHealthComponent
+    public class CharacterHealth : EntityComponent<CharacterBehaviour>, IHealthComponent
     {
         public float MaxHealth { get; private set; }
         public float CurrentHealth { get; private set; }
@@ -26,6 +29,7 @@ namespace Health
 
             _stats = GetComponent<Stats.IStatsComponent>();
             _stats.OnStatsChanged += UpdateStats;
+            OnHealthChanged += OnHealthChangedEvent;
         }
 
         public void ApplyDamage(HealthEventData data)
@@ -44,9 +48,11 @@ namespace Health
             float finalDamage = Mathf.Max(0, amount);
             CurrentHealth -= finalDamage;
 
+            CurrentHealth = Mathf.Clamp(CurrentHealth, 0f, MaxHealth);
+            
             data.Amount = finalDamage;
             data.HitPoint = transform.position;
-
+            
             CombatTextSystem.Instance.DoText(data);
             OnHealthChanged?.Invoke();
 
@@ -81,14 +87,43 @@ namespace Health
             var maxHealth = _stats.GetStat(StatType.MaxHealth);
 
             if (Mathf.Approximately(MaxHealth, -1))
+            {
                 CurrentHealth = maxHealth;
-            
+                OnHealthChanged?.Invoke();
+            }
+
             MaxHealth = maxHealth;
         }
 
         public void HandleDeath(HealthEventData data)
         {
             OnDeath?.Invoke();
+        }
+
+        private void OnHealthChangedEvent()
+        {
+            if(!IsServer || !IsSpawned)
+                return;
+            
+            UpdateHealthClientRpc(CurrentHealth, MaxHealth, RpcTarget.Single(Owner.OwnerClientId, RpcTargetUse.Temp));
+        }
+        
+        [Rpc(SendTo.SpecifiedInParams)]
+        private void UpdateHealthClientRpc(
+            float current,
+            float max, RpcParams rpcParams = default)
+        {
+            CharacterHUDManager.Instance.SetCharacterHealth(current, max);
+        }
+
+        public override void OnNetworkSpawn()
+        {
+            base.OnNetworkSpawn();
+            
+            if(!IsServer || !IsSpawned)
+                return;
+            
+            UpdateHealthClientRpc(CurrentHealth, MaxHealth, RpcTarget.Single(Owner.OwnerClientId, RpcTargetUse.Temp));
         }
     }
 }

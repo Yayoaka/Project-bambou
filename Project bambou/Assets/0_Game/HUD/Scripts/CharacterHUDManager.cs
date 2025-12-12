@@ -101,5 +101,16 @@ namespace HUD
         }
 
         #endregion
+
+        #region Character Data UI
+
+        [SerializeField] private CharacterDataHUD characterDataHUD;
+
+        public void SetCharacterHealth(float health, float maxHealth)
+        {
+            characterDataHUD.SetHealth(health, maxHealth);
+        }
+
+        #endregion
     }
 }

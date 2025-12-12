@@ -25,6 +25,7 @@ namespace Character
         public CharacterInputController InputController { get; private set; }
         public CharacterState State { get; private set; }
         public CharacterVisual Visual { get; private set; }
+        public CharacterHealth Health { get; private set; }
         public IStatsComponent Stats { get; private set; }
         public IUpgradeComponent Upgrade { get; private set; }
 
@@ -36,6 +37,7 @@ namespace Character
             Skills = InitComponent<CharacterSkills>();
             InputController = InitComponent<CharacterInputController>();
             State = InitComponent<CharacterState>();
+            Health = InitComponent<CharacterHealth>();
             Stats = GetComponent<IStatsComponent>();
             Upgrade = GetComponent<IUpgradeComponent>();
             
@@ -44,6 +46,9 @@ namespace Character
             Skills.LateInit();
             InputController.LateInit();
             State.LateInit();
+            Health.LateInit();
+
+            Health.OnDeath += OnDeath;
         }
 
         public override void OnNetworkSpawn()
@@ -90,7 +95,7 @@ namespace Character
         public void Move(Vector2 input)
         {
             if (!IsOwner) return;    
-            if (State.IsStunned) return;
+            if (State.IsStunned || State.IsDead) return;
 
             Movement.Move(input);
         }
@@ -98,7 +103,7 @@ namespace Character
         public void Rotate(Vector3 input)
         {
             if (!IsOwner) return;
-            if (State.IsStunned) return;
+            if (State.IsStunned || State.IsDead) return;
             
             Movement.RotateToMouse(input);
         }
@@ -106,9 +111,15 @@ namespace Character
         public void TryUseSkill(int index, Vector3 mousePosition, Vector3 direction)
         {
             if (!IsOwner) return;
-            if (State.IsStunned) return;
+            if (State.IsStunned || State.IsDead) return;
 
             Skills.TryCast(index, mousePosition, direction);
+        }
+
+        private void OnDeath()
+        {
+            State.Kill();
+            Movement.Move(Vector2.zero);
         }
     }
 }

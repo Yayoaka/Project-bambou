@@ -61,6 +61,7 @@ namespace Stats
             {
                 StatType.AttackDamage   => _baseStats.abilityDamage,
                 StatType.AbilityPower   => _baseStats.abilityPower,
+                StatType.AttackRange    => _baseStats.attackRange,
 
                 StatType.CritChance     => _baseStats.critChance,
                 StatType.CritMultiplier => _baseStats.critMultiplier,

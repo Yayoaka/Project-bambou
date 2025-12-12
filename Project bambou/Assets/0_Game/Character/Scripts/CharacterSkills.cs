@@ -70,7 +70,7 @@ namespace Character
             int index, Vector3 mousePosition, Vector3 direction, bool fromAuto = false, RpcParams rpcParams = default)
         {
             ulong sender = rpcParams.Receive.SenderClientId;
-            if (sender != OwnerClientId)
+            if (sender != OwnerClientId || Owner.State.IsDead)
                 return;
 
             if (!CanCast(index) && !fromAuto)

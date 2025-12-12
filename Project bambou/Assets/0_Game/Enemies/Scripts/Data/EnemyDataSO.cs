@@ -1,5 +1,6 @@
 using System;
 using Collectibles;
+using Effect;
 using Stats.Data;
 using Unity.Netcode;
 using UnityEngine;
@@ -15,6 +16,7 @@ namespace Enemies.Data
 
         [Header("Stats")]
         public StatsData stats;
+        public EffectData effect;
         
         [Header("Prefabs")]
         public GameObject visualPrefab;

@@ -17,10 +17,10 @@ GameObject:
   - component: {fileID: 2914592469210038041}
   - component: {fileID: 7301557644388068056}
   - component: {fileID: 8417061010593134762}
+  - component: {fileID: 5063521303012674712}
   - component: {fileID: 7933995884611417697}
   - component: {fileID: 2320339193218563711}
   - component: {fileID: 9075700504475403070}
-  - component: {fileID: 2525342968106190495}
   - component: {fileID: 5567926824821909677}
   - component: {fileID: 4064493778673570902}
   - component: {fileID: 6431743065237693542}
@@ -200,6 +200,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Character.CharacterAnimationController
   ShowTopMostFoldoutHeaderGroup: 1
+--- !u!114 &5063521303012674712
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2471502131686496270}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2b08d13affe4396a4cc16f4fc85b35c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Character.CharacterHealth
+  ShowTopMostFoldoutHeaderGroup: 1
 --- !u!114 &7933995884611417697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,20 +249,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d783e8c5c2d24402956b8562f91c0d90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Affectable.ShieldComponent
---- !u!114 &2525342968106190495
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2471502131686496270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d00b4d3eac2d8c44aa52ea31021f27e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Character.CharacterHealth
-  ShowTopMostFoldoutHeaderGroup: 1
-  baseMaxHealth: 100
 --- !u!114 &5567926824821909677
 MonoBehaviour:
   m_ObjectHideFlags: 0

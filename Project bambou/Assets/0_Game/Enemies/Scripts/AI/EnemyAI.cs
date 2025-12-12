@@ -4,6 +4,8 @@ using Enemies.Tick;
 using Enemies.Lod;
 using Enemies.Visual;
 using Entity;
+using Interfaces;
+using Skills;
 using Stats.Data;
 
 namespace Enemies.AI
@@ -24,6 +26,8 @@ namespace Enemies.AI
         private int _randomOffset;
 
         private float _attackSpeed = 3;
+
+        private float _attackDelay;
 
         void Awake()
         {
@@ -62,7 +66,7 @@ namespace Enemies.AI
         {
             base.LateInit();
 
-            Owner.Stats.OnStatsChanged += UpdateSpeed;
+            Owner.Stats.OnStatsChanged += UpdateStats;
         }
 
         // ----------------------------------------------------------
@@ -77,7 +81,13 @@ namespace Enemies.AI
 
             if (Vector3.Distance(_target.position, Position) < _attackRange)
             {
-                //anim.SetAttack(_attackSpeed, dt);
+                if (_attackDelay <= Time.time)
+                {
+                    _attackDelay = Time.time + _attackSpeed;
+                    var affectable = _target.GetComponent<IAffectable>();
+                    EffectExecutor.Execute(Owner.Data.effect, Owner.Stats, NetworkObjectId, affectable,
+                        transform.position);
+                }
                 return;
             }
             
@@ -143,9 +153,11 @@ namespace Enemies.AI
 
         public Vector3 Position => transform.position;
 
-        private void UpdateSpeed()
+        private void UpdateStats()
         {
             nav.speed = Owner.Stats.GetStat(StatType.MoveSpeed);
+            _attackSpeed = Owner.Stats.GetStat(StatType.AttackSpeed);
+            _attackRange = Owner.Stats.GetStat(StatType.AttackRange);
         }
     }
 }
