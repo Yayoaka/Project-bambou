@@ -19,14 +19,12 @@ namespace Enemies.Visual
         
         #endregion
 
-        public Dictionary<string, Transform[]> GetGhostRigs => ghostRigAnimators;
+        public SerializableDictionary<string, Transform[]> GetGhostRigs => ghostRigAnimators;
     }
     
     [Serializable] //TODO Dégager cette merde d'ici pleaaaaaasssssseeeeee
-    public class SerializableDictionary<TKey, TValue> : Dictionary<TKey, TValue>, ISerializationCallbackReceiver
+    public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver
     {
-        [SerializeField] private List<Entry> entries = new List<Entry>();
-
         [Serializable]
         private struct Entry
         {
@@ -34,38 +32,44 @@ namespace Enemies.Visual
             public TValue value;
         }
 
-        // Avant que Unity sérialise l'objet (Editor -> disque, playmode, etc.)
+        [SerializeField] private List<Entry> entries = new List<Entry>();
+
+        // Dictionnaire runtime (non sérialisé)
+        private readonly Dictionary<TKey, TValue> dict = new Dictionary<TKey, TValue>();
+
+        public Dictionary<TKey, TValue> Dictionary => dict;
+
         public void OnBeforeSerialize()
         {
-            entries.Clear();
-            foreach (var kvp in this)
-            {
-                entries.Add(new Entry { key = kvp.Key, value = kvp.Value });
-            }
+            // IMPORTANT :
+            // On NE DOIT PAS effacer/reconstruire "entries" à partir de dict ici,
+            // sinon Unity perd ce que vous venez d'ajouter avec le bouton '+'.
+            // Ici, on laisse Unity sérialiser la liste telle qu’elle est dans l’inspecteur.
         }
 
-        // Après que Unity a désérialisé l'objet
         public void OnAfterDeserialize()
         {
-            Clear();
+            dict.Clear();
 
             for (int i = 0; i < entries.Count; i++)
             {
-                var key = entries[i].key;
+                var k = entries[i].key;
 
-                // Attention: si clé dupliquée, on garde la dernière (ou ignore, à choix)
-                if (ContainsKey(key))
-                {
-                    // Option 1: écraser
-                    this[key] = entries[i].value;
+                // Si doublon, on garde la dernière valeur (modifiable selon besoin)
+                dict[k] = entries[i].value;
+            }
+        }
 
-                    // Option 2: ignorer (décommentez si vous préférez)
-                    // continue;
-                }
-                else
-                {
-                    Add(key, entries[i].value);
-                }
+        // Helpers pratiques
+        public bool TryGetValue(TKey key, out TValue value) => dict.TryGetValue(key, out value);
+
+        public TValue this[TKey key]
+        {
+            get => dict[key];
+            set
+            {
+                dict[key] = value;
+                // Si vous modifiez à runtime, cela ne met pas à jour l’inspecteur automatiquement.
             }
         }
     }
