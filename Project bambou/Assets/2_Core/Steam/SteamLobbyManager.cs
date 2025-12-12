@@ -77,6 +77,17 @@ namespace Steam
 
             SteamNetworking.AcceptP2PSessionWithUser(hostSteamId);
 
+            var transport =
+                NetworkManager.Singleton.NetworkConfig.NetworkTransport as SteamP2PTransport;
+
+            if (transport == null)
+            {
+                Debug.LogError("SteamP2PTransport not found on NetworkManager");
+                return;
+            }
+
+            transport.SetServerSteamId(hostSteamId.m_SteamID);
+
             NetworkManager.Singleton.StartClient();
         }
 
