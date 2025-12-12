@@ -11,7 +11,7 @@ namespace Steam
         {
             if (!SteamAPI.Init())
             {
-                Debug.LogError("SteamAPI init failed");
+                Debug.LogError("SteamAPI init failed OUVRE STEAM OU JE TE BUTE (on rigole biensur");
                 Application.Quit();
                 return;
             }
