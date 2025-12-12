@@ -59,14 +59,12 @@ namespace Network
             if (q.Count > 0)
             {
                 var obj = q.Dequeue();
-                obj.Spawn();
                 obj.gameObject.SetActive(true);
                 return obj;
             }
 
             // Instantiate new when empty
             var newObj = Instantiate(prefab, transform);
-            newObj.Spawn();
             return newObj;
         }
 

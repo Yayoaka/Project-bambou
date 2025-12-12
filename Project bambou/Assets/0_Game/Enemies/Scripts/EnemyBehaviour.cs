@@ -48,6 +48,7 @@ namespace Enemies
 
         private void InitEnemy(string id)
         {
+            if (_isInitialized) return;
             Stats ??= GetComponent<IStatsComponent>();
             _health ??= GetComponent<HealthComponent>();
             _activation ??= InitComponent<EnemyActivation>();
@@ -85,8 +86,11 @@ namespace Enemies
             if (!IsServer) return;
 
             var xpNet = NetworkObjectPool.Instance.Get(Data.xpLoot);
+
+            var collectible = xpNet.GetComponent<XpCollectible>();
+            xpNet.Spawn();
+            collectible.Init(Data.xpAmount);
             
-            xpNet.GetComponent<XpCollectible>().Init(Data.xpAmount);
             
             xpNet.transform.position = transform.position;
             
@@ -110,7 +114,7 @@ namespace Enemies
 
         public override void OnNetworkSpawn()
         {
-            if (!IsServer && !_isInitialized && !_enemyId.Value.Value.IsNullOrEmpty())
+            if (!_isInitialized && !_enemyId.Value.Value.IsNullOrEmpty())
             {
                 InitEnemy(_enemyId.Value.Value);
             }

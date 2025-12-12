@@ -80,6 +80,8 @@ namespace Enemies.Spawner
             
             pooled.transform.position = enemyPos;
             pooled.transform.rotation = Quaternion.identity;
+            
+            pooled.Spawn();
 
             pooled.GetComponent<EnemyBehaviour>().Init(data);
         }
