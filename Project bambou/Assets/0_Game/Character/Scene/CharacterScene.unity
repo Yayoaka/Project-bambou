@@ -467,6 +467,90 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1001 &391001312
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1347928049}
+    m_Modifications:
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_Name
+      value: HumanoidScarab_Bl (2)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 391001315}
+  m_SourcePrefab: {fileID: 100100000, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+--- !u!4 &391001313 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+  m_PrefabInstance: {fileID: 391001312}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &391001314 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+  m_PrefabInstance: {fileID: 391001312}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &391001315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 391001314}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f111c7844da56e14ab31ebb5613045e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.GhostRigAnimator
+  walkClip: {fileID: -3419257869308726280, guid: a1d1c3109b276f1479bd7ea9a85a572a, type: 3}
+  rigRoot: {fileID: 391001314}
 --- !u!1001 &513085736
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1125,7 +1209,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Spawner.EnemySpawner
   ShowTopMostFoldoutHeaderGroup: 1
   prefab: {fileID: -885932881952830235, guid: 14f0529e0e9a7d34ca3241d00b069c92, type: 3}
-  data: {fileID: 11400000, guid: a15c53bd92a71f54e8bf1b8d6e45304e, type: 2}
+  data: {fileID: 11400000, guid: 1b463c25ce3a69c4cb5974f10cadb49b, type: 2}
   count: 100
   waveDelay: 30
   minRadius: 20
@@ -1928,6 +2012,9 @@ Transform:
   - {fileID: 513085737}
   - {fileID: 611027238}
   - {fileID: 1311623360}
+  - {fileID: 1908914066}
+  - {fileID: 2088169741}
+  - {fileID: 391001313}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1359748052
@@ -2579,6 +2666,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: da04160995ec26e46aec612bfb418041, type: 2}
   - {fileID: 11400000, guid: 1a1fbbeacbb38d644965be6aa385858e, type: 2}
   - {fileID: 11400000, guid: 062e329699b835c47879b4a67c052e5b, type: 2}
+  - {fileID: 11400000, guid: 38de73482e9a1d64e939643f4ade533e, type: 2}
+  - {fileID: 11400000, guid: 3aa1af08f1242e1429568ed6cb977434, type: 2}
 --- !u!4 &1858013717
 Transform:
   m_ObjectHideFlags: 0
@@ -2707,6 +2796,90 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1217d41995491cbcfe84c59f76a183, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HUD.SpellUIElement
+--- !u!1001 &1908914065
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1347928049}
+    m_Modifications:
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_Name
+      value: HumanoidScarab_Bl
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1908914068}
+  m_SourcePrefab: {fileID: 100100000, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+--- !u!4 &1908914066 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+  m_PrefabInstance: {fileID: 1908914065}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1908914067 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+  m_PrefabInstance: {fileID: 1908914065}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1908914068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1908914067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f111c7844da56e14ab31ebb5613045e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.GhostRigAnimator
+  walkClip: {fileID: -3419257869308726280, guid: a1d1c3109b276f1479bd7ea9a85a572a, type: 3}
+  rigRoot: {fileID: 1908914067}
 --- !u!1001 &1991256794
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3235,6 +3408,90 @@ MonoBehaviour:
       m_PostInfinity: 2
       m_RotationOrder: 4
   CustomBlends: {fileID: 0}
+--- !u!1001 &2088169740
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 1347928049}
+    m_Modifications:
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      propertyPath: m_Name
+      value: HumanoidScarab_Bl (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2088169743}
+  m_SourcePrefab: {fileID: 100100000, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+--- !u!4 &2088169741 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8121406193265297833, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+  m_PrefabInstance: {fileID: 2088169740}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2088169742 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8934815431102567187, guid: efb97de04fa2e884ca4b75087de18cd5, type: 3}
+  m_PrefabInstance: {fileID: 2088169740}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2088169743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2088169742}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f111c7844da56e14ab31ebb5613045e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.GhostRigAnimator
+  walkClip: {fileID: -3419257869308726280, guid: a1d1c3109b276f1479bd7ea9a85a572a, type: 3}
+  rigRoot: {fileID: 2088169742}
 --- !u!1001 &7586306631224763790
 PrefabInstance:
   m_ObjectHideFlags: 0

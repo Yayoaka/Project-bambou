@@ -2,9 +2,9 @@ using UnityEngine;
 
 public class RandomPositionZone : MonoBehaviour
 {
-    public float firstRadius = 150f;
-    public float secondRadius = 200f;
-    public float maxRadius = 250f;
+    public float firstRadius = 75f;
+    public float secondRadius = 125f;
+    public float maxRadius = 150f;
 
     private void OnDrawGizmos()
     {

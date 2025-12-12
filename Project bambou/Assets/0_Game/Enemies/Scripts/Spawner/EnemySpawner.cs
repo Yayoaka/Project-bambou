@@ -16,8 +16,8 @@ namespace Enemies.Spawner
         [SerializeField] private EnemyDataSo data;
         [SerializeField] private int count = 50;
         [SerializeField] private float waveDelay = 30f;
-        [SerializeField] private float minRadius = 500f;
-        [SerializeField] private float maxradius = 1000f;
+        [SerializeField] private float minRadius = 75f;
+        [SerializeField] private float maxradius = 125f;
         
         [Header("Player")]
         public Transform player;
