@@ -108,7 +108,6 @@ namespace Enemies.AI
             if (IsInAttackRange())
             {
                 TryAttack();
-                return;
             }
 
             ApplyMovement(dt);
@@ -272,6 +271,11 @@ namespace Enemies.AI
             nav.speed = Owner.Stats.GetStat(StatType.MoveSpeed);
             _attackSpeed = Owner.Stats.GetStat(StatType.AttackSpeed);
             _attackRange = Owner.Stats.GetStat(StatType.AttackRange);
+        }
+        
+        public void SetRadius(float radius)
+        {
+            nav.radius = radius;
         }
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5727477406582577277}
   - component: {fileID: 8709905198554199963}
   - component: {fileID: 2650269883183198079}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PF_DeathVFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4932,7 +4932,7 @@ GameObject:
   - component: {fileID: 247884150944330285}
   - component: {fileID: 1047755609645774279}
   - component: {fileID: 8856303550045819212}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: ShockWave
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9826,7 +9826,7 @@ GameObject:
   - component: {fileID: 4895730345415944068}
   - component: {fileID: 3354255846329865724}
   - component: {fileID: 7239940625860183727}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Flash
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14720,7 +14720,7 @@ GameObject:
   - component: {fileID: 7203905589710886368}
   - component: {fileID: 473359752588275560}
   - component: {fileID: 8602952474295884968}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Glow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19623,7 +19623,7 @@ GameObject:
   - component: {fileID: 4175229713533268679}
   - component: {fileID: 7858878068327578620}
   - component: {fileID: 4119716982962338156}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Sparks
   m_TagString: Untagged
   m_Icon: {fileID: 0}

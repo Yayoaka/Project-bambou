@@ -1,3 +1,5 @@
+using Upgrades.EffectUpgrades.Data;
+
 namespace Upgrades
 {
     public interface IUpgradeComponent
@@ -9,6 +11,8 @@ namespace Upgrades
         // --- WEAPONS ---
         void AddWeapon(WeaponUpgrades.Data.WeaponUpgradeData weapon);
         void UpgradeWeapon(WeaponUpgrades.Data.WeaponUpgradeData weapon, int level);
+        
+        void DoEffect(EffectUpgradeData weapon);
 
         // --- STAT ACCESS (déléguée à StatsComponent) ---
         (float, float) GetStat(Stats.Data.StatType statType);

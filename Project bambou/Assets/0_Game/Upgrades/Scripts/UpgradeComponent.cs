@@ -13,6 +13,7 @@ using Interfaces;
 using Skills;
 using Skills.Entities;
 using Stats.Data;
+using Upgrades.EffectUpgrades.Data;
 using Random = UnityEngine.Random;
 
 namespace Upgrades
@@ -29,6 +30,7 @@ namespace Upgrades
 
         private CharacterBehaviour _character;
         private StatsComponent _stats;
+        private IAffectable _affectable;
 
         public event Action OnUpgradesChanged;
 
@@ -47,6 +49,7 @@ namespace Upgrades
         {
             _character = GetComponent<CharacterBehaviour>();
             _stats = GetComponent<StatsComponent>();
+            _affectable = GetComponent<IAffectable>();
         }
 
         // ----------------------------------------------------------
@@ -141,6 +144,22 @@ namespace Upgrades
                 return;
 
             foundWeapon.Lvl = level;
+            OnUpgradesChanged?.Invoke();
+        }
+
+        public void DoEffect(EffectUpgradeData data)
+        {
+            foreach (var effect in data.Effects)
+            {
+                EffectExecutor.Execute(
+                    effect,
+                    _stats,
+                    _character.NetworkObjectId,
+                    _affectable,
+                    Vector3.zero
+                );
+            }
+
             OnUpgradesChanged?.Invoke();
         }
 

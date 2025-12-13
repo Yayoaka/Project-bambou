@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +5,7 @@ using HUD;
 using Unity.Netcode;
 using UnityEngine;
 using Upgrades.Data;
+using Upgrades.EffectUpgrades.Data;
 using Upgrades.PassiveUpgrades.Data;
 using Upgrades.WeaponUpgrades.Data;
 
@@ -41,7 +41,9 @@ namespace Upgrades
         private readonly Dictionary<ulong, PlayerUpgradeData> _players = new();
         private readonly HashSet<ulong> _pendingUpgradeChoices = new();
 
+        [Header("Upgrades")]
         [SerializeField] private List<UpgradeData> _allUpgrades = new();
+        [SerializeField] private List<UpgradeData> _fallbackUpgrades = new();
 
         private Coroutine _upgradeTimerCoroutine;
         private const float UPGRADE_TIMEOUT = 40f;
@@ -58,9 +60,8 @@ namespace Upgrades
             };
         }
 
-
         // ---------------------------------------------------------
-        // UPGRADE SELECTION ENTRY POINT
+        // MULTIPLE CHOICE (new + upgrades)
         // ---------------------------------------------------------
         public void CallUpgradeSelection()
         {
@@ -73,7 +74,7 @@ namespace Upgrades
                 var clientId = kvp.Key;
                 var pdata = kvp.Value;
 
-                var choices = GenerateUpgradeChoices(pdata, 3);
+                var choices = ResolveMultipleChoices(pdata, 3);
                 if (choices.Count == 0)
                     continue;
 
@@ -92,6 +93,9 @@ namespace Upgrades
                 StartUpgradeTimer();
         }
 
+        // ---------------------------------------------------------
+        // SINGLE CHOICE (upgrade only)
+        // ---------------------------------------------------------
         public void CallSingleUpgrade()
         {
             if (!IsServer) return;
@@ -103,20 +107,19 @@ namespace Upgrades
                 var clientId = kvp.Key;
                 var pdata = kvp.Value;
 
-                var owned = pdata.Levels.Keys.ToList();
+                var choices = ResolveSingleChoice(pdata);
 
-                if (owned.Count == 0)
+                if (choices.Count == 0)
                 {
                     SendFallbackClientRpc();
                     continue;
                 }
 
-                var choice = PickRandom(owned);
                 _pendingUpgradeChoices.Add(clientId);
 
                 SendChoicesClientRpc(
-                    PackChoices(new List<UpgradeData> { choice }),
-                    PackLevels(new List<UpgradeData> { choice }, pdata),
+                    PackChoices(choices),
+                    PackLevels(choices, pdata),
                     RpcTarget.Single(clientId, RpcTargetUse.Temp)
                 );
             }
@@ -126,7 +129,6 @@ namespace Upgrades
             else
                 StartUpgradeTimer();
         }
-
 
         // ---------------------------------------------------------
         // CLIENT RPCS
@@ -138,21 +140,23 @@ namespace Upgrades
 
             var choices = UnpackChoices(indices);
 
-            CharacterHUDManager.Instance.ShowUpgradeChoices(choices, levels, selected =>
-            {
-                if (selected == null) return;
+            CharacterHUDManager.Instance.ShowUpgradeChoices(
+                choices,
+                levels,
+                selected =>
+                {
+                    if (selected == null) return;
 
-                var idx = _allUpgrades.IndexOf(selected);
-                if (idx < 0) return;
+                    var idx = _allUpgrades.IndexOf(selected);
+                    if (idx < 0) return;
 
-                CharacterHUDManager.Instance.ShowWaitingScreen();
-
-                SelectUpgradeServerRpc(idx);
-            });
+                    CharacterHUDManager.Instance.ShowWaitingScreen();
+                    SelectUpgradeServerRpc(idx);
+                });
         }
 
         [Rpc(SendTo.Everyone)]
-        private void SendFallbackClientRpc(RpcParams rpcParams = default)
+        private void SendFallbackClientRpc()
         {
             Time.timeScale = 0;
             CharacterHUDManager.Instance.ShowSingleUpgradeFallback();
@@ -166,9 +170,8 @@ namespace Upgrades
             CharacterHUDManager.Instance.HideWaitingScreen();
         }
 
-
         // ---------------------------------------------------------
-        // SERVER RPC → CHOICE VALIDATION
+        // SERVER RPC → APPLY
         // ---------------------------------------------------------
         [Rpc(SendTo.Server)]
         private void SelectUpgradeServerRpc(int upgradeIndex, RpcParams rpcParams = default)
@@ -183,35 +186,40 @@ namespace Upgrades
 
             var data = _allUpgrades[upgradeIndex];
 
-            // Apply
-            if (!pdata.Levels.TryGetValue(data, out var level))
+            if (data.isUpgradable)
             {
-                pdata.Levels[data] = 1;
-                ApplyNewUpgrade(pdata, data);
+                if (!pdata.Levels.TryGetValue(data, out var level))
+                {
+                    pdata.Levels[data] = 1;
+                    ApplyNewUpgrade(pdata, data);
+                }
+                else
+                {
+                    pdata.Levels[data] = level + 1;
+                    ApplyLevelUp(pdata, data, level + 1);
+                }
             }
             else
             {
-                pdata.Levels[data] = level + 1;
-                ApplyLevelUp(pdata, data, level + 1);
+                ApplyInstantUpgrade(pdata, data);
             }
 
-            // Mark as finished
-            if (_pendingUpgradeChoices.Contains(sender))
-                _pendingUpgradeChoices.Remove(sender);
+            _pendingUpgradeChoices.Remove(sender);
 
-            // If all players finished
             if (_pendingUpgradeChoices.Count == 0)
                 OnAllPlayersFinishedUpgrading();
         }
 
-
         // ---------------------------------------------------------
-        // TIMEOUT HANDLING (40s)
+        // TIMER
         // ---------------------------------------------------------
         private void StartUpgradeTimer()
         {
             if (_upgradeTimerCoroutine != null)
+            {
                 StopCoroutine(_upgradeTimerCoroutine);
+                _upgradeTimerCoroutine = null;
+            }
 
             _upgradeTimerCoroutine = StartCoroutine(UpgradeTimerRoutine());
         }
@@ -222,73 +230,72 @@ namespace Upgrades
 
             if (!IsServer) yield break;
 
-            // Auto-resolve missing players
             foreach (var clientId in _pendingUpgradeChoices.ToList())
             {
                 if (!_players.TryGetValue(clientId, out var pdata))
                     continue;
 
-                // If no existing upgrades, skip
-                var owned = pdata.Levels.Keys.ToList();
-                UpgradeData autoChoice = owned.Count > 0 ?
-                    PickRandom(owned) :
-                    PickRandom(_allUpgrades);
+                var choice = pdata.Levels.Count > 0
+                    ? PickRandom(pdata.Levels.Keys.ToList())
+                    : PickRandom(_fallbackUpgrades);
 
-                var idx = _allUpgrades.IndexOf(autoChoice);
-                SelectUpgradeServerRpc(idx);
+                if (choice == null)
+                    continue;
+
+                SelectUpgradeServerRpc(_allUpgrades.IndexOf(choice));
             }
 
             _pendingUpgradeChoices.Clear();
             OnAllPlayersFinishedUpgrading();
         }
 
-
-        // ---------------------------------------------------------
-        // END OF UPGRADE PHASE
-        // ---------------------------------------------------------
         private void OnAllPlayersFinishedUpgrading()
         {
-            StopCoroutine(_upgradeTimerCoroutine);
+            if (_upgradeTimerCoroutine != null)
+            {
+                StopCoroutine(_upgradeTimerCoroutine);
+                _upgradeTimerCoroutine = null;
+            }
 
             ResumeGameClientRpc();
         }
 
-
         // ---------------------------------------------------------
-        // UPGRADE LOGIC
+        // CHOICE RESOLUTION
         // ---------------------------------------------------------
-        private List<UpgradeData> GenerateUpgradeChoices(PlayerUpgradeData pdata, int count)
+        private List<UpgradeData> ResolveMultipleChoices(PlayerUpgradeData pdata, int count)
         {
-            var owned = pdata.Levels
+            var ownedUpgradable = pdata.Levels
                 .Where(x => x.Value < 5)
                 .Select(x => x.Key)
                 .ToList();
 
-            var notOwned = _allUpgrades.Except(pdata.Levels.Keys).ToList();
+            var notOwned = _allUpgrades
+                .Except(_fallbackUpgrades)
+                .Except(pdata.Levels.Keys)
+                .ToList();
 
             var result = new List<UpgradeData>();
             const float ownedChance = 0.25f;
 
-            for (int i = 0; i < count; i++)
+            for (var i = 0; i < count; i++)
             {
                 UpgradeData pick = null;
 
-                bool tryOwned = UnityEngine.Random.value < ownedChance;
-
-                if (tryOwned && owned.Count > 0)
+                if (Random.value < ownedChance && ownedUpgradable.Count > 0)
                 {
-                    pick = PickRandom(owned);
-                    owned.Remove(pick);
+                    pick = PickRandom(ownedUpgradable);
+                    ownedUpgradable.Remove(pick);
                 }
                 else if (notOwned.Count > 0)
                 {
                     pick = PickRandom(notOwned);
                     notOwned.Remove(pick);
                 }
-                else if (owned.Count > 0)
+                else if (ownedUpgradable.Count > 0)
                 {
-                    pick = PickRandom(owned);
-                    owned.Remove(pick);
+                    pick = PickRandom(ownedUpgradable);
+                    ownedUpgradable.Remove(pick);
                 }
 
                 if (pick != null)
@@ -298,18 +305,57 @@ namespace Upgrades
             return result;
         }
 
-        private UpgradeData PickRandom(List<UpgradeData> list)
+        private List<UpgradeData> ResolveSingleChoice(PlayerUpgradeData pdata)
         {
-            if (list == null || list.Count == 0) return null;
-            return list[UnityEngine.Random.Range(0, list.Count)];
+            var ownedUpgradable = pdata.Levels
+                .Where(x => x.Value < 5)
+                .Select(x => x.Key)
+                .ToList();
+
+            if (ownedUpgradable.Count > 0)
+            {
+                return new List<UpgradeData>
+                {
+                    PickRandom(ownedUpgradable)
+                };
+            }
+
+            return PickFromFallback(1);
         }
 
+        private List<UpgradeData> PickFromFallback(int count)
+        {
+            var result = new List<UpgradeData>();
+            var pool = new List<UpgradeData>(_fallbackUpgrades);
+
+            for (var i = 0; i < count && pool.Count > 0; i++)
+            {
+                var pick = PickRandom(pool);
+                pool.Remove(pick);
+
+                if (pick != null)
+                    result.Add(pick);
+            }
+
+            return result;
+        }
+
+        // ---------------------------------------------------------
+        // APPLY
+        // ---------------------------------------------------------
         private void ApplyNewUpgrade(PlayerUpgradeData pdata, UpgradeData data)
         {
             switch (data)
             {
-                case PassiveUpgradeData p: pdata.UpgradeComp.AddPassive(p); break;
-                case WeaponUpgradeData w: pdata.UpgradeComp.AddWeapon(w); break;
+                case PassiveUpgradeData p:
+                    pdata.UpgradeComp.AddPassive(p);
+                    break;
+                case WeaponUpgradeData w:
+                    pdata.UpgradeComp.AddWeapon(w);
+                    break;
+                case EffectUpgradeData e:
+                    pdata.UpgradeComp.DoEffect(e);
+                    break;
             }
         }
 
@@ -317,15 +363,29 @@ namespace Upgrades
         {
             switch (data)
             {
-                case PassiveUpgradeData p: pdata.UpgradeComp.UpgradePassive(p, level); break;
-                case WeaponUpgradeData w: pdata.UpgradeComp.UpgradeWeapon(w, level); break;
+                case PassiveUpgradeData p:
+                    pdata.UpgradeComp.UpgradePassive(p, level);
+                    break;
+                case WeaponUpgradeData w:
+                    pdata.UpgradeComp.UpgradeWeapon(w, level);
+                    break;
             }
         }
 
+        private void ApplyInstantUpgrade(PlayerUpgradeData pdata, UpgradeData data)
+        {
+            ApplyNewUpgrade(pdata, data);
+        }
 
         // ---------------------------------------------------------
-        // SERIALISATION HELPERS
+        // HELPERS
         // ---------------------------------------------------------
+        private UpgradeData PickRandom(List<UpgradeData> list)
+        {
+            if (list == null || list.Count == 0) return null;
+            return list[Random.Range(0, list.Count)];
+        }
+
         private int[] PackChoices(List<UpgradeData> list)
         {
             var arr = new int[list.Count];

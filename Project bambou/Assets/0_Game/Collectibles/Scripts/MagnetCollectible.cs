@@ -33,7 +33,7 @@ namespace Collectibles
 
             // Despawn directly
             if (NetworkObject != null && NetworkObject.IsSpawned)
-                NetworkObjectPool.Instance.Return(NetworkObject);
+                NetworkObjectPool.Instance.ReturnOrAdopt(NetworkObject);
         }
 
         protected virtual void OnCollectedServer() { }

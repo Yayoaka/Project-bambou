@@ -7,75 +7,39 @@ namespace Wave
 {
     public class WaveDirector : NetworkBehaviour
     {
-        [SerializeField] private WaveTimeline timeline;
+        [SerializeField] private WaveAsset startWave;
 
-        private WaveContext _context;
-        private int _stepIndex;
-        private WaveStep _currentStep;
+        private WaveRunner _runner;
 
         public override void OnNetworkSpawn()
         {
             if (!IsServer) return;
 
-            _context = new WaveContext
-            {
-                spawner = GetComponent<EnemySpawner>()
-            };
+            _runner = GetComponent<WaveRunner>();
+            WaveRunner.OnWaveCompleted += HandleWaveCompleted;
 
-            StartNextStep();
+            if (startWave != null)
+                _runner.StartWave(startWave);
         }
 
-        private void Update()
+        private void HandleWaveCompleted(WaveAsset wave)
         {
-            if (!IsServer || _currentStep == null) return;
-
-            if (_currentStep.OnStepUpdate(_context, Time.deltaTime))
+            switch (wave.onComplete)
             {
-                StartNextStep();
+                case WaveCompletionAction.NextWave:
+                    if (wave.nextWave != null)
+                        _runner.StartWave(wave.nextWave);
+                    break;
+
+                case WaveCompletionAction.ChangeGameState:
+                    GameStateManager.Instance.ChangeState(wave.nextGameState);
+                    break;
             }
         }
 
-        private void StartNextStep()
+        private void OnDestroy()
         {
-            if (_stepIndex >= timeline.steps.Count)
-            {
-                _currentStep = null;
-                OnTimelineCompleted();
-                return;
-            }
-
-            _currentStep = timeline.steps[_stepIndex];
-            _currentStep.OnStepEnter(_context);
-            _stepIndex++;
-        }
-        
-        private void OnTimelineCompleted()
-        {
-            switch (timeline.endPolicy)
-            {
-                case WaveEndPolicy.Stop:
-                    _currentStep = null;
-                    break;
-
-                case WaveEndPolicy.Loop:
-                    _stepIndex = 0;
-                    StartNextStep();
-                    break;
-
-                case WaveEndPolicy.LoadNext:
-                    timeline = timeline.nextTimeline;
-                    _stepIndex = 0;
-                    StartNextStep();
-                    break;
-
-                case WaveEndPolicy.Endless:
-                    //TODO
-                    break;
-
-                case WaveEndPolicy.SignalGameState:
-                    GameStateManager.Instance.ChangeState(GameStateType.Lobby);
-                    break;
-            }
+            WaveRunner.OnWaveCompleted -= HandleWaveCompleted;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace Enemies.Data
         [Header("Stats")]
         public StatsData stats;
         public EffectData effect;
+        public float radius = 1;
         
         [Header("Prefabs")]
         public GameObject visualPrefab;

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 8407760253474316313}
   - component: {fileID: 4988645769713712501}
   - component: {fileID: -6843079787046953627}
+  - component: {fileID: 4160849715657708948}
   m_Layer: 6
   m_Name: PF_Enemy
   m_TagString: Untagged
@@ -57,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.Netcode.Runtime::Unity.Netcode.NetworkObject
-  GlobalObjectIdHash: 247367866
+  GlobalObjectIdHash: 2213359364
   InScenePlacedSourceGlobalObjectIdHash: 0
   DeferredDespawnTick: 0
   Ownership: 8
@@ -98,6 +99,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.AI.EnemyAI
   ShowTopMostFoldoutHeaderGroup: 1
   nav: {fileID: 1659294417640511897}
+  targets: []
   lodLevel: 0
 --- !u!114 &961213145225754337
 MonoBehaviour:
@@ -164,7 +166,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Enemies.Health.EnemyHealth
   ShowTopMostFoldoutHeaderGroup: 1
-  baseMaxHealth: 100
 --- !u!114 &5495888342717063159
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -307,3 +308,16 @@ MonoBehaviour:
   SwitchTransformSpaceWhenParented: 0
   Interpolate: 1
   SlerpPosition: 0
+--- !u!114 &4160849715657708948
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8461315490994381656}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a912b7f8c5f947afbfd4bb591ed74b35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Enemies.Visual.EnemyColliderSetup
+  destroyAuthoringCollider: 1

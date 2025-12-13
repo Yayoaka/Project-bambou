@@ -8,5 +8,7 @@ namespace Upgrades.Data
         [Multiline]
         public string Description;
         public Sprite Icon;
+
+        public bool isUpgradable;
     }
 }

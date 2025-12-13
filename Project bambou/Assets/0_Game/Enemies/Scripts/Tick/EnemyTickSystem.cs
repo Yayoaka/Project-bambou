@@ -1,9 +1,10 @@
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace Enemies.Tick
 {
-    public class EnemyTickSystem : MonoBehaviour
+    public class EnemyTickSystem : NetworkBehaviour
     {
         public static EnemyTickSystem Instance { get; private set; }
 
@@ -16,6 +17,7 @@ namespace Enemies.Tick
 
         void Update()
         {
+            if (!IsServer) return;
             var dt = Time.deltaTime;
 
             var count = _tickables.Count;

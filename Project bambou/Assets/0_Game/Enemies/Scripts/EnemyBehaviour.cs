@@ -5,6 +5,7 @@ using Data;
 using Enemies.AI;
 using Enemies.Data;
 using Enemies.Lod;
+using Enemies.Visual;
 using Entity;
 using Health;
 using Interfaces;
@@ -31,6 +32,7 @@ namespace Enemies
         public EnemyAI ai;
         private HealthComponent _health;
         private EnemyActivation _activation;
+        private EnemyColliderSetup _colliderSetup;
 
         private GameObject _visual;
         private bool _isInitialized;
@@ -56,6 +58,7 @@ namespace Enemies
             _health ??= GetComponent<HealthComponent>();
             _activation ??= InitComponent<EnemyActivation>();
             ai ??= InitComponent<EnemyAI>();
+            _colliderSetup ??= InitComponent<EnemyColliderSetup>();
             
             _activation.LateInit();
             ai.LateInit();
@@ -82,6 +85,9 @@ namespace Enemies
 
             _visual = Instantiate(data.visualPrefab, transform);
             Stats.SetStats(data.stats);
+            _health.ResetHealth();
+            _colliderSetup.SetupColliderFromVisual();
+            ai.SetRadius(data.radius);
         }
 
         private void OnKill()
@@ -143,6 +149,7 @@ namespace Enemies
         public void OnPoolRelease()
         {
             gameObject.SetActive(false);
+            _isInitialized = false;
             
             if (_health) _health.enabled = false;
             if (ai) ai.enabled = false;

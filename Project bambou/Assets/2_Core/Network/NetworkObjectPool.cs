@@ -100,14 +100,50 @@ namespace Network
         // ------------------------------------------------------
         public void Return(NetworkObject obj)
         {
-            if (!IsServer)
+            if (!IsServer || obj == null)
                 return;
 
             if (!_inUse.Remove(obj))
                 return;
 
+            InternalReturn(obj, obj.PrefabIdHash);
+        }
+        
+        public void ReturnOrAdopt(NetworkObject obj)
+        {
+            if (!IsServer || obj == null)
+                return;
+
             var key = obj.PrefabIdHash;
 
+            // If already pooled → normal return
+            if (_inUse.Remove(obj))
+            {
+                InternalReturn(obj, key);
+                return;
+            }
+
+            // -----------------------------------------
+            // ADOPT EXTERNAL OBJECT
+            // -----------------------------------------
+            Debug.LogWarning($"[NetworkPool] Adopting external NetworkObject {obj.name}");
+
+            // Ensure pool exists
+            if (!_available.ContainsKey(key))
+                _available[key] = new Queue<NetworkObject>();
+
+            // Make sure it is spawned
+            if (!obj.IsSpawned)
+                obj.Spawn();
+
+            // Reset pooled state
+            CallPoolRelease(obj);
+
+            _available[key].Enqueue(obj);
+        }
+        
+        private void InternalReturn(NetworkObject obj, uint key)
+        {
             CallPoolRelease(obj);
 
             if (!_available.ContainsKey(key))

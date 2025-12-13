@@ -85,6 +85,15 @@ namespace Health
             
             MaxHealth = maxHealth;
         }
+        
+        public void ResetHealth()
+        {
+            var maxHealth = _stats.GetStat(StatType.MaxHealth);
+
+            CurrentHealth = maxHealth;
+            
+            MaxHealth = maxHealth;
+        }
 
         public void HandleDeath(HealthEventData data)
         {

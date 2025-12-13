@@ -20,18 +20,32 @@ namespace Enemies.Spawner
 
         public override void OnNetworkSpawn()
         {
+            if (!IsServer)
+                return;
+
             PlayerCharacterManager.OnPlayerSpawned += RegisterPlayer;
             PlayerCharacterManager.OnPlayerUnspawned += UnregisterPlayer;
         }
-        
+
+        private void OnDestroy()
+        {
+            PlayerCharacterManager.OnPlayerSpawned -= RegisterPlayer;
+            PlayerCharacterManager.OnPlayerUnspawned -= UnregisterPlayer;
+        }
+
         #region Public API
 
+        // --------------------------------------------------
+        // PLAYER REGISTRATION
+        // --------------------------------------------------
         public void RegisterPlayer(GameObject player)
         {
-            if (player == null || _players.Contains(player.transform))
+            if (player == null)
                 return;
 
-            _players.Add(player.transform);
+            var t = player.transform;
+            if (!_players.Contains(t))
+                _players.Add(t);
         }
 
         public void UnregisterPlayer(GameObject player)
@@ -42,6 +56,37 @@ namespace Enemies.Spawner
             _players.Remove(player.transform);
         }
 
+        // --------------------------------------------------
+        // SPAWN ORIGIN (USED BY WAVES)
+        // --------------------------------------------------
+        public Vector3 GetSpawnOrigin()
+        {
+            if (_players.Count == 0)
+                return Vector3.zero;
+
+            // Swarm-like: pick a random alive player
+            var player = _players[Random.Range(0, _players.Count)];
+            return player != null ? player.position : Vector3.zero;
+        }
+
+        // --------------------------------------------------
+        // SPAWN (PATTERN / FORCED POSITION)
+        // --------------------------------------------------
+        public void Spawn(EnemyDataSo data, Vector3 position)
+        {
+            if (!IsServer)
+                return;
+
+            var pooled = NetworkObjectPool.Instance.Get(enemyPrefab, position);
+            pooled.transform.SetPositionAndRotation(position, Quaternion.identity);
+
+            pooled.GetComponent<EnemyBehaviour>().Init(data);
+            EnemyManager.RegisterSpawn();
+        }
+
+        // --------------------------------------------------
+        // SPAWN (FALLBACK RANDOM)
+        // --------------------------------------------------
         public void Spawn(EnemyDataSo data)
         {
             if (!IsServer || _players.Count == 0)
@@ -51,11 +96,7 @@ namespace Enemies.Spawner
             if (pos == Vector3.zero)
                 return;
 
-            var pooled = NetworkObjectPool.Instance.Get(enemyPrefab, transform.position);
-            pooled.transform.SetPositionAndRotation(pos, Quaternion.identity);
-            
-            pooled.GetComponent<EnemyBehaviour>().Init(data);
-            EnemyManager.RegisterSpawn();
+            Spawn(data, pos);
         }
 
         #endregion
@@ -64,40 +105,20 @@ namespace Enemies.Spawner
 
         private Vector3 FindValidPosition()
         {
-            var tries = 20;
+            const int tries = 20;
 
-            while (tries-- > 0)
-            {
-                var pos = RandomPosition();
-                if (IsFarEnoughFromAllPlayers(pos))
-                    return pos;
-            }
+            var origin = GetSpawnOrigin();
+            var pos = RandomPositionAround(origin);
 
-            Debug.LogWarning("EnemySpawner: no valid spawn position found.");
-            return Vector3.zero;
+            return pos;
         }
 
-        private bool IsFarEnoughFromAllPlayers(Vector3 position)
-        {
-            for (var i = 0; i < _players.Count; i++)
-            {
-                var player = _players[i];
-                if (player == null)
-                    continue;
-
-                if (Vector3.Distance(position, player.position) < minDistanceFromPlayers)
-                    return false;
-            }
-
-            return true;
-        }
-
-        private Vector3 RandomPosition()
+        private Vector3 RandomPositionAround(Vector3 origin)
         {
             var angle = Random.Range(0f, Mathf.PI * 2f);
             var dist = Random.Range(minRadius, maxRadius);
 
-            return new Vector3(
+            return origin + new Vector3(
                 Mathf.Cos(angle) * dist,
                 0f,
                 Mathf.Sin(angle) * dist

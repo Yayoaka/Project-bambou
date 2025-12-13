@@ -34,7 +34,7 @@ namespace Character
 
         public void ApplyDamage(HealthEventData data)
         {
-            if (!IsAlive)
+            if (!IsAlive || !IsServer)
                 return;
 
             float amount = data.Amount;

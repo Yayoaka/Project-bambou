@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Collectibles.PlayerCollector
   ShowTopMostFoldoutHeaderGroup: 1
-  collectRange: 2
+  collectRange: 4
   collectibleMask:
     serializedVersion: 2
     m_Bits: 128
