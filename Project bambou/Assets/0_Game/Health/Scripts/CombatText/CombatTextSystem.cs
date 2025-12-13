@@ -26,11 +26,9 @@ namespace Health.CombatText
         
         public void DoText(HealthEventData healthEventData)
         {
-            var textEntity = NetworkObjectPool.Instance.Get(textEntityPrefab);
+            var textEntity = NetworkObjectPool.Instance.Get(textEntityPrefab, healthEventData.HitPoint);
             
             var text = textEntity.GetComponent<CombatTextEntity>();
-            
-            textEntity.Spawn();
             
             text.Init(healthEventData);
         }

@@ -1,6 +1,7 @@
 using Data;
 using DG.Tweening;
 using Effect;
+using Interfaces;
 using Network;
 using Stats.Data;
 using Unity.Netcode;
@@ -9,7 +10,7 @@ using Random = UnityEngine.Random;
 
 namespace Health.CombatText
 {
-    public class CombatTextEntity : NetworkBehaviour
+    public class CombatTextEntity : NetworkBehaviour, INetworkPoolable
     {
         [SerializeField] private CanvasGroup textCanvasGroup;
         [SerializeField] private TMPro.TMP_Text healthEventText;
@@ -89,6 +90,16 @@ namespace Health.CombatText
         {
             _textSequence.Kill(true);
             base.OnNetworkDespawn();
+        }
+        
+        public void OnPoolAcquire()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void OnPoolRelease()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

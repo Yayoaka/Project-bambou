@@ -51,10 +51,9 @@ namespace Enemies.Spawner
             if (pos == Vector3.zero)
                 return;
 
-            var pooled = NetworkObjectPool.Instance.Get(enemyPrefab);
+            var pooled = NetworkObjectPool.Instance.Get(enemyPrefab, transform.position);
             pooled.transform.SetPositionAndRotation(pos, Quaternion.identity);
-
-            pooled.Spawn();
+            
             pooled.GetComponent<EnemyBehaviour>().Init(data);
             EnemyManager.RegisterSpawn();
         }

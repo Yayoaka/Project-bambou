@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using Collectibles;
 using Data;
 using Enemies.AI;
@@ -5,6 +7,7 @@ using Enemies.Data;
 using Enemies.Lod;
 using Entity;
 using Health;
+using Interfaces;
 using Network;
 using Stats;
 using Unity.Collections;
@@ -14,7 +17,7 @@ using WebSocketSharp;
 
 namespace Enemies
 {
-    public class EnemyBehaviour : EntityBehaviour<EnemyBehaviour>
+    public class EnemyBehaviour : EntityBehaviour<EnemyBehaviour>, INetworkPoolable
     {
         public EnemyDataSo Data { get; private set; }
 
@@ -56,7 +59,8 @@ namespace Enemies
             
             _activation.LateInit();
             ai.LateInit();
-
+            
+            EnableEnemy();
             _health.OnDeath += OnKill;
             
             var database = GameDatabase.Get<EnemyDatabase>();
@@ -85,31 +89,38 @@ namespace Enemies
         {
             if (!IsServer) return;
 
-            var xpNet = NetworkObjectPool.Instance.Get(Data.xpLoot);
-
-            var collectible = xpNet.GetComponent<XpCollectible>();
-            xpNet.Spawn();
-            collectible.Init(Data.xpAmount);
+            gameObject.SetActive(false);
             
-            
-            xpNet.transform.position = transform.position;
+            SpawnXp();
             
             KillRpc();
-
-            NetworkObjectPool.Instance.Return(NetworkObject);
+            
+            DisableEnemy();
             
             EnemyManager.RegisterDeath();
+            
+            NetworkObjectPool.Instance.Return(NetworkObject);
         }
 
+        private void SpawnXp()
+        {
+            var xpNet = NetworkObjectPool.Instance.Get(Data.xpLoot, transform.position);
+
+            var collectible = xpNet.GetComponent<XpCollectible>();
+            collectible.Init(Data.xpAmount);
+        }
+        
         [Rpc(SendTo.Everyone, RequireOwnership = false)]
         private void KillRpc()
         {
-            if (Data.deathVisual != null)
-                Instantiate(Data.deathVisual, transform.position, Quaternion.identity);
-
             if (_visual != null)
+            {
                 Destroy(_visual);
-            _visual = null;
+                _visual = null;
+            }
+
+            if (Data != null && Data.deathVisual != null)
+                Instantiate(Data.deathVisual, transform.position, Quaternion.identity);
 
             _health.OnDeath -= OnKill;
         }
@@ -120,6 +131,48 @@ namespace Enemies
             {
                 InitEnemy(_enemyId.Value.Value);
             }
+        }
+
+        #region Activation
+
+        private void EnableEnemy()
+        {
+            _health.enabled = true;
+            ai.enabled = true;
+            _activation.enabled = true;
+        }
+
+        private void DisableEnemy()
+        {
+            _health.enabled = false;
+            ai.enabled = false;
+            _activation.enabled = false;
+        }
+
+        #endregion
+        
+        public void OnPoolAcquire()
+        {
+            gameObject.SetActive(true);
+            
+            if (_health) _health.enabled = true;
+            if (ai) ai.enabled = true;
+            if (_activation) _activation.enabled = true;
+
+            if (_visual != null)
+                _visual.SetActive(true);
+        }
+
+        public void OnPoolRelease()
+        {
+            gameObject.SetActive(false);
+            
+            if (_health) _health.enabled = false;
+            if (ai) ai.enabled = false;
+            if (_activation) _activation.enabled = false;
+
+            if (_visual != null)
+                _visual.SetActive(false);
         }
     }
 }

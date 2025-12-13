@@ -1,10 +1,11 @@
+using Interfaces;
 using Network;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace Collectibles
 {
-    public class MagneticCollectible : NetworkBehaviour, ICollectible
+    public class MagneticCollectible : NetworkBehaviour, ICollectible, INetworkPoolable
     {
         public bool IsCollected { get; private set; }
 
@@ -38,6 +39,15 @@ namespace Collectibles
         protected virtual void OnCollectedServer() { }
         
         public override void OnNetworkDespawn()
+        {
+            gameObject.SetActive(false);
+        }
+        public void OnPoolAcquire()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void OnPoolRelease()
         {
             gameObject.SetActive(false);
         }

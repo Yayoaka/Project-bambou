@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Character;
 using Unity.Netcode;
 using UnityEngine;
@@ -10,7 +11,9 @@ public class PlayerCharacterManager : NetworkBehaviour
 {
     [SerializeField] private CharacterBehaviour championPrefab;
 
-    private readonly Dictionary<ulong, CharacterBehaviour> playerCharacters = new();
+    private static readonly Dictionary<ulong, CharacterBehaviour> playerCharacters = new();
+    
+    public static List<GameObject> Characters => playerCharacters.Select(x => x.Value.gameObject).ToList();
     
     public static event Action<GameObject> OnPlayerSpawned;
     public static event Action<GameObject> OnPlayerUnspawned;

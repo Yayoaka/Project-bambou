@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using Interfaces;
 using Unity.Netcode;
 using UnityEngine;
 
 namespace Network
 {
-    public class NetworkObjectPool : MonoBehaviour
+    public class NetworkObjectPool : NetworkBehaviour
     {
         public static NetworkObjectPool Instance;
 
@@ -12,82 +13,153 @@ namespace Network
         public class PoolItem
         {
             public NetworkObject prefab;
-            public int prewarmCount = 20;
+            public int prewarmCount = 10;
         }
 
-        public List<PoolItem> items = new List<PoolItem>();
+        [SerializeField] private List<PoolItem> items = new();
 
-        private Dictionary<uint, Queue<NetworkObject>> pool 
-            = new Dictionary<uint, Queue<NetworkObject>>();
+        private readonly Dictionary<uint, Queue<NetworkObject>> _available = new();
+        private readonly HashSet<NetworkObject> _inUse = new();
+        private readonly Dictionary<uint, NetworkObject> _prefabByKey = new();
 
-        void Awake()
+        private void Awake()
         {
             Instance = this;
 
+            // Build prefab lookup for runtime additions
+            for (var i = 0; i < items.Count; i++)
+            {
+                var item = items[i];
+                if (item.prefab == null)
+                    continue;
+
+                var key = item.prefab.PrefabIdHash;
+                if (!_prefabByKey.ContainsKey(key))
+                    _prefabByKey.Add(key, item.prefab);
+            }
+        }
+
+        // ------------------------------------------------------
+        // PREWARM (SERVER ONLY)
+        // ------------------------------------------------------
+        public override void OnNetworkSpawn()
+        {
+            if (!IsServer)
+                return;
+
+            Prewarm();
+        }
+
+        public void Prewarm()
+        {
             foreach (var item in items)
             {
-                uint key = item.prefab.PrefabIdHash;
+                EnsurePoolExists(item.prefab);
 
-                if (!pool.ContainsKey(key))
-                    pool[key] = new Queue<NetworkObject>();
-
-                for (int i = 0; i < item.prewarmCount; i++)
-                {
-                    var obj = Instantiate(item.prefab, transform, true);
-                    obj.gameObject.SetActive(false);
-                    pool[key].Enqueue(obj);
-                }
+                for (var i = 0; i < item.prewarmCount; i++)
+                    CreateAndEnqueue(item.prefab);
             }
         }
 
-        // ---------------------------------------------------------
-        // GET (auto-register if needed)
-        // ---------------------------------------------------------
-        public NetworkObject Get(NetworkObject prefab)
+        // ------------------------------------------------------
+        // GET
+        // ------------------------------------------------------
+        public NetworkObject Get(
+            NetworkObject prefab,
+            Vector3 position,
+            Quaternion rotation = default)
         {
-            uint key = prefab.PrefabIdHash;
-
-            // Auto-add pool if missing
-            if (!pool.ContainsKey(key))
+            if (!IsServer)
             {
-                Debug.LogWarning($"[Pool] Prefab {prefab.name} not registered. Creating pool automatically.");
-                pool[key] = new Queue<NetworkObject>();
+                Debug.LogError("[NetworkPool] Get called on client.");
+                return null;
             }
 
-            var q = pool[key];
+            EnsurePoolExists(prefab);
 
-            if (q.Count > 0)
+            var key = prefab.PrefabIdHash;
+            var q = _available[key];
+
+            // Pool empty → grow dynamically
+            if (q.Count == 0)
             {
-                var obj = q.Dequeue();
-                obj.gameObject.SetActive(true);
-                return obj;
+                CreateAndEnqueue(prefab);
             }
 
-            // Instantiate new when empty
-            var newObj = Instantiate(prefab, transform);
-            return newObj;
+            var obj = q.Dequeue();
+            _inUse.Add(obj);
+
+            obj.transform.SetPositionAndRotation(position, rotation);
+            CallPoolAcquire(obj);
+
+            return obj;
         }
 
-        // ---------------------------------------------------------
-        // RETURN (auto-register if needed)
-        // ---------------------------------------------------------
+        // ------------------------------------------------------
+        // RETURN
+        // ------------------------------------------------------
         public void Return(NetworkObject obj)
         {
-            uint key = obj.PrefabIdHash;
+            if (!IsServer)
+                return;
 
-            // Auto-register missing pool
-            if (!pool.ContainsKey(key))
-            {
-                Debug.LogWarning($"[Pool] Returned object {obj.name} had no pool entry. Creating queue automatically.");
-                pool[key] = new Queue<NetworkObject>();
-            }
+            if (!_inUse.Remove(obj))
+                return;
 
-            obj.gameObject.SetActive(false);
+            var key = obj.PrefabIdHash;
 
-            // DO NOT destroy
-            obj.Despawn(false);
+            CallPoolRelease(obj);
 
-            pool[key].Enqueue(obj);
+            if (!_available.ContainsKey(key))
+                _available[key] = new Queue<NetworkObject>();
+
+            _available[key].Enqueue(obj);
+        }
+
+        // ------------------------------------------------------
+        // INTERNAL HELPERS
+        // ------------------------------------------------------
+        private void EnsurePoolExists(NetworkObject prefab)
+        {
+            var key = prefab.PrefabIdHash;
+
+            if (_available.ContainsKey(key))
+                return;
+
+            Debug.LogWarning($"[NetworkPool] Prefab {prefab.name} was not registered. Auto-adding to pool.");
+
+            _available[key] = new Queue<NetworkObject>();
+
+            if (!_prefabByKey.ContainsKey(key))
+                _prefabByKey.Add(key, prefab);
+        }
+
+        private void CreateAndEnqueue(NetworkObject prefab)
+        {
+            var obj = Instantiate(prefab);
+            obj.Spawn(); // SPAWN UNE SEULE FOIS, objet persistant
+
+            CallPoolRelease(obj);
+
+            var key = prefab.PrefabIdHash;
+            _available[key].Enqueue(obj);
+        }
+
+        // ------------------------------------------------------
+        // INTERFACE DISPATCH
+        // ------------------------------------------------------
+        private static void CallPoolAcquire(NetworkObject obj)
+        {
+            var poolables = obj.GetComponentsInChildren<INetworkPoolable>(true);
+            for (var i = 0; i < poolables.Length; i++)
+                poolables[i].OnPoolAcquire();
+        }
+
+        private static void CallPoolRelease(NetworkObject obj)
+        {
+            var poolables = obj.GetComponentsInChildren<INetworkPoolable>(true);
+            for (var i = 0; i < poolables.Length; i++)
+                poolables[i].OnPoolRelease();
         }
     }
 }
