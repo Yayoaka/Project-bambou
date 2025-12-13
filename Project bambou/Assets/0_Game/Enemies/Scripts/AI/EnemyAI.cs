@@ -97,6 +97,7 @@ namespace Enemies.AI
         // ----------------------------------------------------------
         public void Tick(float dt)
         {
+            if (!enabled) return;
             _frameCount++;
 
             ResolveClosestTarget();

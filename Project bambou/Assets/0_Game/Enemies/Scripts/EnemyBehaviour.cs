@@ -60,7 +60,6 @@ namespace Enemies
             _activation.LateInit();
             ai.LateInit();
             
-            EnableEnemy();
             _health.OnDeath += OnKill;
             
             var database = GameDatabase.Get<EnemyDatabase>();
@@ -88,14 +87,10 @@ namespace Enemies
         private void OnKill()
         {
             if (!IsServer) return;
-
-            gameObject.SetActive(false);
             
             SpawnXp();
             
             KillRpc();
-            
-            DisableEnemy();
             
             EnemyManager.RegisterDeath();
             
@@ -132,24 +127,6 @@ namespace Enemies
                 InitEnemy(_enemyId.Value.Value);
             }
         }
-
-        #region Activation
-
-        private void EnableEnemy()
-        {
-            _health.enabled = true;
-            ai.enabled = true;
-            _activation.enabled = true;
-        }
-
-        private void DisableEnemy()
-        {
-            _health.enabled = false;
-            ai.enabled = false;
-            _activation.enabled = false;
-        }
-
-        #endregion
         
         public void OnPoolAcquire()
         {
