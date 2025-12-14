@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Interfaces;
 using Unity.Netcode;
 using UnityEngine;
@@ -196,6 +197,52 @@ namespace Network
             var poolables = obj.GetComponentsInChildren<INetworkPoolable>(true);
             for (var i = 0; i < poolables.Length; i++)
                 poolables[i].OnPoolRelease();
+        }
+
+        public void ClearPooledObjects()
+        {
+            if (!IsServer)
+                return;
+
+            // -------------------------
+            // AVAILABLE
+            // -------------------------
+            foreach (var queue in _available.Values)
+            {
+                while (queue.Count > 0)
+                {
+                    var obj = queue.Dequeue();
+                    if (obj == null)
+                        continue;
+
+                    if (obj.IsSpawned)
+                        obj.Despawn();
+
+                    Destroy(obj.gameObject);
+                }
+            }
+
+            _available.Clear();
+
+            // -------------------------
+            // IN USE (SNAPSHOT)
+            // -------------------------
+            var inUseSnapshot = _inUse.ToArray();
+
+            foreach (var obj in inUseSnapshot)
+            {
+                if (obj == null)
+                    continue;
+
+                if (obj.IsSpawned)
+                    obj.Despawn();
+
+                Destroy(obj.gameObject);
+            }
+
+            _inUse.Clear();
+
+            Debug.Log("[NetworkPool] Pool fully cleared.");
         }
     }
 }

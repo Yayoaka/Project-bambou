@@ -11,7 +11,7 @@ namespace GameState.States
 
         void IGameState.Exit()
         {
-            throw new System.NotImplementedException();
+            
         }
 
         void IGameState.Tick(float dt)

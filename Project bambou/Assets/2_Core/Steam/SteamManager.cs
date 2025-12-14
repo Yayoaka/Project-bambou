@@ -6,6 +6,8 @@ namespace Steam
 {
     public class SteamManager : MonoBehaviour
     {
+        private static bool _initialized = false;
+        public static bool Initialized => _initialized;
         
         private void Awake()
         {
@@ -15,6 +17,8 @@ namespace Steam
                 Application.Quit();
                 return;
             }
+
+            _initialized = true;
         }
 
         private void Update()

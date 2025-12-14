@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using GameState.States;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace GameState
@@ -16,6 +18,19 @@ namespace GameState
         {
             Instance = this;
             BuildStates();
+
+            StartCoroutine(RegisterWhenReady());
+        }
+
+        private IEnumerator RegisterWhenReady()
+        {
+            while (NetworkManager.Singleton == null)
+            {
+                yield return null;
+            }
+            
+            
+            NetworkManager.Singleton.ConnectionApprovalCallback += ApprovalCheck;
         }
 
         void BuildStates()
@@ -53,5 +68,26 @@ namespace GameState
             var dt = Time.deltaTime;
             _currentState?.Tick(dt);
         }
+        
+        
+
+        #region Connexion
+
+        private void ApprovalCheck(
+            NetworkManager.ConnectionApprovalRequest request,
+            NetworkManager.ConnectionApprovalResponse response)
+        {
+            if (_currentType == GameStateType.Mission)
+            {
+                response.Approved = false;
+                response.Reason = "Game already started";
+                return;
+            }
+
+            response.Approved = true;
+            response.CreatePlayerObject = true;
+        }
+
+        #endregion
     }
 }

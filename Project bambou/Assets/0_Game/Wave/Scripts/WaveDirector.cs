@@ -1,5 +1,7 @@
 using Enemies.Spawner;
 using GameState;
+using GameState.States;
+using SceneLoader;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -32,7 +34,7 @@ namespace Wave
                     break;
 
                 case WaveCompletionAction.ChangeGameState:
-                    GameStateManager.Instance.ChangeState(wave.nextGameState);
+                    SceneLoaderManager.Instance.LoadSceneAsync(new LoadingContext(wave.nextGameState));
                     break;
             }
         }

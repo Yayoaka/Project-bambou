@@ -3,9 +3,11 @@ using Character.Data;
 using Character.Input;
 using Character.State;
 using Character.Visual;
+using Data;
 using Entity;
 using Health;
 using Interfaces;
+using Players;
 using Stats;
 using Unity.Netcode;
 using UnityEngine;
@@ -53,6 +55,8 @@ namespace Character
 
         public override void OnNetworkSpawn()
         {
+            data = GameDatabase.Get<CharacterDatabase>().GetCharacter(PlayerDataManager.Instance.GetCharacter().ToString());
+            
             SpawnVisual();
             SetData();
             

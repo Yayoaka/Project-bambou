@@ -12,6 +12,7 @@ namespace Character.Data
         [SerializeField] private string characterName;
         [SerializeField] private string characterDescription;
         [SerializeField] private Sprite characterIcon;
+        [SerializeField] private Sprite characterRoleIcon; //TEMP
         [SerializeField] private CharacterVisual characterVisualPrefab;
         [SerializeField] private SpellData[] spells;
         [SerializeField] private StatsData stats;
@@ -19,6 +20,7 @@ namespace Character.Data
         public string CharacterName => characterName;
         public string CharacterDescription => characterDescription;
         public Sprite CharacterIcon => characterIcon;
+        public Sprite CharacterRoleIcon => characterRoleIcon;
         public CharacterVisual CharacterVisualPrefab => characterVisualPrefab;
         public SpellData[] Spells => spells;
         public StatsData Stats => stats;

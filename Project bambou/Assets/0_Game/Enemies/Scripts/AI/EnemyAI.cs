@@ -7,6 +7,7 @@ using Enemies.Lod;
 using Enemies.Visual;
 using Entity;
 using Interfaces;
+using Networking;
 using Skills;
 using Stats.Data;
 
